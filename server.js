@@ -12,6 +12,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json({ limit: '500kb' }));
 app.use(express.static(path.join(ROOT, 'public')));
+app.use('/data', express.static(path.join(ROOT, 'data')));
 
 const DB = path.join(ROOT, 'data', 'tournaments.json');
 const IG_DB = path.join(ROOT, 'data', 'instagram-candidates.json');

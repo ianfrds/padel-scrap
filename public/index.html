@@ -1861,8 +1861,14 @@ function notify(text, isError = false) {
 // 6. FETCH API & RENDER
 async function loadData() {
   try {
-    const res = await fetch(API + '/tournaments');
-    if (!res.ok) throw new Error('Gagal memuat API');
+    let res = null;
+    try {
+      res = await fetch(API + '/tournaments');
+    } catch {}
+    if (!res || !res.ok) {
+      res = await fetch('./data/tournaments.json');
+    }
+    if (!res || !res.ok) throw new Error('Gagal memuat API atau berkas statis');
     const data = await res.json();
     masterEvents = data.events || [];
     populateMonthSelects();
@@ -2267,7 +2273,11 @@ let currentIgCityFilter = 'all';
 
 async function loadIgRadarAccounts() {
   try {
-    const res = await fetch(API + '/instagram/accounts');
+    let res = null;
+    try { res = await fetch(API + '/instagram/accounts'); } catch {}
+    if (!res || !res.ok) {
+      res = await fetch('./data/instagram-accounts.json');
+    }
     allIgAccounts = await res.json();
     $('#igAccountsTotalCount').textContent = allIgAccounts.length;
     renderIgAccounts();
