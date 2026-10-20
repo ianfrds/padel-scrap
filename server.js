@@ -22,8 +22,7 @@ const SOURCES = [
   { id: 'padelgigs', name: 'Padelgigs', url: 'https://padelgigs.id/' },
   { id: 'pbpi', name: 'PBPI Jawa Timur', url: 'https://pbpijatim.com/events' },
   { id: 'smesh', name: 'Smesh.ID', url: 'https://smesh.id/tournaments?sport=padel' },
-  { id: 'recourt', name: 'Recourt.ID', url: 'https://recourt.id/tournaments' },
-  { id: 'reclub', name: 'Reclub', url: 'https://reclub.co' }
+  { id: 'recourt', name: 'Recourt.ID', url: 'https://recourt.id/tournaments' }
 ];
 
 const JATIM_IG_ACCOUNTS = [
@@ -735,7 +734,6 @@ app.post('/api/scan', async (req, res) => {
         else if (source.id === 'pbpi') result = await scanPBPI();
         else if (source.id === 'smesh') result = await scanSmesh();
         else if (source.id === 'recourt') result = await scanRecourt();
-        else if (source.id === 'reclub') result = await scanReclub();
 
         raw.push(...result);
         const matchCount = (monthStart !== 'all' || monthEnd !== 'all')

@@ -4,7 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>Jatim Padel Scout, Radar dan Agregator Turnamen Padel Jawa Timur</title>
-  <meta name="description" content="Katalog dan pemindai jadwal turnamen padel di Jawa Timur: Surabaya, Malang, Sidoarjo, Gresik, Pasuruan, Nganjuk, dan sekitarnya. Sumber data dari Incourta, Padelgigs, PBPI Jatim, Smesh.ID, Recourt.ID, Reclub, dan Instagram."/>
+  <meta name="description" content="Katalog dan pemindai jadwal turnamen padel di Jawa Timur: Surabaya, Malang, Sidoarjo, Gresik, Pasuruan, Nganjuk, dan sekitarnya. Sumber data dari Incourta, Padelgigs, PBPI Jatim, Smesh.ID, Recourt.ID, dan Instagram."/>
   <meta name="theme-color" content="#15803d"/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -247,6 +247,18 @@
     .source-item:hover {
       background: var(--bg-surface);
       color: var(--text);
+    }
+
+    .source-item.active {
+      background: var(--accent-light, rgba(21, 128, 61, 0.12));
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .source-item.active .source-count {
+      background: var(--accent);
+      color: var(--accent-contrast);
+      border-color: var(--accent);
     }
 
     .source-tag {
@@ -643,6 +655,219 @@
     .search-icon svg {
       width: 16px;
       height: 16px;
+    }
+
+    /* Multi-select source dropdown */
+    .multi-select-wrap {
+      position: relative;
+    }
+
+    .multi-select-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      cursor: pointer;
+      text-align: left;
+      font-family: inherit;
+    }
+
+    .multi-select-label {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      flex: 1;
+    }
+
+    .multi-select-badge {
+      background: var(--accent);
+      color: var(--accent-contrast);
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 999px;
+      flex-shrink: 0;
+    }
+
+    .dropdown-chevron {
+      flex-shrink: 0;
+      color: var(--text-dim);
+      transition: transform 0.15s ease;
+    }
+
+    .multi-select-wrap.open .dropdown-chevron {
+      transform: rotate(180deg);
+    }
+
+    .multi-select-dropdown {
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      width: 270px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-lg);
+      padding: 10px;
+      z-index: 100;
+      display: none;
+    }
+
+    .multi-select-wrap.open .multi-select-dropdown {
+      display: block;
+    }
+
+    .multi-select-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 8px;
+      margin-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .multi-select-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-text-action {
+      background: none;
+      border: none;
+      font-size: 11px;
+      color: var(--accent);
+      font-weight: 600;
+      cursor: pointer;
+      padding: 2px 4px;
+      border-radius: 3px;
+    }
+
+    .btn-text-action:hover {
+      text-decoration: underline;
+    }
+
+    .multi-select-options {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      max-height: 240px;
+      overflow-y: auto;
+    }
+
+    .multi-select-option {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 6px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12.5px;
+      color: var(--text);
+      user-select: none;
+      transition: background 0.1s;
+    }
+
+    .multi-select-option:hover {
+      background: var(--bg-surface);
+    }
+
+    .multi-select-option input[type="checkbox"] {
+      width: 15px;
+      height: 15px;
+      accent-color: var(--accent);
+      cursor: pointer;
+      margin: 0;
+    }
+
+    .multi-select-option .option-name {
+      flex: 1;
+    }
+
+    .multi-select-option .option-count {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: var(--bg);
+      padding: 1px 6px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+    }
+
+    /* Active Source Chips under toolbar */
+    .active-source-chips {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: -14px;
+      margin-bottom: 20px;
+      padding: 0 4px;
+    }
+
+    .active-chips-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .chips-list {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .source-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--accent-light, rgba(21, 128, 61, 0.1));
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 3px 8px 3px 10px;
+      border-radius: 999px;
+      font-size: 11.5px;
+      font-weight: 700;
+    }
+
+    .source-chip-remove {
+      background: none;
+      border: none;
+      color: var(--accent);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      width: 14px;
+      height: 14px;
+      font-size: 14px;
+      line-height: 1;
+      border-radius: 50%;
+    }
+
+    .source-chip-remove:hover {
+      background: var(--accent);
+      color: var(--accent-contrast);
+    }
+
+    .clear-chips-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 11.5px;
+      font-weight: 600;
+      text-decoration: underline;
+      cursor: pointer;
+      padding: 2px 4px;
+    }
+
+    .clear-chips-btn:hover {
+      color: var(--text);
     }
 
     .results-meta {
@@ -1100,55 +1325,138 @@
       margin-top: 22px;
     }
 
-    /* Instagram Hub Tabs */
-    .ig-hub-modal {
-      max-width: 880px;
-      width: 100%;
-      max-height: 92vh;
+    /* App View Container */
+    .app-view {
+      display: block;
+      animation: fadeIn 0.15s ease-out;
+    }
+
+    .app-view[hidden] {
+      display: none !important;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Dedicated Instagram Page View */
+    .ig-page-header {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
       padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .ig-page-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .ig-page-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      color: var(--accent);
+      background: var(--accent-light, rgba(21, 128, 61, 0.1));
+      padding: 3px 8px;
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+
+    .ig-page-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text);
+      margin: 0 0 6px;
+      letter-spacing: -0.02em;
+    }
+
+    .ig-page-desc {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      margin: 0;
+      max-width: 740px;
+      line-height: 1.55;
+    }
+
+    .ig-tab-content {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      animation: fadeIn 0.12s ease-out;
+    }
+
+    .ig-tab-content[hidden] {
+      display: none !important;
     }
 
     .ig-tabs {
       display: flex;
-      gap: 6px;
+      gap: 8px;
       border-bottom: 1px solid var(--border);
       padding-bottom: 12px;
-      margin-bottom: 18px;
+      margin-bottom: 0;
+      flex-wrap: wrap;
     }
 
     .ig-tab {
-      padding: 7px 14px;
-      font-size: 12.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      font-size: 13px;
       font-weight: 700;
       border-radius: var(--radius-sm);
       color: var(--text-muted);
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
       cursor: pointer;
+      font-family: inherit;
+      transition: all 0.12s ease;
     }
 
     .ig-tab:hover {
-      background: var(--bg-surface);
+      background: var(--bg-hover);
       color: var(--text);
+      border-color: var(--text-dim);
     }
 
     .ig-tab.active {
       background: var(--accent);
       color: var(--accent-contrast);
+      border-color: var(--accent);
     }
 
     .ig-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 14px;
     }
 
     .ig-account-card {
       background: var(--bg-surface);
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
-      padding: 14px;
+      padding: 14px 16px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
+      transition: border-color 0.15s ease, transform 0.15s ease;
+    }
+
+    .ig-account-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-1px);
     }
 
     .ig-account-name {
@@ -1252,31 +1560,30 @@
 
     <!-- Data Sources Status -->
     <div class="sources-box">
-      <p class="side-label">Sumber Data (6 Platform)</p>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <p class="side-label" style="margin:0;">Sumber Data (5 Platform)</p>
+        <button type="button" id="resetSidebarSourcesBtn" style="background:none;border:none;font-size:11px;color:var(--accent);cursor:pointer;font-weight:700;padding:2px 4px;display:none;">Reset</button>
+      </div>
       <div id="sourceStatusList">
-        <div class="source-item" onclick="filterBySource('Incourta')">
+        <div class="source-item" data-source="Incourta" onclick="toggleSource('Incourta')">
           <span class="source-tag"><span class="status-dot"></span><span>Incourta</span></span>
           <span class="source-count" id="countIncourta">0</span>
         </div>
-        <div class="source-item" onclick="filterBySource('Padelgigs')">
+        <div class="source-item" data-source="Padelgigs" onclick="toggleSource('Padelgigs')">
           <span class="source-tag"><span class="status-dot"></span><span>Padelgigs</span></span>
           <span class="source-count" id="countPadelgigs">0</span>
         </div>
-        <div class="source-item" onclick="filterBySource('PBPI')">
+        <div class="source-item" data-source="PBPI" onclick="toggleSource('PBPI')">
           <span class="source-tag"><span class="status-dot"></span><span>PBPI Jawa Timur</span></span>
           <span class="source-count" id="countPbpi">0</span>
         </div>
-        <div class="source-item" onclick="filterBySource('Smesh')">
+        <div class="source-item" data-source="Smesh" onclick="toggleSource('Smesh')">
           <span class="source-tag"><span class="status-dot"></span><span>Smesh.ID</span></span>
           <span class="source-count" id="countSmesh">0</span>
         </div>
-        <div class="source-item" onclick="filterBySource('Recourt')">
+        <div class="source-item" data-source="Recourt" onclick="toggleSource('Recourt')">
           <span class="source-tag"><span class="status-dot"></span><span>Recourt.ID</span></span>
           <span class="source-count" id="countRecourt">0</span>
-        </div>
-        <div class="source-item" onclick="filterBySource('Reclub')">
-          <span class="source-tag"><span class="status-dot"></span><span>Reclub</span></span>
-          <span class="source-count" id="countReclub">0</span>
         </div>
       </div>
     </div>
@@ -1293,7 +1600,7 @@
       <div class="top-meta">
         <span>JAWA TIMUR</span>
         <span>/</span>
-        <strong>RADAR DAN SCRAPER TURNAMEN</strong>
+        <strong id="topMetaTitle">KATALOG TURNAMEN</strong>
       </div>
 
       <div class="top-actions">
@@ -1310,7 +1617,9 @@
       </div>
     </header>
 
-    <!-- Hero Title -->
+    <!-- 1. VIEW: KATALOG TURNAMEN -->
+    <div id="viewCatalog" class="app-view">
+      <!-- Hero Title -->
     <section class="hero">
       <div class="hero-eyebrow">
         <span>RADAR RESMI</span>
@@ -1335,7 +1644,7 @@
       <div class="range-scan-header">
         <div>
           <div class="range-scan-title">Filter Scraping Berdasarkan Rentang Bulan</div>
-          <p class="range-scan-desc">Tentukan rentang bulan yang ingin dipindai dari Incourta, Padelgigs, PBPI Jatim, Smesh.ID, Recourt.ID, dan Reclub:</p>
+          <p class="range-scan-desc">Tentukan rentang bulan yang ingin dipindai dari Incourta, Padelgigs, PBPI Jatim, Smesh.ID, dan Recourt.ID:</p>
         </div>
 
         <!-- Quick Preset Range Chips -->
@@ -1424,17 +1733,64 @@
         <option value="past">Sudah Selesai</option>
       </select>
 
-      <select class="field" id="filterSource">
-        <option value="">Semua Sumber</option>
-        <option value="Incourta">Incourta</option>
-        <option value="Padelgigs">Padelgigs</option>
-        <option value="PBPI">PBPI Jawa Timur</option>
-        <option value="Smesh">Smesh.ID</option>
-        <option value="Recourt">Recourt.ID</option>
-        <option value="Reclub">Reclub</option>
-        <option value="Instagram">Instagram</option>
-      </select>
+      <!-- Multi-Select Source Filter Dropdown -->
+      <div class="multi-select-wrap" id="sourceMultiSelectWrap">
+        <button type="button" class="field multi-select-btn" id="sourceMultiSelectBtn" aria-haspopup="true" aria-expanded="false">
+          <span class="multi-select-label" id="sourceMultiSelectLabel">Semua Sumber</span>
+          <span class="multi-select-badge" id="sourceMultiSelectBadge" hidden>0</span>
+          <svg class="dropdown-chevron" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="multi-select-dropdown" id="sourceMultiSelectDropdown">
+          <div class="multi-select-header">
+            <span>Filter Sumber Data</span>
+            <div class="multi-select-actions">
+              <button type="button" class="btn-text-action" id="selectAllSourcesBtn">Pilih Semua</button>
+              <span style="color:var(--text-dim);">·</span>
+              <button type="button" class="btn-text-action" id="clearAllSourcesBtn">Reset</button>
+            </div>
+          </div>
+          <div class="multi-select-options">
+            <label class="multi-select-option">
+              <input type="checkbox" class="source-checkbox" value="Incourta" />
+              <span class="option-name">Incourta</span>
+              <span class="option-count" id="optCountIncourta">0</span>
+            </label>
+            <label class="multi-select-option">
+              <input type="checkbox" class="source-checkbox" value="Padelgigs" />
+              <span class="option-name">Padelgigs</span>
+              <span class="option-count" id="optCountPadelgigs">0</span>
+            </label>
+            <label class="multi-select-option">
+              <input type="checkbox" class="source-checkbox" value="PBPI" />
+              <span class="option-name">PBPI Jawa Timur</span>
+              <span class="option-count" id="optCountPbpi">0</span>
+            </label>
+            <label class="multi-select-option">
+              <input type="checkbox" class="source-checkbox" value="Smesh" />
+              <span class="option-name">Smesh.ID</span>
+              <span class="option-count" id="optCountSmesh">0</span>
+            </label>
+            <label class="multi-select-option">
+              <input type="checkbox" class="source-checkbox" value="Recourt" />
+              <span class="option-name">Recourt.ID</span>
+              <span class="option-count" id="optCountRecourt">0</span>
+            </label>
+            <label class="multi-select-option">
+              <input type="checkbox" class="source-checkbox" value="Instagram" />
+              <span class="option-name">Instagram</span>
+              <span class="option-count" id="optCountInstagram">0</span>
+            </label>
+          </div>
+        </div>
+      </div>
     </section>
+
+    <!-- Active Source Chips (Tampil saat beberapa sumber dipilih) -->
+    <div class="active-source-chips" id="activeSourceChips" hidden>
+      <span class="active-chips-label">Sumber Terpilih:</span>
+      <div class="chips-list" id="chipsList"></div>
+      <button type="button" class="clear-chips-btn" id="clearAllChipsBtn">Reset Filter Sumber</button>
+    </div>
 
     <!-- Results Meta -->
     <div class="results-meta">
@@ -1449,6 +1805,96 @@
         <div class="empty-state-desc">Menghubungkan ke basis data turnamen padel Jawa Timur.</div>
       </div>
     </section>
+    </div> <!-- /viewCatalog -->
+
+    <!-- 2. VIEW: INSTAGRAM RADAR (PAGE DEDIKASI) -->
+    <div id="viewInstagram" class="app-view" hidden>
+      <section class="ig-page-header">
+        <div class="ig-page-title-row">
+          <div>
+            <div class="ig-page-badge">INSTAGRAM RADAR JAWA TIMUR</div>
+            <h1 class="ig-page-title">Direktori Radar Akun & Ekstraktor Postingan</h1>
+            <p class="ig-page-desc">Pantau 35 akun Instagram resmi federasi, klub, venue, dan komunitas padel se-Jawa Timur. Ekstraksi jadwal turnamen secara otomatis langsung dari caption atau link postingan.</p>
+          </div>
+          <button type="button" class="btn" id="backToCatalogBtn">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            Kembali ke Katalog
+          </button>
+        </div>
+
+        <div class="ig-tabs">
+          <button type="button" class="ig-tab active" data-igtab="radar">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+            Radar 35 Akun Jatim
+          </button>
+          <button type="button" class="ig-tab" data-igtab="extract">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Ekstraktor Caption NLP
+          </button>
+          <button type="button" class="ig-tab" data-igtab="candidates">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7.5" r="4"/><polyline points="17 11 19 13 23 9"/></svg>
+            Antrean Verifikasi (<span id="igCandidateBadge">0</span>)
+          </button>
+        </div>
+      </section>
+
+      <!-- Tab 1: Radar Akun Lapangan -->
+      <div id="igViewRadar" class="ig-tab-content">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:12px;flex-wrap:wrap;">
+          <div style="font-size:13px;color:var(--text);font-weight:700;">Direktori Radar Lapangan & Komunitas (<span id="igAccountsTotalCount">0</span> Akun Terpantau):</div>
+          <div class="range-chips" style="margin:0;">
+            <button type="button" class="preset-chip active" data-igcity="all">Semua Kota</button>
+            <button type="button" class="preset-chip" data-igcity="Surabaya">Surabaya</button>
+            <button type="button" class="preset-chip" data-igcity="Malang">Malang & Batu</button>
+            <button type="button" class="preset-chip" data-igcity="Sidoarjo">Sidoarjo & Gresik</button>
+            <button type="button" class="preset-chip" data-igcity="Pasuruan">Pasuruan</button>
+            <button type="button" class="preset-chip" data-igcity="Lainnya">Lainnya</button>
+          </div>
+        </div>
+        <div style="margin-bottom:16px;">
+          <input type="text" class="field" id="searchIgAccountsInput" placeholder="Cari nama venue/lapangan, username @, atau kota..." autocomplete="off"/>
+        </div>
+        <div class="ig-grid" id="igAccountsList">
+          <!-- populated dynamically -->
+        </div>
+      </div>
+
+      <!-- Tab 2: NLP Extractor -->
+      <div id="igViewExtract" class="ig-tab-content" hidden>
+        <div style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">Tempel caption atau teks informasi dari postingan Instagram turnamen untuk mengekstrak tanggal, nama acara, kategori, dan lokasi lapangan secara otomatis:</div>
+
+        <div class="form-group">
+          <label class="field-label" for="igCaptionInput">Teks Caption Postingan Instagram *</label>
+          <textarea class="field" id="igCaptionInput" rows="6" style="height:auto;padding:12px;font-family:inherit;font-size:13px;" placeholder="Contoh: SAVE THE DATE! Turnamen Padel Kemerdekaan di Darmo Padel Club Surabaya pada 24-25 Oktober 2026. Kategori Men Beginner dan Women Bronze. Pendaftaran IDR 400.000..."></textarea>
+        </div>
+
+        <div class="form-row">
+          <div>
+            <label class="field-label" for="igPostUrl">URL Link Postingan Instagram</label>
+            <input class="field" type="url" id="igPostUrl" placeholder="https://instagram.com/p/..."/>
+          </div>
+          <div>
+            <label class="field-label" for="igPosterUrl">URL Gambar Flyer / Poster</label>
+            <input class="field" type="url" id="igPosterUrl" placeholder="https://..."/>
+          </div>
+        </div>
+
+        <div id="igExtractResult" style="margin-top:16px;" hidden>
+          <div style="font-size:12px;font-weight:700;color:var(--accent);margin-bottom:8px;letter-spacing:0.04em;">HASIL EKSTRAKSI:</div>
+          <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;font-size:13px;" id="igExtractPreview"></div>
+          <div style="margin-top:14px;display:flex;gap:10px;">
+            <button type="button" class="btn primary" id="saveIgExtractedBtn">Tambahkan ke Katalog Turnamen</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 3: Candidates Queue -->
+      <div id="igViewCandidates" class="ig-tab-content" hidden>
+        <div id="igCandidatesContainer">
+          <!-- populated dynamically -->
+        </div>
+      </div>
+    </div> <!-- /viewInstagram -->
   </main>
 </div>
 
@@ -1534,82 +1980,6 @@
         <button type="submit" class="btn primary">Simpan Turnamen</button>
       </div>
     </form>
-  </div>
-</div>
-
-<!-- Instagram Discovery Hub Modal -->
-<div class="modal-overlay" id="igHubOverlay" hidden>
-  <div class="dialog-card ig-hub-modal">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-      <div>
-        <h3 class="dialog-title">Instagram Discovery Hub</h3>
-        <p class="dialog-desc" style="margin:0;">Radar akun lapangan padel Jawa Timur dan ekstraktor turnamen otomatis dari caption.</p>
-      </div>
-      <button class="lightbox-close" id="closeIgHubBtn" type="button" title="Tutup">✕</button>
-    </div>
-
-    <div class="ig-tabs">
-      <button type="button" class="ig-tab active" data-igtab="radar">Radar Akun Jatim</button>
-      <button type="button" class="ig-tab" data-igtab="extract">Ekstraktor Caption NLP</button>
-      <button type="button" class="ig-tab" data-igtab="candidates">Antrean Verifikasi (<span id="igCandidateBadge">0</span>)</button>
-    </div>
-
-    <!-- Tab 1: Radar Akun Lapangan -->
-    <div id="igViewRadar">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;gap:10px;flex-wrap:wrap;">
-        <div style="font-size:12.5px;color:var(--text);font-weight:700;">Direktori Radar Padel Jawa Timur (<span id="igAccountsTotalCount">0</span> Akun Terpantau):</div>
-        <div class="range-chips" style="margin:0;">
-          <button type="button" class="preset-chip active" data-igcity="all">Semua</button>
-          <button type="button" class="preset-chip" data-igcity="Surabaya">Surabaya</button>
-          <button type="button" class="preset-chip" data-igcity="Malang">Malang & Batu</button>
-          <button type="button" class="preset-chip" data-igcity="Sidoarjo">Sidoarjo & Gresik</button>
-          <button type="button" class="preset-chip" data-igcity="Pasuruan">Pasuruan</button>
-          <button type="button" class="preset-chip" data-igcity="Lainnya">Lainnya</button>
-        </div>
-      </div>
-      <div style="margin-bottom:14px;">
-        <input type="text" class="field" id="searchIgAccountsInput" placeholder="Cari nama lapangan, username @, atau kota..." autocomplete="off"/>
-      </div>
-      <div class="ig-grid" id="igAccountsList">
-        <!-- populated dynamically -->
-      </div>
-    </div>
-
-    <!-- Tab 2: NLP Extractor -->
-    <div id="igViewExtract" hidden>
-      <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px;">Tempel caption dari postingan Instagram turnamen untuk mengekstrak tanggal, nama, dan lokasi secara otomatis:</div>
-
-      <div class="form-group">
-        <label class="field-label" for="igCaptionInput">Teks Caption Postingan IG</label>
-        <textarea class="field" id="igCaptionInput" rows="5" style="height:auto;padding:10px;" placeholder="Contoh: SAVE THE DATE! Turnamen Padel Kemerdekaan di Darmo Padel Club Surabaya pada 24-25 Oktober 2026..."></textarea>
-      </div>
-
-      <div class="form-row">
-        <div>
-          <label class="field-label" for="igPostUrl">URL Link Postingan IG</label>
-          <input class="field" type="url" id="igPostUrl" placeholder="https://instagram.com/p/..."/>
-        </div>
-        <div>
-          <label class="field-label" for="igPosterUrl">URL Gambar Flyer</label>
-          <input class="field" type="url" id="igPosterUrl" placeholder="https://..."/>
-        </div>
-      </div>
-
-      <div id="igExtractResult" style="margin-top:14px;" hidden>
-        <div style="font-size:12px;font-weight:700;color:var(--accent);margin-bottom:8px;">HASIL EKSTRAKSI:</div>
-        <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;font-size:12.5px;" id="igExtractPreview"></div>
-        <div style="margin-top:12px;display:flex;gap:10px;">
-          <button type="button" class="btn primary" id="saveIgExtractedBtn">Tambahkan ke Katalog Turnamen</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Tab 3: Candidates Queue -->
-    <div id="igViewCandidates" hidden>
-      <div id="igCandidatesContainer">
-        <!-- populated dynamically -->
-      </div>
-    </div>
   </div>
 </div>
 
@@ -1921,26 +2291,31 @@ function render() {
   $('#statPast').textContent = filteredByRange.filter(e => timeStatus(e) === 'past').length;
   $('#statPosters').textContent = filteredByRange.filter(e => e.posterUrl).length;
 
-  // 3. Update Source counts in sidebar
+  // 3. Update Source counts in sidebar and dropdown options
   const getSourceCount = name => filteredByRange.filter(e => e.source.toLowerCase().includes(name.toLowerCase())).length;
   $('#countIncourta').textContent = getSourceCount('Incourta');
   $('#countPadelgigs').textContent = getSourceCount('Padelgigs');
   $('#countPbpi').textContent = getSourceCount('PBPI');
   $('#countSmesh').textContent = getSourceCount('Smesh');
   $('#countRecourt').textContent = getSourceCount('Recourt');
-  $('#countReclub').textContent = getSourceCount('Reclub');
 
-  // 4. Secondary filters (Search, City, Status, Source)
+  if ($('#optCountIncourta')) $('#optCountIncourta').textContent = getSourceCount('Incourta');
+  if ($('#optCountPadelgigs')) $('#optCountPadelgigs').textContent = getSourceCount('Padelgigs');
+  if ($('#optCountPbpi')) $('#optCountPbpi').textContent = getSourceCount('PBPI');
+  if ($('#optCountSmesh')) $('#optCountSmesh').textContent = getSourceCount('Smesh');
+  if ($('#optCountRecourt')) $('#optCountRecourt').textContent = getSourceCount('Recourt');
+  if ($('#optCountInstagram')) $('#optCountInstagram').textContent = getSourceCount('Instagram');
+
+  // 4. Secondary filters (Search, City, Status, Multi-Source)
   const q = $('#searchKeyword').value.trim().toLowerCase();
   const city = $('#filterCity').value;
   const statusFilter = $('#filterStatus').value;
-  const sourceFilter = $('#filterSource').value;
 
   const displayList = filteredByRange.filter(e => {
     const textMatch = !q || [e.title, e.city, e.location, e.source, e.category, e.description].join(' ').toLowerCase().includes(q);
     const cityMatch = !city || e.city === city;
     const statusMatch = !statusFilter || timeStatus(e) === statusFilter;
-    const sourceMatch = !sourceFilter || e.source.toLowerCase().includes(sourceFilter.toLowerCase());
+    const sourceMatch = selectedSources.size === 0 || Array.from(selectedSources).some(s => e.source.toLowerCase().includes(s.toLowerCase()));
     return textMatch && cityMatch && statusMatch && sourceMatch;
   }).sort((a, b) => a.dateStart.localeCompare(b.dateStart));
 
@@ -2076,19 +2451,39 @@ $('#triggerScanBtn').onclick = async () => {
   btn.disabled = true;
   spinner.style.display = 'inline-block';
   icon.style.display = 'none';
-  text.textContent = 'Memindai 6 Platform...';
+  text.textContent = 'Memindai 5 Platform...';
 
   try {
-    const res = await fetch(API + '/scan', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        monthStart: currentStartMonth,
-        monthEnd: currentEndMonth
-      })
-    });
+    let res = null;
+    try {
+      res = await fetch(API + '/scan', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          monthStart: currentStartMonth,
+          monthEnd: currentEndMonth
+        })
+      });
+    } catch {}
+
+    if (!res || !res.ok) {
+      if (window.location.hostname.includes('github.io')) {
+        // Di GitHub Pages (hosting statis), muat ulang dari database JSON terindeks
+        await loadData();
+        notify('Data turnamen Jawa Timur berhasil dimuat ulang dari database terindeks. (Crawler realtime aktif di server lokal)');
+        return;
+      }
+      let errMsg = res ? `Server merespon ${res.status}` : 'Tidak dapat terhubung ke server pemindai';
+      if (res) {
+        try {
+          const errJson = await res.json();
+          if (errJson.error) errMsg = errJson.error;
+        } catch {}
+      }
+      throw new Error(errMsg);
+    }
+
     const j = await res.json();
-    if (!res.ok) throw new Error(j.error || 'Pemindaian gagal');
 
     // Refresh data
     const refreshRes = await fetch(API + '/tournaments');
@@ -2111,23 +2506,162 @@ $('#triggerScanBtn').onclick = async () => {
   }
 };
 
-// 9. FILTER EVENT LISTENERS
-['#searchKeyword', '#filterCity', '#filterStatus', '#filterSource'].forEach(sel => {
-  const el = $(sel);
-  el.addEventListener(sel === '#searchKeyword' ? 'input' : 'change', render);
+// 9. MULTI-SELECT SOURCE FILTER LOGIC
+const selectedSources = new Set();
+
+const sourceWrap = $('#sourceMultiSelectWrap');
+const sourceBtn = $('#sourceMultiSelectBtn');
+const sourceDropdown = $('#sourceMultiSelectDropdown');
+const sourceLabel = $('#sourceMultiSelectLabel');
+const sourceBadge = $('#sourceMultiSelectBadge');
+const activeChipsBox = $('#activeSourceChips');
+const chipsList = $('#chipsList');
+const resetSidebarBtn = $('#resetSidebarSourcesBtn');
+
+// Toggle dropdown open/close
+if (sourceBtn) {
+  sourceBtn.onclick = (e) => {
+    e.stopPropagation();
+    sourceWrap.classList.toggle('open');
+    sourceBtn.setAttribute('aria-expanded', sourceWrap.classList.contains('open'));
+  };
+}
+
+document.addEventListener('click', (e) => {
+  if (sourceWrap && !sourceWrap.contains(e.target)) {
+    sourceWrap.classList.remove('open');
+    if (sourceBtn) sourceBtn.setAttribute('aria-expanded', 'false');
+  }
 });
 
-function filterBySource(name) {
-  const sel = $('#filterSource');
-  for (let opt of sel.options) {
-    if (opt.value && name.toLowerCase().includes(opt.value.toLowerCase())) {
-      sel.value = opt.value;
-      render();
-      window.scrollTo({ top: 400, behavior: 'smooth' });
-      return;
+// Checkbox changes inside dropdown
+$$('.source-checkbox').forEach(cb => {
+  cb.onchange = () => {
+    if (cb.checked) {
+      selectedSources.add(cb.value);
+    } else {
+      selectedSources.delete(cb.value);
+    }
+    syncSourceFilters();
+    render();
+  };
+});
+
+// "Pilih Semua" button
+if ($('#selectAllSourcesBtn')) {
+  $('#selectAllSourcesBtn').onclick = (e) => {
+    e.stopPropagation();
+    $$('.source-checkbox').forEach(cb => {
+      cb.checked = true;
+      selectedSources.add(cb.value);
+    });
+    syncSourceFilters();
+    render();
+  };
+}
+
+// "Reset" button in dropdown
+if ($('#clearAllSourcesBtn')) {
+  $('#clearAllSourcesBtn').onclick = (e) => {
+    e.stopPropagation();
+    clearSourceFilters();
+  };
+}
+
+// "Reset" button in chips
+if ($('#clearAllChipsBtn')) {
+  $('#clearAllChipsBtn').onclick = clearSourceFilters;
+}
+
+// "Reset" button in sidebar
+if (resetSidebarBtn) {
+  resetSidebarBtn.onclick = clearSourceFilters;
+}
+
+function clearSourceFilters() {
+  selectedSources.clear();
+  $$('.source-checkbox').forEach(cb => cb.checked = false);
+  syncSourceFilters();
+  render();
+}
+
+function toggleSource(name) {
+  const cb = $(`.source-checkbox[value="${name}"]`);
+  if (selectedSources.has(name)) {
+    selectedSources.delete(name);
+    if (cb) cb.checked = false;
+  } else {
+    selectedSources.add(name);
+    if (cb) cb.checked = true;
+  }
+  syncSourceFilters();
+  render();
+}
+
+window.filterBySource = toggleSource;
+window.toggleSource = toggleSource;
+
+function syncSourceFilters() {
+  const count = selectedSources.size;
+
+  // Sync checkboxes
+  $$('.source-checkbox').forEach(cb => {
+    cb.checked = selectedSources.has(cb.value);
+  });
+
+  // Update button label & badge
+  if (count === 0) {
+    if (sourceLabel) sourceLabel.textContent = 'Semua Sumber';
+    if (sourceBadge) sourceBadge.hidden = true;
+  } else if (count === 1) {
+    const single = Array.from(selectedSources)[0];
+    if (sourceLabel) sourceLabel.textContent = single;
+    if (sourceBadge) {
+      sourceBadge.textContent = '1';
+      sourceBadge.hidden = false;
+    }
+  } else {
+    if (sourceLabel) sourceLabel.textContent = `${count} Sumber: ${Array.from(selectedSources).join(', ')}`;
+    if (sourceBadge) {
+      sourceBadge.textContent = count;
+      sourceBadge.hidden = false;
     }
   }
+
+  // Update active chips container under toolbar
+  if (activeChipsBox && chipsList) {
+    if (count === 0) {
+      activeChipsBox.hidden = true;
+      chipsList.innerHTML = '';
+    } else {
+      activeChipsBox.hidden = false;
+      chipsList.innerHTML = Array.from(selectedSources).map(s => `
+        <span class="source-chip">
+          <span>${escaped(s)}</span>
+          <button type="button" class="source-chip-remove" onclick="toggleSource('${escaped(s)}')">&times;</button>
+        </span>
+      `).join('');
+    }
+  }
+
+  // Update sidebar active highlights
+  $$('.source-item').forEach(item => {
+    const s = item.dataset.source;
+    if (s) {
+      item.classList.toggle('active', selectedSources.has(s));
+    }
+  });
+
+  if (resetSidebarBtn) {
+    resetSidebarBtn.style.display = count > 0 ? 'inline-block' : 'none';
+  }
 }
+
+// 9b. OTHER FILTER EVENT LISTENERS
+['#searchKeyword', '#filterCity', '#filterStatus'].forEach(sel => {
+  const el = $(sel);
+  if (el) el.addEventListener(sel === '#searchKeyword' ? 'input' : 'change', render);
+});
 
 // 10. LIGHTBOX HANDLER
 function openLightbox(imgUrl, title, date, venue, regUrl) {
@@ -2163,7 +2697,6 @@ window.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
     closeLightbox();
     closeManualModal();
-    closeIgHub();
   }
 });
 
@@ -2189,13 +2722,47 @@ $('#manualAddForm').onsubmit = async e => {
   e.preventDefault();
   const formData = Object.fromEntries(new FormData(e.target));
   try {
-    const res = await fetch(API + '/tournaments', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData)
-    });
-    const j = await res.json();
-    if (!res.ok) throw new Error(j.error || 'Gagal menyimpan turnamen');
+    let res = null;
+    try {
+      res = await fetch(API + '/tournaments', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+    } catch {}
+
+    if (!res || !res.ok) {
+      if (window.location.hostname.includes('github.io')) {
+        const newEv = {
+          id: Math.random().toString(16).slice(2, 10),
+          title: formData.title,
+          dateStart: formData.dateStart,
+          dateEnd: formData.dateEnd || formData.dateStart,
+          location: formData.location,
+          city: (formData.location.match(/(Surabaya|Malang|Batu|Sidoarjo|Gresik|Pasuruan|Jember|Kediri|Nganjuk|Sumenep)/i) || ['Surabaya'])[0],
+          category: formData.category || null,
+          source: formData.source || 'Manual Input',
+          posterUrl: formData.posterUrl || null,
+          registrationUrl: formData.registrationUrl || null,
+          manual: true
+        };
+        masterEvents.unshift(newEv);
+        populateMonthSelects();
+        populateCityFilter();
+        render();
+        closeManualModal();
+        e.target.reset();
+        notify('Turnamen berhasil disimpan ke katalog!');
+        return;
+      }
+      let errMsg = 'Gagal menyimpan turnamen';
+      try {
+        const j = await res.json();
+        if (j.error) errMsg = j.error;
+      } catch {}
+      throw new Error(errMsg);
+    }
+
     closeManualModal();
     e.target.reset();
     notify('Turnamen berhasil disimpan ke katalog!');
@@ -2207,9 +2774,22 @@ $('#manualAddForm').onsubmit = async e => {
 
 // 12. EXPORT CSV
 $('#exportCsvBtn').onclick = () => {
-  const filtered = (currentStartMonth !== 'all' || currentEndMonth !== 'all')
+  const isRangeFiltered = (currentStartMonth !== 'all' || currentEndMonth !== 'all');
+  const filteredByRange = isRangeFiltered
     ? masterEvents.filter(e => matchesMonthRange(e, currentStartMonth, currentEndMonth))
     : masterEvents;
+
+  const q = $('#searchKeyword').value.trim().toLowerCase();
+  const city = $('#filterCity').value;
+  const statusFilter = $('#filterStatus').value;
+
+  const filtered = filteredByRange.filter(e => {
+    const textMatch = !q || [e.title, e.city, e.location, e.source, e.category, e.description].join(' ').toLowerCase().includes(q);
+    const cityMatch = !city || e.city === city;
+    const statusMatch = !statusFilter || timeStatus(e) === statusFilter;
+    const sourceMatch = selectedSources.size === 0 || Array.from(selectedSources).some(s => e.source.toLowerCase().includes(s.toLowerCase()));
+    return textMatch && cityMatch && statusMatch && sourceMatch;
+  }).sort((a, b) => a.dateStart.localeCompare(b.dateStart));
 
   const headers = ['Nama Turnamen', 'Tanggal Mulai', 'Tanggal Selesai', 'Status', 'Kota', 'Venue/Lokasi', 'Kategori', 'URL Poster', 'URL Pendaftaran', 'Sumber Data'];
   const rows = filtered.map(e => [
@@ -2229,34 +2809,61 @@ $('#exportCsvBtn').onclick = () => {
     .map(r => r.map(cell => '"' + String(cell ?? '').replace(/"/g, '""') + '"').join(','))
     .join('\r\n');
 
+  const sourceSuffix = selectedSources.size > 0 ? `-${Array.from(selectedSources).join('-')}` : '';
   const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `turnamen-padel-jatim-${currentStartMonth}-sd-${currentEndMonth}.csv`;
+  a.download = `turnamen-padel-jatim${sourceSuffix}-${currentStartMonth}-sd-${currentEndMonth}.csv`;
   a.click();
   URL.revokeObjectURL(url);
-  notify('File CSV turnamen berhasil diunduh.');
+  notify(`File CSV (${filtered.length} turnamen) berhasil diunduh.`);
 };
 
-// 13. INSTAGRAM DISCOVERY HUB
-function openIgHub() {
-  $('#igHubOverlay').hidden = false;
-  document.body.style.overflow = 'hidden';
-  loadIgRadarAccounts();
-  loadIgCandidates();
+// 13. VIEW SWITCHER (PAGE KATALOG vs PAGE INSTAGRAM RADAR)
+function switchView(viewName) {
+  const isIg = (viewName === 'instagram');
+  const viewCatalog = $('#viewCatalog');
+  const viewInstagram = $('#viewInstagram');
+
+  if (viewCatalog) viewCatalog.hidden = isIg;
+  if (viewInstagram) viewInstagram.hidden = !isIg;
+
+  if ($('#navFeed')) $('#navFeed').classList.toggle('active', !isIg);
+  if ($('#navInstagram')) $('#navInstagram').classList.toggle('active', isIg);
+
+  const topTitle = $('#topMetaTitle');
+  if (topTitle) {
+    topTitle.textContent = isIg ? 'INSTAGRAM RADAR' : 'KATALOG TURNAMEN';
+  }
+
+  if (isIg) {
+    loadIgRadarAccounts();
+    loadIgCandidates();
+    if (window.location.hash !== '#instagram') {
+      window.location.hash = 'instagram';
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else {
+    if (window.location.hash !== '#katalog' && window.location.hash !== '') {
+      window.location.hash = 'katalog';
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 }
 
-function closeIgHub() {
-  $('#igHubOverlay').hidden = true;
-  document.body.style.overflow = '';
-}
+if ($('#navFeed')) $('#navFeed').onclick = () => switchView('catalog');
+if ($('#navInstagram')) $('#navInstagram').onclick = () => switchView('instagram');
+if ($('#openIgBtn')) $('#openIgBtn').onclick = () => switchView('instagram');
+if ($('#backToCatalogBtn')) $('#backToCatalogBtn').onclick = () => switchView('catalog');
 
-$('#openIgBtn').onclick = $('#navInstagram').onclick = openIgHub;
-$('#closeIgHubBtn').onclick = closeIgHub;
-$('#igHubOverlay').onclick = e => {
-  if (e.target.id === 'igHubOverlay') closeIgHub();
-};
+window.addEventListener('hashchange', () => {
+  if (window.location.hash === '#instagram') {
+    switchView('instagram');
+  } else {
+    switchView('catalog');
+  }
+});
 
 $$('.ig-tab').forEach(tab => {
   tab.onclick = () => {
@@ -2416,25 +3023,53 @@ $('#saveIgExtractedBtn').onclick = async () => {
   if (!window.lastParsedTournament) return;
   const t = window.lastParsedTournament;
   try {
-    const res = await fetch(API + '/tournaments', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        title: t.title,
-        dateStart: t.dateStart,
-        dateEnd: t.dateEnd,
-        location: t.location || 'Surabaya, Jawa Timur',
-        category: t.category,
-        posterUrl: $('#igPosterUrl').value.trim(),
-        registrationUrl: $('#igPostUrl').value.trim(),
-        source: 'Instagram Radar'
-      })
-    });
-    if (res.ok) {
-      notify('Turnamen dari Instagram berhasil disimpan ke katalog!');
-      closeIgHub();
-      await loadData();
+    let res = null;
+    try {
+      res = await fetch(API + '/tournaments', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: t.title,
+          dateStart: t.dateStart,
+          dateEnd: t.dateEnd,
+          location: t.location || 'Surabaya, Jawa Timur',
+          category: t.category,
+          posterUrl: $('#igPosterUrl').value.trim(),
+          registrationUrl: $('#igPostUrl').value.trim(),
+          source: 'Instagram Radar'
+        })
+      });
+    } catch {}
+
+    if (!res || !res.ok) {
+      if (window.location.hostname.includes('github.io')) {
+        const newEv = {
+          id: Math.random().toString(16).slice(2, 10),
+          title: t.title,
+          dateStart: t.dateStart,
+          dateEnd: t.dateEnd || t.dateStart,
+          location: t.location || 'Surabaya, Jawa Timur',
+          city: (t.location.match(/(Surabaya|Malang|Batu|Sidoarjo|Gresik|Pasuruan|Jember|Kediri|Nganjuk|Sumenep)/i) || ['Surabaya'])[0],
+          category: t.category || null,
+          posterUrl: $('#igPosterUrl').value.trim() || null,
+          registrationUrl: $('#igPostUrl').value.trim() || null,
+          source: 'Instagram Radar',
+          manual: true
+        };
+        masterEvents.unshift(newEv);
+        populateMonthSelects();
+        populateCityFilter();
+        render();
+        notify('Turnamen dari Instagram berhasil ditambahkan ke katalog!');
+        switchView('catalog');
+        return;
+      }
+      throw new Error('Gagal menyimpan turnamen dari Instagram');
     }
+
+    notify('Turnamen dari Instagram berhasil disimpan ke katalog!');
+    await loadData();
+    switchView('catalog');
   } catch {
     notify('Gagal menyimpan turnamen dari Instagram', true);
   }
@@ -2443,6 +3078,9 @@ $('#saveIgExtractedBtn').onclick = async () => {
 // Initial Start
 initTheme();
 loadData();
+if (window.location.hash === '#instagram') {
+  switchView('instagram');
+}
 </script>
 </body>
 </html>
