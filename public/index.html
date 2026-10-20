@@ -1,0 +1,2438 @@
+<!doctype html>
+<html lang="id" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Jatim Padel Scout, Radar dan Agregator Turnamen Padel Jawa Timur</title>
+  <meta name="description" content="Katalog dan pemindai jadwal turnamen padel di Jawa Timur: Surabaya, Malang, Sidoarjo, Gresik, Pasuruan, Nganjuk, dan sekitarnya. Sumber data dari Incourta, Padelgigs, PBPI Jatim, Smesh.ID, Recourt.ID, Reclub, dan Instagram."/>
+  <meta name="theme-color" content="#15803d"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+  <style>
+    /* CSS Design System with Anti-AI Slop Humanist Tokens */
+    :root, [data-theme="light"] {
+      --theme: "light";
+      --bg: #f4f6f3;
+      --bg-sidebar: #ebf0e9;
+      --bg-card: #ffffff;
+      --bg-card-hover: #fafbfa;
+      --bg-surface: #edf2eb;
+      --bg-muted: #e2e9df;
+      --border: #d4ded3;
+      --border-strong: #b8c7b6;
+      --border-focus: #15803d;
+      --text: #131c14;
+      --text-muted: #435445;
+      --text-dim: #6d806f;
+      --accent: #15803d;
+      --accent-hover: #166534;
+      --accent-contrast: #ffffff;
+      --accent-subtle: rgba(21, 128, 61, 0.09);
+      --badge-past-bg: #e6eae4;
+      --badge-past-text: #4e5f50;
+      --badge-past-border: #cbd6c9;
+      --badge-live-bg: #fef3c7;
+      --badge-live-text: #92400e;
+      --badge-live-border: #fde68a;
+      --badge-up-bg: #dcfce7;
+      --badge-up-text: #166534;
+      --badge-up-border: #bbf7d0;
+      --danger: #dc2626;
+      --danger-subtle: #fee2e2;
+      --radius-sm: 6px;
+      --radius: 10px;
+      --radius-lg: 14px;
+      --shadow-sm: 0 1px 3px rgba(18, 30, 20, 0.05);
+      --shadow: 0 4px 14px rgba(18, 30, 20, 0.06);
+      --shadow-lg: 0 12px 30px rgba(18, 30, 20, 0.1);
+      color-scheme: light;
+    }
+
+    [data-theme="dark"] {
+      --theme: "dark";
+      --bg: #0c120e;
+      --bg-sidebar: #0f1611;
+      --bg-card: #131b15;
+      --bg-card-hover: #18221b;
+      --bg-surface: #172219;
+      --bg-muted: #1e2c21;
+      --border: #233226;
+      --border-strong: #334837;
+      --border-focus: #22c55e;
+      --text: #edf4ee;
+      --text-muted: #9bb09e;
+      --text-dim: #6b7f6e;
+      --accent: #22c55e;
+      --accent-hover: #16a34a;
+      --accent-contrast: #07170c;
+      --accent-subtle: rgba(34, 197, 94, 0.12);
+      --badge-past-bg: #1a241c;
+      --badge-past-text: #8e9f90;
+      --badge-past-border: #29382b;
+      --badge-live-bg: #2d2008;
+      --badge-live-text: #fcd34d;
+      --badge-live-border: #523e11;
+      --badge-up-bg: #0f2d18;
+      --badge-up-text: #4ade80;
+      --badge-up-border: #1a4d29;
+      --danger: #ef4444;
+      --danger-subtle: #2b1414;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+      --shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 14px 36px rgba(0, 0, 0, 0.6);
+      color-scheme: dark;
+    }
+
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: var(--text);
+      background-color: var(--bg);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button, input, select, textarea {
+      font-family: inherit;
+      color: inherit;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Layout Structure */
+    .app {
+      display: grid;
+      grid-template-columns: 270px 1fr;
+      min-height: 100vh;
+    }
+
+    /* Sidebar Navigation */
+    .sidebar {
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      padding: 24px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 4px 6px;
+    }
+
+    .brand-mark {
+      background: var(--accent);
+      color: var(--accent-contrast);
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-sm);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 17px;
+      letter-spacing: -0.5px;
+      flex-shrink: 0;
+    }
+
+    .brand-text {
+      line-height: 1.15;
+    }
+
+    .brand-title {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -0.2px;
+      display: block;
+    }
+
+    .brand-subtitle {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-top: 3px;
+      display: block;
+    }
+
+    .side-nav-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .side-label {
+      font-size: 10.5px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      padding: 0 10px;
+      margin: 0 0 8px;
+    }
+
+    .nav-item {
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 13px;
+      transition: background 0.15s, color 0.15s;
+      border: 1px solid transparent;
+      cursor: pointer;
+    }
+
+    .nav-item:hover {
+      background: var(--bg-surface);
+      color: var(--text);
+    }
+
+    .nav-item.active {
+      background: var(--bg-card);
+      color: var(--accent);
+      font-weight: 700;
+      border-color: var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-item svg {
+      width: 17px;
+      height: 17px;
+      flex-shrink: 0;
+    }
+
+    .sources-box {
+      margin-top: auto;
+      border-top: 1px solid var(--border);
+      padding-top: 20px;
+    }
+
+    .source-item {
+      font-size: 12px;
+      padding: 7px 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .source-item:hover {
+      background: var(--bg-surface);
+      color: var(--text);
+    }
+
+    .source-tag {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .source-count {
+      font-size: 11px;
+      font-weight: 700;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      padding: 1px 7px;
+      border-radius: 10px;
+      color: var(--text);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .side-footer {
+      font-size: 11px;
+      color: var(--text-dim);
+      line-height: 1.45;
+      padding: 0 4px;
+    }
+
+    /* Main Content Area */
+    .main {
+      padding: 24px 32px 80px;
+      max-width: 1240px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* Header Bar */
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 24px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .top-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .top-meta strong {
+      color: var(--text);
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 13px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-strong);
+      background: var(--bg-card);
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 700;
+      box-shadow: var(--shadow-sm);
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .theme-toggle:hover {
+      background: var(--bg-surface);
+      border-color: var(--accent);
+    }
+
+    .live-clock {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-surface);
+      padding: 6px 11px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+    }
+
+    /* Hero Section */
+    .hero {
+      margin-bottom: 24px;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--accent);
+      background: var(--accent-subtle);
+      border: 1px solid var(--border);
+      padding: 3px 10px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 12px;
+    }
+
+    .hero h1 {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.6px;
+      line-height: 1.25;
+      margin: 0 0 10px;
+      color: var(--text);
+    }
+
+    .hero p {
+      margin: 0 0 18px;
+      color: var(--text-muted);
+      font-size: 14px;
+      max-width: 740px;
+      line-height: 1.6;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* Primary & Standard Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 9px 15px;
+      border-radius: var(--radius-sm);
+      font-size: 12.5px;
+      font-weight: 700;
+      background: var(--bg-card);
+      color: var(--text);
+      border: 1px solid var(--border-strong);
+      box-shadow: var(--shadow-sm);
+      transition: all 0.15s ease;
+      cursor: pointer;
+      text-decoration: none;
+      min-height: 40px;
+    }
+
+    .btn:hover {
+      background: var(--bg-surface);
+      border-color: var(--text-dim);
+    }
+
+    .btn.primary {
+      background: var(--accent);
+      color: var(--accent-contrast);
+      border-color: var(--accent);
+    }
+
+    .btn.primary:hover {
+      background: var(--accent-hover);
+      border-color: var(--accent-hover);
+    }
+
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* Month Range Scraping Section (User Request: Filter range bulan sebelum scraping) */
+    .range-scan-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius);
+      padding: 20px 22px;
+      box-shadow: var(--shadow);
+      margin-bottom: 24px;
+    }
+
+    .range-scan-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .range-scan-title {
+      font-size: 14.5px;
+      font-weight: 800;
+      color: var(--text);
+      margin: 0 0 4px;
+      letter-spacing: -0.2px;
+    }
+
+    .range-scan-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .range-chips {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .preset-chip {
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 5px 11px;
+      border-radius: var(--radius-sm);
+      background: var(--bg-surface);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+
+    .preset-chip:hover {
+      background: var(--bg-muted);
+      color: var(--text);
+    }
+
+    .preset-chip.active {
+      background: var(--accent-subtle);
+      color: var(--accent);
+      border-color: var(--accent);
+      font-weight: 800;
+    }
+
+    .range-scan-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr auto;
+      gap: 12px;
+      align-items: flex-end;
+    }
+
+    .field-label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .field {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: var(--radius-sm);
+      min-height: 40px;
+      padding: 0 12px;
+      font-size: 13px;
+      outline: none;
+      width: 100%;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .field:focus {
+      border-color: var(--border-focus);
+      background: var(--bg-card);
+    }
+
+    /* Active Filter Range Banner */
+    .active-range-banner {
+      background: var(--accent-subtle);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 11px 16px;
+      margin-bottom: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-size: 12.5px;
+      color: var(--text);
+    }
+
+    .active-badge {
+      font-size: 10px;
+      font-weight: 800;
+      background: var(--accent);
+      color: var(--accent-contrast);
+      padding: 2px 7px;
+      border-radius: 4px;
+      margin-right: 8px;
+    }
+
+    .btn-link {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      cursor: pointer;
+      padding: 2px 4px;
+    }
+
+    /* Stats Grid */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      margin-bottom: 26px;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .stat-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .stat-value {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.1;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .stat-value.past {
+      color: var(--text-dim);
+    }
+
+    .stat-value.upcoming {
+      color: var(--accent);
+    }
+
+    /* Toolbar Filter Bar */
+    .toolbar {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      margin-bottom: 24px;
+      display: grid;
+      grid-template-columns: 2fr 1.2fr 1.2fr 1.2fr;
+      gap: 10px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .search-input-wrap {
+      position: relative;
+    }
+
+    .search-input-wrap .field {
+      padding-left: 36px;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 11px;
+      top: 12px;
+      color: var(--text-dim);
+      display: flex;
+      align-items: center;
+      pointer-events: none;
+    }
+
+    .search-icon svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .results-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .results-count {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      padding: 3px 9px;
+      border-radius: var(--radius-sm);
+      font-weight: 800;
+      color: var(--text);
+      font-size: 12px;
+    }
+
+    /* Tournament Grid */
+    .tournaments-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .tournament-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .tournament-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--border-strong);
+      box-shadow: var(--shadow);
+    }
+
+    /* Past finished tournament styling */
+    .tournament-card.past-event {
+      border-color: var(--border);
+      background: var(--bg-card);
+    }
+
+    .tournament-card.past-event .card-poster img {
+      filter: grayscale(25%) contrast(95%);
+      opacity: 0.88;
+    }
+
+    .card-poster {
+      height: 220px;
+      position: relative;
+      background: var(--bg-surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .card-poster img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.25s ease;
+    }
+
+    .tournament-card:hover .card-poster img {
+      transform: scale(1.02);
+    }
+
+    .card-poster-empty {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: var(--text-dim);
+      background: var(--bg-surface);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .card-poster-empty svg {
+      width: 32px;
+      height: 32px;
+      opacity: 0.6;
+    }
+
+    /* Status Badges */
+    .card-status-badge {
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      border: 1px solid transparent;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+    }
+
+    .card-status-badge.upcoming {
+      background: var(--badge-up-bg);
+      color: var(--badge-up-text);
+      border-color: var(--badge-up-border);
+    }
+
+    .card-status-badge.ongoing {
+      background: var(--badge-live-bg);
+      color: var(--badge-live-text);
+      border-color: var(--badge-live-border);
+    }
+
+    .card-status-badge.past {
+      background: var(--badge-past-bg);
+      color: var(--badge-past-text);
+      border-color: var(--badge-past-border);
+    }
+
+    .card-city-tag {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 4px 8px;
+      background: var(--bg-card);
+      color: var(--text);
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+    }
+
+    .card-source-tag {
+      position: absolute;
+      left: 10px;
+      bottom: 10px;
+      font-size: 9.5px;
+      font-weight: 700;
+      padding: 3px 7px;
+      background: var(--bg-card);
+      color: var(--accent);
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+    }
+
+    .card-body {
+      padding: 16px 18px 18px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .card-date-line {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1.35;
+      letter-spacing: -0.3px;
+      margin: 0 0 8px;
+      color: var(--text);
+      min-height: 44px;
+    }
+
+    .card-location {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-category-badge {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+      background: var(--accent-subtle);
+      border: 1px solid var(--border);
+      padding: 3px 7px;
+      border-radius: 4px;
+      margin-bottom: 14px;
+      align-self: flex-start;
+      max-width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: auto;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+
+    .action-btn {
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: var(--radius-sm);
+      padding: 8px 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      flex: 1;
+      text-decoration: none;
+      transition: background 0.15s, border-color 0.15s;
+      min-height: 38px;
+    }
+
+    .action-btn.primary {
+      background: var(--accent);
+      color: var(--accent-contrast);
+      border: 1px solid var(--accent);
+    }
+
+    .action-btn.primary:hover {
+      background: var(--accent-hover);
+      border-color: var(--accent-hover);
+    }
+
+    .action-btn.muted {
+      background: var(--bg-surface);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+
+    .action-btn.muted:hover {
+      background: var(--bg-muted);
+      color: var(--text);
+    }
+
+    .action-btn.icon-only {
+      flex: 0 0 auto;
+      padding: 8px 10px;
+    }
+
+    .card-footer {
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-footer a {
+      color: var(--text-muted);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .card-footer a:hover {
+      color: var(--accent);
+    }
+
+    /* Empty state */
+    .empty-state {
+      grid-column: 1 / -1;
+      border: 1px dashed var(--border-strong);
+      border-radius: var(--radius);
+      text-align: center;
+      padding: 60px 24px;
+      background: var(--bg-card);
+    }
+
+    .empty-state-title {
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .empty-state-desc {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Spinner */
+    .spinner {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 2px solid currentColor;
+      border-right-color: transparent;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Lightbox Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 16, 12, 0.82);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .lightbox-modal {
+      background: var(--bg-card);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-lg);
+      max-width: 860px;
+      width: 100%;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      flex-direction: column;
+      max-height: 92vh;
+    }
+
+    .lightbox-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .lightbox-header h3 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .lightbox-close {
+      font-size: 18px;
+      color: var(--text-muted);
+      padding: 4px 8px;
+      border-radius: var(--radius-sm);
+    }
+
+    .lightbox-close:hover {
+      background: var(--bg-surface);
+      color: var(--text);
+    }
+
+    .lightbox-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-y: auto;
+      background: var(--bg);
+    }
+
+    .lightbox-body img {
+      max-width: 100%;
+      max-height: 65vh;
+      object-fit: contain;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+    }
+
+    .lightbox-info {
+      width: 100%;
+      padding-top: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .lightbox-meta {
+      font-size: 12.5px;
+      color: var(--text-muted);
+    }
+
+    /* Generic Modal Dialog */
+    .dialog-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-lg);
+      max-width: 600px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 26px 28px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .dialog-title {
+      font-size: 18px;
+      font-weight: 800;
+      margin: 0 0 6px;
+      letter-spacing: -0.3px;
+    }
+
+    .dialog-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin: 0 0 20px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .dialog-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    /* Instagram Hub Tabs */
+    .ig-hub-modal {
+      max-width: 880px;
+      width: 100%;
+      max-height: 92vh;
+      padding: 24px;
+    }
+
+    .ig-tabs {
+      display: flex;
+      gap: 6px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+      margin-bottom: 18px;
+    }
+
+    .ig-tab {
+      padding: 7px 14px;
+      font-size: 12.5px;
+      font-weight: 700;
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    .ig-tab:hover {
+      background: var(--bg-surface);
+      color: var(--text);
+    }
+
+    .ig-tab.active {
+      background: var(--accent);
+      color: var(--accent-contrast);
+    }
+
+    .ig-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .ig-account-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .ig-account-name {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .ig-account-handle {
+      font-size: 11.5px;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .ig-account-meta {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      max-width: 400px;
+      background: var(--text);
+      color: var(--bg);
+      padding: 12px 18px;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      font-size: 13px;
+      box-shadow: var(--shadow-lg);
+      z-index: 120;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .toast.error {
+      background: var(--danger);
+      color: #ffffff;
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 1024px) {
+      .tournaments-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .app { grid-template-columns: 1fr; }
+      .sidebar {
+        height: auto;
+        position: relative;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 14px 18px;
+      }
+      .side-nav-group, .sources-box, .side-footer { display: none; }
+      .main { padding: 18px 16px 60px; }
+      .tournaments-grid { grid-template-columns: 1fr; }
+      .range-scan-body { grid-template-columns: 1fr; }
+      .toolbar { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .form-row { grid-template-columns: 1fr; }
+      .ig-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="app">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">JP</div>
+      <div class="brand-text">
+        <span class="brand-title">Jatim Padel Scout</span>
+        <span class="brand-subtitle">Tournament Radar</span>
+      </div>
+    </div>
+
+    <div class="side-nav-group">
+      <p class="side-label">Navigasi Utama</p>
+      <div class="nav-item active" id="navFeed">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+        <span>Katalog Turnamen</span>
+      </div>
+      <div class="nav-item" id="navInstagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+        <span>Instagram Radar</span>
+      </div>
+      <div class="nav-item" id="navManual">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        <span>Input Turnamen</span>
+      </div>
+    </div>
+
+    <!-- Data Sources Status -->
+    <div class="sources-box">
+      <p class="side-label">Sumber Data (6 Platform)</p>
+      <div id="sourceStatusList">
+        <div class="source-item" onclick="filterBySource('Incourta')">
+          <span class="source-tag"><span class="status-dot"></span><span>Incourta</span></span>
+          <span class="source-count" id="countIncourta">0</span>
+        </div>
+        <div class="source-item" onclick="filterBySource('Padelgigs')">
+          <span class="source-tag"><span class="status-dot"></span><span>Padelgigs</span></span>
+          <span class="source-count" id="countPadelgigs">0</span>
+        </div>
+        <div class="source-item" onclick="filterBySource('PBPI')">
+          <span class="source-tag"><span class="status-dot"></span><span>PBPI Jawa Timur</span></span>
+          <span class="source-count" id="countPbpi">0</span>
+        </div>
+        <div class="source-item" onclick="filterBySource('Smesh')">
+          <span class="source-tag"><span class="status-dot"></span><span>Smesh.ID</span></span>
+          <span class="source-count" id="countSmesh">0</span>
+        </div>
+        <div class="source-item" onclick="filterBySource('Recourt')">
+          <span class="source-tag"><span class="status-dot"></span><span>Recourt.ID</span></span>
+          <span class="source-count" id="countRecourt">0</span>
+        </div>
+        <div class="source-item" onclick="filterBySource('Reclub')">
+          <span class="source-tag"><span class="status-dot"></span><span>Reclub</span></span>
+          <span class="source-count" id="countReclub">0</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-footer">
+      Sistem pemindai independen turnamen padel Jawa Timur. Pembaruan berkala dari platform resmi dan asosiasi.
+    </div>
+  </aside>
+
+  <!-- Main Container -->
+  <main class="main">
+    <!-- Top Bar with Breadcrumb and Theme Switcher -->
+    <header class="top-bar">
+      <div class="top-meta">
+        <span>JAWA TIMUR</span>
+        <span>/</span>
+        <strong>RADAR DAN SCRAPER TURNAMEN</strong>
+      </div>
+
+      <div class="top-actions">
+        <div class="live-clock" id="liveClock">
+          <span class="status-dot"></span>
+          <span id="clockText">Surabaya, WIB</span>
+        </div>
+
+        <!-- Light / Dark Mode Toggle Button -->
+        <button class="theme-toggle" id="themeToggle" type="button" title="Ganti mode terang atau gelap">
+          <span id="themeIcon">☾</span>
+          <span id="themeLabel">Mode Gelap</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Hero Title -->
+    <section class="hero">
+      <div class="hero-eyebrow">
+        <span>RADAR RESMI</span>
+        <span>•</span>
+        <span>JAWA TIMUR</span>
+      </div>
+      <h1>Turnamen Padel Jawa Timur</h1>
+      <p>Pusat informasi dan direktori turnamen padel se-Jawa Timur: Surabaya, Malang, Sidoarjo, Gresik, Pasuruan, Nganjuk, dan sekitarnya. Tentukan rentang bulan sebelum memindai data terbaru.</p>
+
+      <div class="hero-buttons">
+        <button class="btn" id="openIgBtn" type="button">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+          Instagram Discovery Hub
+        </button>
+        <button class="btn" id="openAddModalBtn" type="button">+ Input Turnamen</button>
+        <button class="btn" id="exportCsvBtn" type="button">Export Data CSV</button>
+      </div>
+    </section>
+
+    <!-- Filter Rentang Bulan Sebelum Scraping (User Request) -->
+    <section class="range-scan-card">
+      <div class="range-scan-header">
+        <div>
+          <div class="range-scan-title">Filter Scraping Berdasarkan Rentang Bulan</div>
+          <p class="range-scan-desc">Tentukan rentang bulan yang ingin dipindai dari Incourta, Padelgigs, PBPI Jatim, Smesh.ID, Recourt.ID, dan Reclub:</p>
+        </div>
+
+        <!-- Quick Preset Range Chips -->
+        <div class="range-chips">
+          <button type="button" class="preset-chip" data-preset="this_month">Bulan Ini</button>
+          <button type="button" class="preset-chip" data-preset="next_3">3 Bulan</button>
+          <button type="button" class="preset-chip" data-preset="next_6">6 Bulan</button>
+          <button type="button" class="preset-chip active" data-preset="all">Semua Bulan</button>
+        </div>
+      </div>
+
+      <div class="range-scan-body">
+        <div>
+          <label class="field-label" for="scanStartMonth">Mulai Bulan</label>
+          <select class="field" id="scanStartMonth">
+            <option value="all">Semua Bulan</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="field-label" for="scanEndMonth">Sampai Bulan</label>
+          <select class="field" id="scanEndMonth">
+            <option value="all">Semua Bulan</option>
+          </select>
+        </div>
+
+        <button class="btn primary" id="triggerScanBtn" type="button">
+          <span id="scanSpinner" class="spinner" style="display:none;"></span>
+          <span id="scanIcon">↻</span>
+          <span id="scanButtonText">Pindai Sumber Data</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Active Range Filter Banner -->
+    <div class="active-range-banner" id="activeFilterBanner" hidden>
+      <div>
+        <span class="active-badge">FILTER AKTIF</span>
+        <span id="activeRangeText">Menampilkan data turnamen</span>
+      </div>
+      <button class="btn-link" id="resetRangeBtn" type="button">Reset ke Semua Bulan</button>
+    </div>
+
+    <!-- Numerical Metrics Overview (Real Data Only) -->
+    <section class="stats">
+      <div class="stat-card">
+        <div class="stat-label">Total Terdata</div>
+        <div class="stat-value" id="statTotal">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Akan Datang</div>
+        <div class="stat-value upcoming" id="statUpcoming">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Sedang Berlangsung</div>
+        <div class="stat-value" id="statOngoing">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Sudah Selesai</div>
+        <div class="stat-value past" id="statPast">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Flyer Tersedia</div>
+        <div class="stat-value" id="statPosters">0</div>
+      </div>
+    </section>
+
+    <!-- Secondary Filters Toolbar -->
+    <section class="toolbar">
+      <div class="search-input-wrap">
+        <div class="search-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </div>
+        <input type="text" class="field" id="searchKeyword" placeholder="Cari nama turnamen, venue, atau kota..." autocomplete="off"/>
+      </div>
+
+      <select class="field" id="filterCity">
+        <option value="">Semua Kota (Jatim)</option>
+      </select>
+
+      <!-- Status Filter with explicit "Sudah Selesai" label -->
+      <select class="field" id="filterStatus">
+        <option value="">Semua Status</option>
+        <option value="upcoming">Akan Datang</option>
+        <option value="ongoing">Sedang Berlangsung</option>
+        <option value="past">Sudah Selesai</option>
+      </select>
+
+      <select class="field" id="filterSource">
+        <option value="">Semua Sumber</option>
+        <option value="Incourta">Incourta</option>
+        <option value="Padelgigs">Padelgigs</option>
+        <option value="PBPI">PBPI Jawa Timur</option>
+        <option value="Smesh">Smesh.ID</option>
+        <option value="Recourt">Recourt.ID</option>
+        <option value="Reclub">Reclub</option>
+        <option value="Instagram">Instagram</option>
+      </select>
+    </section>
+
+    <!-- Results Meta -->
+    <div class="results-meta">
+      <span id="resultsSubtext">Menampilkan turnamen terindeks</span>
+      <span class="results-count" id="resultsCount">0 Turnamen</span>
+    </div>
+
+    <!-- Tournament Cards Container -->
+    <section class="tournaments-grid" id="tournamentsList">
+      <div class="empty-state">
+        <div class="empty-state-title">Memuat data turnamen...</div>
+        <div class="empty-state-desc">Menghubungkan ke basis data turnamen padel Jawa Timur.</div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- Flyer Poster Lightbox Modal -->
+<div class="modal-overlay" id="lightboxOverlay" hidden>
+  <div class="lightbox-modal">
+    <div class="lightbox-header">
+      <h3 id="lightboxTitle">Poster Turnamen</h3>
+      <button class="lightbox-close" id="closeLightboxBtn" type="button" title="Tutup (Esc)">✕</button>
+    </div>
+    <div class="lightbox-body">
+      <img id="lightboxImg" src="" alt="Flyer Turnamen" loading="lazy"/>
+      <div class="lightbox-info">
+        <div class="lightbox-meta">
+          <div id="lightboxDateText" style="font-weight:700;"></div>
+          <div id="lightboxVenueText"></div>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <a class="btn" id="lightboxOriginalLink" target="_blank" rel="noopener noreferrer">Buka Ukuran Asli</a>
+          <a class="btn primary" id="lightboxRegLink" target="_blank" rel="noopener noreferrer" hidden>Daftar Turnamen</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Manual Input Modal -->
+<div class="modal-overlay" id="manualModalOverlay" hidden>
+  <div class="dialog-card">
+    <h3 class="dialog-title">Tambah Turnamen Manual</h3>
+    <p class="dialog-desc">Masukkan informasi turnamen padel di Jawa Timur jika Anda memiliki brosur atau informasi langsung dari pengelola lapangan.</p>
+
+    <form id="manualAddForm">
+      <div class="form-group">
+        <label class="field-label" for="addTitle">Nama Turnamen *</label>
+        <input class="field" id="addTitle" name="title" required placeholder="Contoh: Surabaya Padel Open 2026"/>
+      </div>
+
+      <div class="form-row">
+        <div>
+          <label class="field-label" for="addStart">Tanggal Mulai (YYYY-MM-DD) *</label>
+          <input class="field" type="date" id="addStart" name="dateStart" required/>
+        </div>
+        <div>
+          <label class="field-label" for="addEnd">Tanggal Selesai (YYYY-MM-DD)</label>
+          <input class="field" type="date" id="addEnd" name="dateEnd"/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="field-label" for="addLocation">Lokasi / Venue Lapangan *</label>
+        <input class="field" id="addLocation" name="location" required placeholder="Contoh: Darmo Padel Club, Surabaya"/>
+      </div>
+
+      <div class="form-row">
+        <div>
+          <label class="field-label" for="addCategory">Kategori / Divisi</label>
+          <input class="field" id="addCategory" name="category" placeholder="Contoh: Men Beginner, Open Double"/>
+        </div>
+        <div>
+          <label class="field-label" for="addSource">Sumber Informasi</label>
+          <input class="field" id="addSource" name="source" placeholder="Contoh: Brosur Lapangan, WhatsApp Komunitas"/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="field-label" for="addPoster">URL Poster Flyer (Opsional)</label>
+        <input class="field" type="url" id="addPoster" name="posterUrl" placeholder="https://..."/>
+      </div>
+
+      <div class="form-group">
+        <label class="field-label" for="addReg">URL Pendaftaran / Registrasi (Opsional)</label>
+        <input class="field" type="url" id="addReg" name="registrationUrl" placeholder="https://..."/>
+      </div>
+
+      <div class="form-group">
+        <label class="field-label" for="addDesc">Catatan Tambahan</label>
+        <textarea class="field" id="addDesc" name="description" rows="2" style="height:auto;padding:8px 12px;" placeholder="Informasi biaya pendaftaran, kontak admin, dsb."></textarea>
+      </div>
+
+      <div class="dialog-actions">
+        <button type="button" class="btn" id="cancelManualBtn">Batal</button>
+        <button type="submit" class="btn primary">Simpan Turnamen</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Instagram Discovery Hub Modal -->
+<div class="modal-overlay" id="igHubOverlay" hidden>
+  <div class="dialog-card ig-hub-modal">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+      <div>
+        <h3 class="dialog-title">Instagram Discovery Hub</h3>
+        <p class="dialog-desc" style="margin:0;">Radar akun lapangan padel Jawa Timur dan ekstraktor turnamen otomatis dari caption.</p>
+      </div>
+      <button class="lightbox-close" id="closeIgHubBtn" type="button" title="Tutup">✕</button>
+    </div>
+
+    <div class="ig-tabs">
+      <button type="button" class="ig-tab active" data-igtab="radar">Radar Akun Jatim</button>
+      <button type="button" class="ig-tab" data-igtab="extract">Ekstraktor Caption NLP</button>
+      <button type="button" class="ig-tab" data-igtab="candidates">Antrean Verifikasi (<span id="igCandidateBadge">0</span>)</button>
+    </div>
+
+    <!-- Tab 1: Radar Akun Lapangan -->
+    <div id="igViewRadar">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;gap:10px;flex-wrap:wrap;">
+        <div style="font-size:12.5px;color:var(--text);font-weight:700;">Direktori Radar Padel Jawa Timur (<span id="igAccountsTotalCount">0</span> Akun Terpantau):</div>
+        <div class="range-chips" style="margin:0;">
+          <button type="button" class="preset-chip active" data-igcity="all">Semua</button>
+          <button type="button" class="preset-chip" data-igcity="Surabaya">Surabaya</button>
+          <button type="button" class="preset-chip" data-igcity="Malang">Malang & Batu</button>
+          <button type="button" class="preset-chip" data-igcity="Sidoarjo">Sidoarjo & Gresik</button>
+          <button type="button" class="preset-chip" data-igcity="Pasuruan">Pasuruan</button>
+          <button type="button" class="preset-chip" data-igcity="Lainnya">Lainnya</button>
+        </div>
+      </div>
+      <div style="margin-bottom:14px;">
+        <input type="text" class="field" id="searchIgAccountsInput" placeholder="Cari nama lapangan, username @, atau kota..." autocomplete="off"/>
+      </div>
+      <div class="ig-grid" id="igAccountsList">
+        <!-- populated dynamically -->
+      </div>
+    </div>
+
+    <!-- Tab 2: NLP Extractor -->
+    <div id="igViewExtract" hidden>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px;">Tempel caption dari postingan Instagram turnamen untuk mengekstrak tanggal, nama, dan lokasi secara otomatis:</div>
+
+      <div class="form-group">
+        <label class="field-label" for="igCaptionInput">Teks Caption Postingan IG</label>
+        <textarea class="field" id="igCaptionInput" rows="5" style="height:auto;padding:10px;" placeholder="Contoh: SAVE THE DATE! Turnamen Padel Kemerdekaan di Darmo Padel Club Surabaya pada 24-25 Oktober 2026..."></textarea>
+      </div>
+
+      <div class="form-row">
+        <div>
+          <label class="field-label" for="igPostUrl">URL Link Postingan IG</label>
+          <input class="field" type="url" id="igPostUrl" placeholder="https://instagram.com/p/..."/>
+        </div>
+        <div>
+          <label class="field-label" for="igPosterUrl">URL Gambar Flyer</label>
+          <input class="field" type="url" id="igPosterUrl" placeholder="https://..."/>
+        </div>
+      </div>
+
+      <div id="igExtractResult" style="margin-top:14px;" hidden>
+        <div style="font-size:12px;font-weight:700;color:var(--accent);margin-bottom:8px;">HASIL EKSTRAKSI:</div>
+        <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;font-size:12.5px;" id="igExtractPreview"></div>
+        <div style="margin-top:12px;display:flex;gap:10px;">
+          <button type="button" class="btn primary" id="saveIgExtractedBtn">Tambahkan ke Katalog Turnamen</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab 3: Candidates Queue -->
+    <div id="igViewCandidates" hidden>
+      <div id="igCandidatesContainer">
+        <!-- populated dynamically -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Box -->
+<div class="toast" id="toastMessage" hidden></div>
+
+<script>
+// ==================== ANTI-AI SLOP STATE & LOGIC ====================
+const API = '/api';
+const $ = document.querySelector.bind(document);
+const $$ = document.querySelectorAll.bind(document);
+
+let masterEvents = [];
+let currentStartMonth = 'all';
+let currentEndMonth = 'all';
+let toastTimer = null;
+
+// Escaped string helper
+function escaped(s) {
+  return String(s ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+// 1. THEME CONTROLLER (Dual Mode: Light & Dark)
+function initTheme() {
+  const saved = localStorage.getItem('padel_theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const initialTheme = saved || (prefersDark ? 'dark' : 'light');
+  setTheme(initialTheme);
+}
+
+function setTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('padel_theme', theme);
+
+  const icon = $('#themeIcon');
+  const label = $('#themeLabel');
+  if (theme === 'dark') {
+    icon.textContent = '☼';
+    label.textContent = 'Mode Terang';
+  } else {
+    icon.textContent = '☾';
+    label.textContent = 'Mode Gelap';
+  }
+}
+
+$('#themeToggle').onclick = () => {
+  const cur = document.documentElement.getAttribute('data-theme') || 'light';
+  setTheme(cur === 'dark' ? 'light' : 'dark');
+};
+
+// 2. LIVE CLOCK (WIB)
+function updateClock() {
+  const now = new Date();
+  const options = {
+    timeZone: 'Asia/Jakarta',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false
+  };
+  $('#clockText').textContent = 'Surabaya, ' + now.toLocaleTimeString('id-ID', options) + ' WIB';
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+// 3. TOURNAMENT DATE STATUS (User Request: "cek juga tanggalnya, jika tanggal sudah terlewat maka tandai sudah selesai labelnya")
+function timeStatus(e) {
+  const today = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Jakarta' }); // e.g. "2026-10-20"
+  const end = e.dateEnd || e.dateStart;
+  if (!end) return 'upcoming';
+  if (end < today) return 'past';
+  if (e.dateStart > today) return 'upcoming';
+  return 'ongoing';
+}
+
+function getStatusBadge(status) {
+  if (status === 'past') {
+    return `<div class="card-status-badge past">Sudah Selesai</div>`;
+  }
+  if (status === 'ongoing') {
+    return `<div class="card-status-badge ongoing"><span class="status-dot" style="background:#f59e0b;"></span> Sedang Berlangsung</div>`;
+  }
+  return `<div class="card-status-badge upcoming">Akan Datang</div>`;
+}
+
+// Format date for display
+function formatDateId(d) {
+  if (!d) return '-';
+  try {
+    const parts = d.split('-');
+    if (parts.length === 3) {
+      const dt = new Date(+parts[0], +parts[1] - 1, +parts[2]);
+      return dt.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
+    }
+  } catch {}
+  return d;
+}
+
+function displayDateRange(e) {
+  if (!e.dateStart) return '-';
+  if (!e.dateEnd || e.dateStart === e.dateEnd) return formatDateId(e.dateStart);
+  return `${formatDateId(e.dateStart)} – ${formatDateId(e.dateEnd)}`;
+}
+
+function getMonthName(ym) {
+  if (!ym || ym === 'all') return 'Semua Bulan';
+  try {
+    const parts = ym.split('-');
+    const dt = new Date(+parts[0], +parts[1] - 1, 1);
+    return dt.toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
+  } catch {
+    return ym;
+  }
+}
+
+// 4. MONTH RANGE FILTER LOGIC (User Request: "Untuk filter scraping bisa pilih range bulan saja")
+function matchesMonthRange(e, mStart, mEnd) {
+  if ((!mStart || mStart === 'all') && (!mEnd || mEnd === 'all')) return true;
+
+  const start = e.dateStart;
+  const end = e.dateEnd || start;
+  if (!start) return false;
+
+  const hasStart = mStart && mStart !== 'all' && /^\d{4}-\d{2}$/.test(mStart);
+  const hasEnd = mEnd && mEnd !== 'all' && /^\d{4}-\d{2}$/.test(mEnd);
+
+  if (hasStart && hasEnd) {
+    const minM = mStart <= mEnd ? mStart : mEnd;
+    const maxM = mStart <= mEnd ? mEnd : mStart;
+    const rStart = `${minM}-01`;
+    const rEnd = `${maxM}-31`;
+    return start <= rEnd && end >= rStart;
+  }
+
+  if (hasStart) {
+    const rStart = `${mStart}-01`;
+    const rEnd = `${mStart}-31`;
+    return start <= rEnd && end >= rStart;
+  }
+
+  if (hasEnd) {
+    const rStart = `${mEnd}-01`;
+    const rEnd = `${mEnd}-31`;
+    return start <= rEnd && end >= rStart;
+  }
+
+  return true;
+}
+
+function populateMonthSelects() {
+  const startSelect = $('#scanStartMonth');
+  const endSelect = $('#scanEndMonth');
+
+  const curStart = startSelect.value;
+  const curEnd = endSelect.value;
+
+  const monthsInData = [...new Set(masterEvents.map(e => e.dateStart?.slice(0, 7)).filter(Boolean))];
+  const now = new Date();
+  const futureMonths = [];
+  for (let i = -1; i <= 6; i++) {
+    const d = new Date(now.getFullYear(), now.getMonth() + i, 1);
+    const ym = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+    if (!futureMonths.includes(ym)) futureMonths.push(ym);
+  }
+  const allMonths = [...new Set([...monthsInData, ...futureMonths])].sort();
+
+  const optionsHtml = '<option value="all">Semua Bulan</option>' +
+    allMonths.map(m => `<option value="${m}">${getMonthName(m)}</option>`).join('');
+
+  startSelect.innerHTML = optionsHtml;
+  endSelect.innerHTML = optionsHtml;
+
+  startSelect.value = curStart || currentStartMonth;
+  endSelect.value = curEnd || currentEndMonth;
+}
+
+function updatePresetActive(preset) {
+  $$('.preset-chip').forEach(chip => {
+    chip.classList.toggle('active', chip.dataset.preset === preset);
+  });
+}
+
+// Preset Range Handlers
+$$('.preset-chip').forEach(chip => {
+  chip.onclick = () => {
+    const p = chip.dataset.preset;
+    updatePresetActive(p);
+    const now = new Date();
+    const curYm = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+
+    if (p === 'this_month') {
+      currentStartMonth = curYm;
+      currentEndMonth = curYm;
+    } else if (p === 'next_3') {
+      currentStartMonth = curYm;
+      const endD = new Date(now.getFullYear(), now.getMonth() + 2, 1);
+      currentEndMonth = `${endD.getFullYear()}-${String(endD.getMonth() + 1).padStart(2, '0')}`;
+    } else if (p === 'next_6') {
+      currentStartMonth = curYm;
+      const endD = new Date(now.getFullYear(), now.getMonth() + 5, 1);
+      currentEndMonth = `${endD.getFullYear()}-${String(endD.getMonth() + 1).padStart(2, '0')}`;
+    } else {
+      currentStartMonth = 'all';
+      currentEndMonth = 'all';
+    }
+
+    $('#scanStartMonth').value = currentStartMonth;
+    $('#scanEndMonth').value = currentEndMonth;
+    render();
+  };
+});
+
+$('#scanStartMonth').addEventListener('change', e => {
+  currentStartMonth = e.target.value;
+  updatePresetActive(currentStartMonth === 'all' && currentEndMonth === 'all' ? 'all' : '');
+  render();
+});
+
+$('#scanEndMonth').addEventListener('change', e => {
+  currentEndMonth = e.target.value;
+  updatePresetActive(currentStartMonth === 'all' && currentEndMonth === 'all' ? 'all' : '');
+  render();
+});
+
+$('#resetRangeBtn').onclick = () => {
+  currentStartMonth = 'all';
+  currentEndMonth = 'all';
+  $('#scanStartMonth').value = 'all';
+  $('#scanEndMonth').value = 'all';
+  updatePresetActive('all');
+  render();
+};
+
+// 5. TOAST NOTIFIER
+function notify(text, isError = false) {
+  const toast = $('#toastMessage');
+  toast.textContent = text;
+  toast.className = 'toast' + (isError ? ' error' : '');
+  toast.hidden = false;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { toast.hidden = true; }, 4200);
+}
+
+// 6. FETCH API & RENDER
+async function loadData() {
+  try {
+    const res = await fetch(API + '/tournaments');
+    if (!res.ok) throw new Error('Gagal memuat API');
+    const data = await res.json();
+    masterEvents = data.events || [];
+    populateMonthSelects();
+    populateCityFilter();
+    render();
+  } catch (err) {
+    notify('Koneksi ke server gagal: ' + err.message, true);
+  }
+}
+
+function populateCityFilter() {
+  const citySelect = $('#filterCity');
+  const curVal = citySelect.value;
+  const cities = [...new Set(masterEvents.map(e => e.city).filter(Boolean))].sort();
+  citySelect.innerHTML = '<option value="">Semua Kota (Jatim)</option>' +
+    cities.map(c => `<option value="${escaped(c)}">${escaped(c)}</option>`).join('');
+  citySelect.value = curVal;
+}
+
+function render() {
+  // 1. Filter by Selected Month Range
+  const isRangeFiltered = (currentStartMonth !== 'all' || currentEndMonth !== 'all');
+  const filteredByRange = isRangeFiltered
+    ? masterEvents.filter(e => matchesMonthRange(e, currentStartMonth, currentEndMonth))
+    : masterEvents;
+
+  // Active Filter Banner
+  const banner = $('#activeFilterBanner');
+  if (isRangeFiltered) {
+    banner.hidden = false;
+    let label = '';
+    if (currentStartMonth !== 'all' && currentEndMonth !== 'all' && currentStartMonth === currentEndMonth) {
+      label = getMonthName(currentStartMonth);
+    } else if (currentStartMonth !== 'all' && currentEndMonth !== 'all') {
+      label = `${getMonthName(currentStartMonth)} sampai ${getMonthName(currentEndMonth)}`;
+    } else if (currentStartMonth !== 'all') {
+      label = `Mulai ${getMonthName(currentStartMonth)}`;
+    } else {
+      label = `Sampai ${getMonthName(currentEndMonth)}`;
+    }
+    $('#activeRangeText').innerHTML = `Menampilkan turnamen untuk rentang: <strong>${escaped(label)}</strong> (${filteredByRange.length} ditemukan)`;
+  } else {
+    banner.hidden = true;
+  }
+
+  // 2. Metrics calculation
+  $('#statTotal').textContent = filteredByRange.length;
+  $('#statUpcoming').textContent = filteredByRange.filter(e => timeStatus(e) === 'upcoming').length;
+  $('#statOngoing').textContent = filteredByRange.filter(e => timeStatus(e) === 'ongoing').length;
+  $('#statPast').textContent = filteredByRange.filter(e => timeStatus(e) === 'past').length;
+  $('#statPosters').textContent = filteredByRange.filter(e => e.posterUrl).length;
+
+  // 3. Update Source counts in sidebar
+  const getSourceCount = name => filteredByRange.filter(e => e.source.toLowerCase().includes(name.toLowerCase())).length;
+  $('#countIncourta').textContent = getSourceCount('Incourta');
+  $('#countPadelgigs').textContent = getSourceCount('Padelgigs');
+  $('#countPbpi').textContent = getSourceCount('PBPI');
+  $('#countSmesh').textContent = getSourceCount('Smesh');
+  $('#countRecourt').textContent = getSourceCount('Recourt');
+  $('#countReclub').textContent = getSourceCount('Reclub');
+
+  // 4. Secondary filters (Search, City, Status, Source)
+  const q = $('#searchKeyword').value.trim().toLowerCase();
+  const city = $('#filterCity').value;
+  const statusFilter = $('#filterStatus').value;
+  const sourceFilter = $('#filterSource').value;
+
+  const displayList = filteredByRange.filter(e => {
+    const textMatch = !q || [e.title, e.city, e.location, e.source, e.category, e.description].join(' ').toLowerCase().includes(q);
+    const cityMatch = !city || e.city === city;
+    const statusMatch = !statusFilter || timeStatus(e) === statusFilter;
+    const sourceMatch = !sourceFilter || e.source.toLowerCase().includes(sourceFilter.toLowerCase());
+    return textMatch && cityMatch && statusMatch && sourceMatch;
+  }).sort((a, b) => a.dateStart.localeCompare(b.dateStart));
+
+  $('#resultsCount').textContent = `${displayList.length} Turnamen`;
+  $('#resultsSubtext').textContent = isRangeFiltered
+    ? `Menampilkan ${displayList.length} dari ${masterEvents.length} turnamen total.`
+    : `Semua turnamen terindeks di Jawa Timur (${displayList.length} turnamen).`;
+
+  const container = $('#tournamentsList');
+  if (displayList.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-title">Tidak ada turnamen yang sesuai filter</div>
+        <div class="empty-state-desc">Cobalah mereset filter kota, kata kunci pencarian, atau rentang bulan di atas.</div>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = displayList.map(renderTournamentCard).join('');
+
+  // Attach Lightbox event
+  $$('.card-poster').forEach(p => {
+    p.onclick = () => {
+      const img = p.querySelector('img');
+      if (img && img.src) {
+        openLightbox(img.src, p.dataset.title, p.dataset.date, p.dataset.venue, p.dataset.reg);
+      }
+    };
+  });
+}
+
+// 7. RENDER INDIVIDUAL TOURNAMENT CARD
+function renderTournamentCard(e) {
+  const status = timeStatus(e);
+  const isPast = status === 'past';
+  const rl = validUrl(e.registrationUrl);
+  const pl = validUrl(e.posterUrl);
+  const src = validUrl(e.sourceUrl);
+
+  const statusBadge = getStatusBadge(status);
+  const dateStr = displayDateRange(e);
+
+  const posterHtml = pl
+    ? `<img src="${escaped(pl)}" alt="Poster ${escaped(e.title)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentElement.innerHTML=renderEmptyPoster()"/>`
+    : renderEmptyPoster();
+
+  let actionButton = '';
+  if (isPast) {
+    actionButton = rl
+      ? `<a class="action-btn muted" href="${escaped(rl)}" target="_blank" rel="noopener noreferrer">Detail Turnamen</a>`
+      : `<span class="action-btn muted">Turnamen Selesai</span>`;
+  } else if (rl && e.registrationType === 'registration') {
+    actionButton = `<a class="action-btn primary" href="${escaped(rl)}" target="_blank" rel="noopener noreferrer">Daftar Sekarang</a>`;
+  } else if (rl) {
+    actionButton = `<a class="action-btn muted" href="${escaped(rl)}" target="_blank" rel="noopener noreferrer">Halaman Info Event</a>`;
+  } else {
+    actionButton = `<span class="action-btn muted">Pendaftaran Belum Ada</span>`;
+  }
+
+  const zoomButton = pl
+    ? `<button type="button" class="action-btn muted icon-only" title="Lihat Ukuran Penuh Flyer Poster" onclick="openLightbox('${escaped(pl)}', '${escaped(e.title)}', '${escaped(dateStr)}', '${escaped(e.location)}', '${escaped(rl || '')}')">🔍</button>`
+    : '';
+
+  const categoryTag = e.category
+    ? `<div class="card-category-badge" title="${escaped(e.category)}">${escaped(e.category)}</div>`
+    : '';
+
+  const sourceName = e.source.split(',')[0].trim();
+
+  return `
+    <article class="tournament-card ${isPast ? 'past-event' : ''}">
+      <div class="card-poster" data-title="${escaped(e.title)}" data-date="${escaped(dateStr)}" data-venue="${escaped(e.location)}" data-reg="${escaped(rl || '')}">
+        ${posterHtml}
+        ${statusBadge}
+        <div class="card-city-tag">${escaped(e.city)}</div>
+        <div class="card-source-tag">${escaped(sourceName)}</div>
+      </div>
+
+      <div class="card-body">
+        <div class="card-date-line">
+          <span>📅 ${escaped(dateStr)}</span>
+        </div>
+
+        <h3 class="card-title">${escaped(e.title)}</h3>
+        <div class="card-location" title="${escaped(e.location)}">⌖ ${escaped(e.location)}</div>
+        ${categoryTag}
+
+        <div class="card-actions">
+          ${actionButton}
+          ${zoomButton}
+        </div>
+
+        <div class="card-footer">
+          <span>Sumber: ${escaped(sourceName)}</span>
+          ${src ? `<a href="${escaped(src)}" target="_blank" rel="noopener noreferrer">Tautan Asli</a>` : ''}
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+function renderEmptyPoster() {
+  return `
+    <div class="card-poster-empty">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="3" y="3" width="18" height="18" rx="2.5"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m3 17 5-5 4 4 3-3 6 6"/>
+      </svg>
+      <span>Flyer Turnamen</span>
+    </div>
+  `;
+}
+
+function validUrl(url) {
+  if (!url || typeof url !== 'string') return null;
+  url = url.trim();
+  if (url === '' || url === 'undefined' || url === 'null') return null;
+  try {
+    const u = new URL(url);
+    return /^https?:$/.test(u.protocol) ? u.href : null;
+  } catch {
+    return null;
+  }
+}
+
+// 8. SCAN TRIGGER WITH RANGE
+$('#triggerScanBtn').onclick = async () => {
+  const btn = $('#triggerScanBtn');
+  const spinner = $('#scanSpinner');
+  const icon = $('#scanIcon');
+  const text = $('#scanButtonText');
+
+  btn.disabled = true;
+  spinner.style.display = 'inline-block';
+  icon.style.display = 'none';
+  text.textContent = 'Memindai 6 Platform...';
+
+  try {
+    const res = await fetch(API + '/scan', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        monthStart: currentStartMonth,
+        monthEnd: currentEndMonth
+      })
+    });
+    const j = await res.json();
+    if (!res.ok) throw new Error(j.error || 'Pemindaian gagal');
+
+    // Refresh data
+    const refreshRes = await fetch(API + '/tournaments');
+    const freshData = await refreshRes.json();
+    masterEvents = freshData.events || [];
+
+    populateMonthSelects();
+    populateCityFilter();
+    render();
+
+    const okSources = (j.status || []).filter(s => s.ok).length;
+    notify(`Pemindaian selesai (${okSources} platform aktif). Ditemukan ${j.events.length} turnamen.`);
+  } catch (err) {
+    notify('Gagal memindai: ' + err.message, true);
+  } finally {
+    btn.disabled = false;
+    spinner.style.display = 'none';
+    icon.style.display = 'inline';
+    text.textContent = 'Pindai Sumber Data';
+  }
+};
+
+// 9. FILTER EVENT LISTENERS
+['#searchKeyword', '#filterCity', '#filterStatus', '#filterSource'].forEach(sel => {
+  const el = $(sel);
+  el.addEventListener(sel === '#searchKeyword' ? 'input' : 'change', render);
+});
+
+function filterBySource(name) {
+  const sel = $('#filterSource');
+  for (let opt of sel.options) {
+    if (opt.value && name.toLowerCase().includes(opt.value.toLowerCase())) {
+      sel.value = opt.value;
+      render();
+      window.scrollTo({ top: 400, behavior: 'smooth' });
+      return;
+    }
+  }
+}
+
+// 10. LIGHTBOX HANDLER
+function openLightbox(imgUrl, title, date, venue, regUrl) {
+  $('#lightboxImg').src = imgUrl;
+  $('#lightboxTitle').textContent = title || 'Poster Turnamen';
+  $('#lightboxDateText').textContent = date || '';
+  $('#lightboxVenueText').textContent = venue || '';
+  $('#lightboxOriginalLink').href = imgUrl;
+
+  const regLink = $('#lightboxRegLink');
+  if (regUrl) {
+    regLink.href = regUrl;
+    regLink.hidden = false;
+  } else {
+    regLink.hidden = true;
+  }
+
+  $('#lightboxOverlay').hidden = false;
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  $('#lightboxOverlay').hidden = true;
+  document.body.style.overflow = '';
+}
+
+$('#closeLightboxBtn').onclick = closeLightbox;
+$('#lightboxOverlay').onclick = e => {
+  if (e.target.id === 'lightboxOverlay') closeLightbox();
+};
+
+window.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    closeLightbox();
+    closeManualModal();
+    closeIgHub();
+  }
+});
+
+// 11. MANUAL ADD MODAL
+function openManualModal() {
+  $('#manualModalOverlay').hidden = false;
+  document.body.style.overflow = 'hidden';
+  $('#addTitle').focus();
+}
+
+function closeManualModal() {
+  $('#manualModalOverlay').hidden = true;
+  document.body.style.overflow = '';
+}
+
+$('#openAddModalBtn').onclick = $('#navManual').onclick = openManualModal;
+$('#cancelManualBtn').onclick = closeManualModal;
+$('#manualModalOverlay').onclick = e => {
+  if (e.target.id === 'manualModalOverlay') closeManualModal();
+};
+
+$('#manualAddForm').onsubmit = async e => {
+  e.preventDefault();
+  const formData = Object.fromEntries(new FormData(e.target));
+  try {
+    const res = await fetch(API + '/tournaments', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData)
+    });
+    const j = await res.json();
+    if (!res.ok) throw new Error(j.error || 'Gagal menyimpan turnamen');
+    closeManualModal();
+    e.target.reset();
+    notify('Turnamen berhasil disimpan ke katalog!');
+    await loadData();
+  } catch (err) {
+    notify(err.message, true);
+  }
+};
+
+// 12. EXPORT CSV
+$('#exportCsvBtn').onclick = () => {
+  const filtered = (currentStartMonth !== 'all' || currentEndMonth !== 'all')
+    ? masterEvents.filter(e => matchesMonthRange(e, currentStartMonth, currentEndMonth))
+    : masterEvents;
+
+  const headers = ['Nama Turnamen', 'Tanggal Mulai', 'Tanggal Selesai', 'Status', 'Kota', 'Venue/Lokasi', 'Kategori', 'URL Poster', 'URL Pendaftaran', 'Sumber Data'];
+  const rows = filtered.map(e => [
+    e.title,
+    e.dateStart,
+    e.dateEnd,
+    timeStatus(e) === 'past' ? 'Sudah Selesai' : timeStatus(e) === 'ongoing' ? 'Sedang Berlangsung' : 'Akan Datang',
+    e.city,
+    e.location,
+    e.category || '',
+    e.posterUrl || '',
+    e.registrationUrl || '',
+    e.source || ''
+  ]);
+
+  const csvContent = '\ufeff' + [headers, ...rows]
+    .map(r => r.map(cell => '"' + String(cell ?? '').replace(/"/g, '""') + '"').join(','))
+    .join('\r\n');
+
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `turnamen-padel-jatim-${currentStartMonth}-sd-${currentEndMonth}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+  notify('File CSV turnamen berhasil diunduh.');
+};
+
+// 13. INSTAGRAM DISCOVERY HUB
+function openIgHub() {
+  $('#igHubOverlay').hidden = false;
+  document.body.style.overflow = 'hidden';
+  loadIgRadarAccounts();
+  loadIgCandidates();
+}
+
+function closeIgHub() {
+  $('#igHubOverlay').hidden = true;
+  document.body.style.overflow = '';
+}
+
+$('#openIgBtn').onclick = $('#navInstagram').onclick = openIgHub;
+$('#closeIgHubBtn').onclick = closeIgHub;
+$('#igHubOverlay').onclick = e => {
+  if (e.target.id === 'igHubOverlay') closeIgHub();
+};
+
+$$('.ig-tab').forEach(tab => {
+  tab.onclick = () => {
+    $$('.ig-tab').forEach(t => t.classList.toggle('active', t === tab));
+    const target = tab.dataset.igtab;
+    $('#igViewRadar').hidden = (target !== 'radar');
+    $('#igViewExtract').hidden = (target !== 'extract');
+    $('#igViewCandidates').hidden = (target !== 'candidates');
+  };
+});
+
+let allIgAccounts = [];
+let currentIgCityFilter = 'all';
+
+async function loadIgRadarAccounts() {
+  try {
+    const res = await fetch(API + '/instagram/accounts');
+    allIgAccounts = await res.json();
+    $('#igAccountsTotalCount').textContent = allIgAccounts.length;
+    renderIgAccounts();
+  } catch {}
+}
+
+function renderIgAccounts() {
+  const q = ($('#searchIgAccountsInput')?.value || '').trim().toLowerCase();
+  const filtered = allIgAccounts.filter(a => {
+    const textMatch = !q || [a.name, a.username, a.city, a.role].join(' ').toLowerCase().includes(q);
+    let cityMatch = true;
+    if (currentIgCityFilter === 'Surabaya') cityMatch = a.city === 'Surabaya';
+    else if (currentIgCityFilter === 'Malang') cityMatch = (a.city === 'Malang' || a.city === 'Batu');
+    else if (currentIgCityFilter === 'Sidoarjo') cityMatch = (a.city === 'Sidoarjo' || a.city === 'Gresik');
+    else if (currentIgCityFilter === 'Pasuruan') cityMatch = a.city === 'Pasuruan';
+    else if (currentIgCityFilter === 'Lainnya') cityMatch = !['Surabaya', 'Malang', 'Batu', 'Sidoarjo', 'Gresik', 'Pasuruan'].includes(a.city);
+    return textMatch && cityMatch;
+  });
+
+  const list = $('#igAccountsList');
+  if (filtered.length === 0) {
+    list.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--text-muted);font-size:13px;">Tidak ada akun yang sesuai pencarian.</div>`;
+    return;
+  }
+
+  list.innerHTML = filtered.map(a => `
+    <div class="ig-account-card">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+        <div>
+          <div class="ig-account-name">${escaped(a.name)}</div>
+          <div class="ig-account-handle">@${escaped(a.username)}</div>
+        </div>
+        <span style="font-size:10px;font-weight:700;background:var(--bg-card);border:1px solid var(--border);padding:2px 6px;border-radius:4px;white-space:nowrap;">${escaped(a.role)}</span>
+      </div>
+      <div class="ig-account-meta" style="margin-top:auto;padding-top:8px;">
+        <span>📍 ${escaped(a.city)}</span>
+        <div style="display:flex;gap:10px;align-items:center;">
+          <a href="https://instagram.com/${escaped(a.username)}" target="_blank" rel="noopener noreferrer" style="color:var(--text-muted);font-weight:700;text-decoration:underline;">Buka Profil</a>
+          <button type="button" class="btn-link" onclick="importFromAccount('@${escaped(a.username)}')">Import Post</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+window.importFromAccount = function(handle) {
+  $('[data-igtab="extract"]').click();
+  $('#igCaptionInput').value = `Turnamen dari ${handle}: `;
+  $('#igCaptionInput').focus();
+};
+
+$$('[data-igcity]').forEach(btn => {
+  btn.onclick = () => {
+    $$('[data-igcity]').forEach(b => b.classList.toggle('active', b === btn));
+    currentIgCityFilter = btn.dataset.igcity;
+    renderIgAccounts();
+  };
+});
+$('#searchIgAccountsInput').addEventListener('input', renderIgAccounts);
+
+async function loadIgCandidates() {
+  try {
+    const res = await fetch(API + '/instagram/candidates');
+    const candidates = await res.json();
+    $('#igCandidateBadge').textContent = candidates.length;
+    const container = $('#igCandidatesContainer');
+    if (candidates.length === 0) {
+      container.innerHTML = `<div style="text-align:center;padding:40px;color:var(--text-muted);font-size:13px;">Belum ada antrean verifikasi dari Instagram.</div>`;
+      return;
+    }
+    container.innerHTML = candidates.map(c => `
+      <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;margin-bottom:10px;">
+        <div style="font-weight:800;font-size:14px;margin-bottom:4px;">${escaped(c.title)}</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-bottom:6px;">📅 ${escaped(c.dateStart)} s/d ${escaped(c.dateEnd)} · 📍 ${escaped(c.location)}</div>
+        <div style="display:flex;gap:8px;margin-top:10px;">
+          <button class="btn primary" onclick="approveIgCandidate('${escaped(c.id)}')">Setujui & Publikasikan</button>
+        </div>
+      </div>
+    `).join('');
+  } catch {}
+}
+
+window.approveIgCandidate = async function(id) {
+  try {
+    const res = await fetch(API + '/instagram/candidates/' + encodeURIComponent(id) + '/approve', { method: 'POST' });
+    if (res.ok) {
+      notify('Kandidat berhasil disetujui dan ditambahkan ke katalog!');
+      loadIgCandidates();
+      await loadData();
+    }
+  } catch {
+    notify('Gagal menyetujui kandidat', true);
+  }
+};
+
+// NLP Live Parser in Instagram Hub
+let captionDebounceTimer = null;
+$('#igCaptionInput').addEventListener('input', () => {
+  clearTimeout(captionDebounceTimer);
+  captionDebounceTimer = setTimeout(triggerLiveNlpParse, 400);
+});
+
+async function triggerLiveNlpParse() {
+  const caption = $('#igCaptionInput').value.trim();
+  const postUrl = $('#igPostUrl').value.trim();
+  const posterUrl = $('#igPosterUrl').value.trim();
+
+  if (caption.length < 15) {
+    $('#igExtractResult').hidden = true;
+    return;
+  }
+
+  try {
+    const res = await fetch(API + '/instagram/parse', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ caption, postUrl, posterUrl })
+    });
+    const parsed = await res.json();
+    if (parsed.tournament) {
+      const t = parsed.tournament;
+      window.lastParsedTournament = t;
+      $('#igExtractResult').hidden = false;
+      $('#igExtractPreview').innerHTML = `
+        <div><strong>Nama Turnamen:</strong> ${escaped(t.title || 'Tidak terdeteksi')}</div>
+        <div><strong>Tanggal Mulai:</strong> ${escaped(t.dateStart || '-')}</div>
+        <div><strong>Tanggal Selesai:</strong> ${escaped(t.dateEnd || '-')}</div>
+        <div><strong>Kota / Lokasi:</strong> ${escaped(t.location || t.city || 'Jawa Timur')}</div>
+        <div><strong>Kategori:</strong> ${escaped(t.category || '-')}</div>
+      `;
+    }
+  } catch {}
+}
+
+$('#saveIgExtractedBtn').onclick = async () => {
+  if (!window.lastParsedTournament) return;
+  const t = window.lastParsedTournament;
+  try {
+    const res = await fetch(API + '/tournaments', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        title: t.title,
+        dateStart: t.dateStart,
+        dateEnd: t.dateEnd,
+        location: t.location || 'Surabaya, Jawa Timur',
+        category: t.category,
+        posterUrl: $('#igPosterUrl').value.trim(),
+        registrationUrl: $('#igPostUrl').value.trim(),
+        source: 'Instagram Radar'
+      })
+    });
+    if (res.ok) {
+      notify('Turnamen dari Instagram berhasil disimpan ke katalog!');
+      closeIgHub();
+      await loadData();
+    }
+  } catch {
+    notify('Gagal menyimpan turnamen dari Instagram', true);
+  }
+};
+
+// Initial Start
+initTheme();
+loadData();
+</script>
+</body>
+</html>
