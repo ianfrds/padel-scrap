@@ -46,11 +46,31 @@ const JATIM_IG_ACCOUNTS = [
   { username: 'decasanopadel', name: 'de Casano Padel', city: 'Surabaya', role: 'Club & Venue' },
   { username: 'padelcollective', name: 'Padel Collective Ngagel', city: 'Surabaya', role: 'Club & Venue' },
   { username: 'miupadel', name: 'MIU Padel & Tennis Surabaya', city: 'Surabaya', role: 'Club & Venue' },
+  { username: 'eastpadel.game', name: 'East Padel Game Surabaya (Merr)', city: 'Surabaya', role: 'Club & Venue' },
+  { username: 'padelistacourts', name: 'Padelista Courts Dinoyo', city: 'Surabaya', role: 'Club & Venue' },
+  { username: 'donpadel_sby', name: 'DON PADEL Surabaya', city: 'Surabaya', role: 'Club & Venue' },
+  { username: 'ossehpadel', name: 'Osseh Padel Indonesia (Merr)', city: 'Surabaya', role: 'Club & Venue' },
+  { username: 'grandsportspadel', name: 'Grand Sports Padel Jemursari', city: 'Surabaya', role: 'Club & Venue' },
+  { username: 'solpadel.id', name: 'Sol Padel Surabaya (Jl. Sumatera)', city: 'Surabaya', role: 'Club & Venue' },
+  { username: 'popuppadel.sub', name: 'PopUp Padel Surabaya', city: 'Surabaya', role: 'Club & Venue' },
+  { username: 'superpadel.surabaya', name: 'Super Padel Surabaya', city: 'Surabaya', role: 'Club & Venue' },
+  { username: 'crossarena.id', name: 'Cross Arena Padel Court (Kertajaya)', city: 'Surabaya', role: 'Club & Venue' },
+  { username: 'rallysocialclub', name: 'Rally Social Club (RSC)', city: 'Surabaya', role: 'Club & Venue' },
+  { username: 'atlaspadelsurabaya', name: 'Atlas Padel Surabaya (Atlas Cup)', city: 'Surabaya', role: 'Club & Venue' },
 
-  // Surabaya: Komunitas Pemain
+  // Surabaya & Sidoarjo: Komunitas & Event Organizer
+  { username: 'padelsocietas', name: 'Padel Societas (Tournament Organizer)', city: 'Surabaya', role: 'Tournament Organizer' },
+  { username: 'eventbyonpoint', name: 'On Point Padel Event Organizer', city: 'Surabaya', role: 'Tournament Organizer' },
+  { username: '247comm', name: '247 Communication Sports EO', city: 'Surabaya', role: 'Tournament Organizer' },
+  { username: 'musangpadelclub', name: 'Musang Padel Club', city: 'Sidoarjo', role: 'Komunitas' },
   { username: 'padelsurabaya', name: 'Padel Surabaya Community', city: 'Surabaya', role: 'Komunitas' },
+  { username: 'padeltoday.id', name: 'PadelToday Surabaya', city: 'Surabaya', role: 'Komunitas' },
+  { username: 'weekend.padelclub', name: 'Weekend Padel Club Surabaya', city: 'Surabaya', role: 'Komunitas' },
+  { username: 'padelaper', name: 'Padel Surabaya Community (Padelaper)', city: 'Surabaya', role: 'Komunitas' },
   { username: 'chillpadel', name: 'Chill Padel Club Surabaya', city: 'Surabaya', role: 'Komunitas' },
   { username: 'padelols', name: 'PadeLols Recreational Club', city: 'Surabaya', role: 'Komunitas' },
+  { username: 'padelpagipagi', name: 'Padel Pagi-Pagi Surabaya-Gresik', city: 'Gresik', role: 'Komunitas' },
+  { username: 'vamossurabaya', name: 'Vamos Surabaya Padel Club', city: 'Surabaya', role: 'Komunitas' },
 
   // Malang & Batu
   { username: 'jaspadelsociety', name: 'JAS Padel Society', city: 'Malang', role: 'Club & Venue' },
@@ -121,7 +141,7 @@ const isJatim = s => {
   }
   return /jawa\s*timur|east\s*java|jatim/i.test(str) ||
     CITIES.some(c => new RegExp('\\b' + c + '\\b', 'i').test(str)) ||
-    /\bdarmo\b|graha\s*padel|citraland|de\s*casano|\bvibora\b|jas\s*padel|pas\s*padel|jamo\s*padel|golden\s*east|kijo\s*padel|padel\s*garden|platinum\s*padel|\bkober\b|luca\s*padel|padel\s*town|uno\s*padel|homeground|sempusari|panjalu|padel\s*collective|golden\s*grove|araya\s*(?:padel|club|malang)/i.test(str);
+    /\bdarmo\b|graha\s*padel|citraland|de\s*casano|\bvibora\b|jas\s*padel|pas\s*padel|jamo\s*padel|golden\s*east|kijo\s*padel|padel\s*garden|platinum\s*padel|\bkober\b|luca\s*padel|padel\s*town|uno\s*padel|homeground|sempusari|panjalu|padel\s*collective|golden\s*grove|araya\s*(?:padel|club|malang)|east\s*padel|markas\s*padel|musang|padelista|don\s*padel|osseh|grand\s*sports|sol\s*padel|popup\s*padel|super\s*padel|padeltoday|weekend\s*padel|padelaper|padelpagipagi/i.test(str);
 };
 
 function cityFrom(text) {
@@ -130,11 +150,11 @@ function cityFrom(text) {
   if (found) {
     return found.charAt(0).toUpperCase() + found.slice(1);
   }
-  if (/darmo|graha|citraland|casano|vibora|fairway|platinum|luca|padel\s*town|uno\s*padel|homeground|padel\s*collective|ngagel|chill\s*padel|padelols/i.test(text)) return 'Surabaya';
+  if (/darmo|graha|citraland|casano|vibora|fairway|platinum|luca|padel\s*town|uno\s*padel|homeground|padel\s*collective|ngagel|chill\s*padel|padelols|east\s*padel|merr|padelista|dinoyo|don\s*padel|osseh|grand\s*sports|jemursari|sol\s*padel|popup|super\s*padel|padeltoday|weekend\s*padel|padelaper/i.test(text)) return 'Surabaya';
   if (/jas|araya|padel\s*garden|kober|golden\s*grove/i.test(text)) return 'Malang';
   if (/pas\s*padel|basecamp/i.test(text)) return 'Pasuruan';
-  if (/jamo/i.test(text)) return 'Sidoarjo';
-  if (/golden\s*east/i.test(text)) return 'Gresik';
+  if (/jamo|markas\s*padel|musang/i.test(text)) return 'Sidoarjo';
+  if (/golden\s*east|padelpagipagi/i.test(text)) return 'Gresik';
   if (/kijo/i.test(text)) return 'Nganjuk';
   if (/panjalu/i.test(text)) return 'Kediri';
   if (/sempusari|padeleight/i.test(text)) return 'Jember';
@@ -814,7 +834,14 @@ app.delete('/api/tournaments/:id', async (req, res) => {
 });
 
 app.get('/api/sources', (req, res) => res.json(SOURCES));
-app.get('/api/instagram/accounts', (req, res) => res.json(JATIM_IG_ACCOUNTS));
+app.get('/api/instagram/accounts', async (req, res) => {
+  try {
+    const list = JSON.parse(await fs.readFile(path.join(ROOT, 'data', 'instagram-accounts.json'), 'utf8'));
+    return res.json(list);
+  } catch {
+    return res.json(JATIM_IG_ACCOUNTS);
+  }
+});
 
 // ==================== INSTAGRAM DISCOVERY & NLP EXTRACTION ====================
 
@@ -859,14 +886,78 @@ async function saveIg(o) {
 const getPostUrl = v => {
   try {
     const u = new URL(v);
-    if (!['www.instagram.com', 'instagram.com'].includes(u.hostname) || !/^\/(p|reel)\/[a-zA-Z0-9_-]+\/?$/.test(u.pathname)) {
-      return null;
-    }
-    return 'https://www.instagram.com' + u.pathname.replace(/\/$/, '') + '/';
+    if (!['www.instagram.com', 'instagram.com'].includes(u.hostname)) return null;
+    const m = u.pathname.match(/(?:^|\/)(p|reel)\/([a-zA-Z0-9_-]+)/);
+    if (!m) return null;
+    return `https://www.instagram.com/${m[1]}/${m[2]}/`;
   } catch {
     return null;
   }
 };
+
+function decodeHtml(str) {
+  if (!str) return '';
+  return str
+    .replace(/&#x([0-9a-fA-F]+);/g, (_, code) => String.fromCodePoint(parseInt(code, 16)))
+    .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(parseInt(code, 10)))
+    .replace(/&amp;/g, '&')
+    .replace(/&quot;/g, '"')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>');
+}
+
+async function fetchInstagramPostOg(url) {
+  const cleanUrl = getPostUrl(url);
+  if (!cleanUrl) return null;
+  try {
+    const res = await fetch(cleanUrl, {
+      headers: {
+        'User-Agent': 'facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)',
+        'Accept': 'text/html,application/xhtml+xml'
+      },
+      redirect: 'follow',
+      signal: AbortSignal.timeout(8000)
+    });
+    if (!res.ok) return null;
+    const html = await res.text();
+    const ogTitleMatch = html.match(/<meta property="og:title" content="([\s\S]*?)"\s*\/>/i);
+    const ogDescMatch = html.match(/<meta property="og:description" content="([\s\S]*?)"\s*\/>/i);
+    const ogImageMatch = html.match(/<meta property="og:image" content="([\s\S]*?)"\s*\/>/i);
+    const ogUrlMatch = html.match(/<meta property="og:url" content="([\s\S]*?)"\s*\/>/i);
+
+    const titleRaw = ogTitleMatch ? decodeHtml(ogTitleMatch[1]) : '';
+    const descRaw = ogDescMatch ? decodeHtml(ogDescMatch[1]) : '';
+    const posterUrl = ogImageMatch ? decodeHtml(ogImageMatch[1]) : null;
+    const finalUrl = ogUrlMatch ? ogUrlMatch[1] : cleanUrl;
+
+    let username = null;
+    const urlUserMatch = finalUrl.match(/instagram\.com\/([a-zA-Z0-9._]+)\/p\//i);
+    if (urlUserMatch && !['p', 'reel', 'tv'].includes(urlUserMatch[1])) {
+      username = urlUserMatch[1];
+    } else {
+      const titleUserMatch = titleRaw.match(/@([a-zA-Z0-9._]+)/);
+      if (titleUserMatch) username = titleUserMatch[1];
+    }
+
+    let caption = '';
+    const titleQuoteMatch = titleRaw.match(/on Instagram:\s*["“]([\s\S]*)["”]?$/i);
+    if (titleQuoteMatch) {
+      caption = titleQuoteMatch[1].replace(/["”]$/, '').trim();
+    } else {
+      caption = descRaw;
+    }
+
+    return {
+      title: titleRaw,
+      caption,
+      posterUrl,
+      sourceUrl: finalUrl,
+      username
+    };
+  } catch {
+    return null;
+  }
+}
 
 function extractCandidate(post) {
   const caption = compact(post.caption || '');
@@ -970,7 +1061,15 @@ app.get('/api/instagram/candidates', async (req, res) => res.json(await loadIg()
 
 // Instant text / caption / URL parser for quick analysis
 app.post('/api/instagram/parse', async (req, res) => {
-  const { url, caption, posterUrl, sourceAccount } = req.body || {};
+  let { url, caption, posterUrl, sourceAccount } = req.body || {};
+  if (url && (!caption || !posterUrl)) {
+    const og = await fetchInstagramPostOg(url);
+    if (og) {
+      if (!caption && og.caption) caption = og.caption;
+      if (!posterUrl && og.posterUrl) posterUrl = og.posterUrl;
+      if (!sourceAccount && og.username) sourceAccount = og.username;
+    }
+  }
   const cand = extractCandidate({
     id: hash((url || '') + (caption || '')),
     permalink: url,
@@ -984,17 +1083,30 @@ app.post('/api/instagram/parse', async (req, res) => {
 // Import a post by URL + provided caption/poster
 app.post('/api/instagram/import', async (req, res) => {
   const p = req.body || {};
-  const url = getPostUrl(p.sourceUrl);
-  if (!url && !compact(p.caption)) {
+  let url = getPostUrl(p.sourceUrl);
+  let caption = p.caption;
+  let posterUrl = p.posterUrl;
+  let sourceAccount = p.sourceAccount;
+
+  if (url && (!caption || !posterUrl)) {
+    const og = await fetchInstagramPostOg(url);
+    if (og) {
+      if (!caption && og.caption) caption = og.caption;
+      if (!posterUrl && og.posterUrl) posterUrl = og.posterUrl;
+      if (!sourceAccount && og.username) sourceAccount = og.username;
+    }
+  }
+
+  if (!url && !compact(caption)) {
     return res.status(400).json({ error: 'Berikan URL Instagram atau tempel caption postingan' });
   }
 
   const candidate = extractCandidate({
-    id: hash((url || '') + p.caption),
-    permalink: url || `https://www.instagram.com/${p.sourceAccount ? p.sourceAccount.replace(/^@/, '') : 'p'}/`,
-    caption: String(p.caption || '').slice(0, 5000),
-    media_url: absolute(p.posterUrl, 'https://instagram.com'),
-    username: (p.sourceAccount || '').replace(/^@/, '')
+    id: hash((url || '') + (caption || '')),
+    permalink: url || `https://www.instagram.com/${sourceAccount ? sourceAccount.replace(/^@/, '') : 'p'}/`,
+    caption: String(caption || '').slice(0, 5000),
+    media_url: absolute(posterUrl, 'https://instagram.com'),
+    username: (sourceAccount || '').replace(/^@/, '')
   });
 
   const db = await loadIg();

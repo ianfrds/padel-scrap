@@ -29,10 +29,10 @@ Dashboard intelijen dan pemindai multi-sumber turnamen padel di wilayah Jawa Tim
    - Dilengkapi tombol sakelar tema di pojok kanan atas dengan penyimpanan otomatis ke `localStorage`.
    - Bebas dari pola AI slop generik (tanpa gradient neon ungu/cyan, tanpa emoji dekoratif pada heading, tanpa panah dekoratif pada tombol).
 
-5. **Instagram Discovery Hub (35 Akun Radar Jawa Timur):**
-   - **Direktori 35 Akun Padel Jatim**: Memantau federasi resmi (PBPI Jatim, PBPI Kota Pasuruan), klub dan venue (Darmo, Graha, LUCA, Platinum, Padel Town, Uno, Homeground, Jungle, Vibora, Casano, JAS Malang, Padel Garden Malang, Golden Grove, Pas Padel, Basecamp, Panjalu Kediri, Padel Eight Jember, Sempusari, Sumenep, dsb.), serta komunitas pemain di Jawa Timur.
+5. **Instagram Discovery Hub (55 Akun Radar Jawa Timur):**
+   - **Direktori 55 Akun Padel Jatim**: Memantau federasi resmi (PBPI Jatim, PBPI Kota Pasuruan), promotor & tournament organizer (Padel Societas, On Point, 247 Communication), klub dan venue (East Padel Merr, Cross Arena Kertajaya, Rally Social Club, Atlas Padel, Padelista Dinoyo, Don Padel, Osseh Padel, Grand Sports, Sol Padel, PopUp Padel, Super Padel, Darmo, Graha, LUCA, Platinum, Padel Town, Uno, Homeground, Jungle, Vibora, Casano, JAS Malang, Padel Garden Malang, Golden Grove, Pas Padel, Basecamp, Panjalu Kediri, Padel Eight Jember, Sempusari, Sumenep, dsb.), serta komunitas pemain (Musang Padel Club, Vamos Surabaya, Padel Today, Weekend Padel Club, Padelaper, dsb.).
    - **Pencarian dan Filter Kota Akun**: Memfilter akun radar berdasarkan kota (Surabaya, Malang dan Batu, Sidoarjo dan Gresik, Pasuruan, Jember, Kediri, Madura).
-   - **Smart NLP Extractor**: Tempel caption atau tautan postingan Instagram; sistem mengekstrak otomatis nama turnamen, rentang tanggal, lokasi, dan kategori.
+   - **Smart NLP & OpenGraph Extractor**: Cukup masukkan link Instagram atau tempel caption postingan; sistem secara otomatis menarik informasi flyer, nama turnamen, rentang tanggal, lokasi venue, dan kategori langsung dari OpenGraph Meta.
    - **Antrean Verifikasi**: Meninjau hasil ekstraksi sebelum diterbitkan ke katalog utama.
 
 6. **Fitur Pendukung:**
@@ -54,12 +54,12 @@ Buka [http://localhost:3000](http://localhost:3000) di browser Anda.
 ## API Endpoints
 
 - `GET /api/tournaments?monthStart=...&monthEnd=...` : Mengambil data turnamen terindeks (opsional filter rentang bulan)
-- `POST /api/scan` : Menjalankan pemindaian live ke 5 platform (menerima body `{ monthStart, monthEnd }`)
+- `POST /api/scan` : Menjalankan pemindaian live ke platform sumber (menerima body `{ monthStart, monthEnd }`)
 - `POST /api/tournaments` : Menambahkan turnamen manual
 - `DELETE /api/tournaments/:id` : Menghapus data turnamen
 - `GET /api/sources` : Daftar platform sumber data yang dipantau
-- `GET /api/instagram/accounts` : Mengambil direktori 35 akun Instagram padel resmi Jawa Timur
-- `POST /api/instagram/parse` : Ekstraksi NLP regex instan untuk teks caption Instagram
+- `GET /api/instagram/accounts` : Mengambil direktori 55 akun Instagram padel resmi Jawa Timur
+- `POST /api/instagram/parse` : Ekstraksi instan link postingan / caption Instagram (otomatis mengambil OpenGraph)
 - `POST /api/instagram/import` : Menyimpan postingan ke antrean verifikasi
 - `GET /api/instagram/candidates` : Mengambil daftar antrean verifikasi Instagram
 - `POST /api/instagram/candidates/:id/approve` : Menyetujui dan memublikasikan turnamen ke katalog
