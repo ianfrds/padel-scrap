@@ -1007,9 +1007,9 @@ function renderPagination(totalItems, totalPages, startItem, endItem) {
   let html = '';
 
   // Previous button
-  html += `<button type="button" class="btn-page-nav" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''} aria-label="Halaman Sebelumnya">
+  html += `<button type="button" class="btn-page btn-page-nav" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''} aria-label="Halaman Sebelumnya">
     <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
-    Sebelumnya
+    <span>Sebelumnya</span>
   </button>`;
 
   // Page numbers with ellipsis
@@ -1030,8 +1030,8 @@ function renderPagination(totalItems, totalPages, startItem, endItem) {
   }
 
   // Next button
-  html += `<button type="button" class="btn-page-nav" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''} aria-label="Halaman Selanjutnya">
-    Selanjutnya
+  html += `<button type="button" class="btn-page btn-page-nav" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''} aria-label="Halaman Selanjutnya">
+    <span>Selanjutnya</span>
     <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
   </button>`;
 
