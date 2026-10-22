@@ -211,8 +211,8 @@
 
       <!-- Status Filter with explicit "Sudah Selesai" label -->
       <select class="field" id="filterStatus">
+        <option value="upcoming" selected>Akan Datang</option>
         <option value="">Semua Status</option>
-        <option value="upcoming">Akan Datang</option>
         <option value="ongoing">Sedang Berlangsung</option>
         <option value="past">Sudah Selesai</option>
       </select>
@@ -289,6 +289,12 @@
         <div class="empty-state-desc">Menghubungkan ke basis data turnamen padel Jawa Timur.</div>
       </div>
     </section>
+
+    <!-- Pagination Controls (User Request) -->
+    <div class="pagination-wrap" id="paginationControls" hidden>
+      <div class="pagination-info" id="paginationInfo">Menampilkan 0 turnamen</div>
+      <div class="pagination-nav" id="paginationNav"></div>
+    </div>
     </div> <!-- /viewCatalog -->
 
     <!-- 2. VIEW: INSTAGRAM RADAR (PAGE DEDIKASI) -->
@@ -298,7 +304,7 @@
           <div>
             <div class="ig-page-badge">INSTAGRAM RADAR JAWA TIMUR</div>
             <h1 class="ig-page-title">Direktori Radar Akun & Ekstraktor Postingan</h1>
-            <p class="ig-page-desc">Pantau 55 akun Instagram resmi federasi, klub, venue, komunitas, dan tournament organizer padel se-Jawa Timur. Ekstraksi jadwal turnamen secara otomatis langsung dari caption atau link postingan.</p>
+            <p class="ig-page-desc">Pantau 57 akun Instagram resmi federasi, klub, venue, komunitas, dan tournament organizer padel se-Jawa Timur. Ekstraksi jadwal turnamen secara otomatis langsung dari caption atau link postingan.</p>
           </div>
           <button type="button" class="btn" id="backToCatalogBtn">
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
@@ -368,6 +374,12 @@
           <button type="button" class="btn-reset-filter" id="resetIgFiltersBtn" title="Reset filter">
             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
             Reset
+          </button>
+
+          <!-- Tambah Akun Button -->
+          <button type="button" class="btn primary" id="openAddIgAccountBtn" style="height:32px;padding:0 12px;font-size:12px;display:inline-flex;align-items:center;gap:5px;border-radius:var(--radius-sm);">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Tambah Akun
           </button>
         </div>
 
@@ -449,10 +461,11 @@
 <!-- Manual Input Modal -->
 <div class="modal-overlay" id="manualModalOverlay" hidden>
   <div class="dialog-card">
-    <h3 class="dialog-title">Tambah Turnamen Manual</h3>
-    <p class="dialog-desc">Masukkan informasi turnamen padel di Jawa Timur jika Anda memiliki brosur atau informasi langsung dari pengelola lapangan.</p>
+    <h3 class="dialog-title" id="manualModalTitle">Tambah Turnamen Manual</h3>
+    <p class="dialog-desc" id="manualModalDesc">Masukkan informasi turnamen padel di Jawa Timur jika Anda memiliki brosur atau informasi langsung dari pengelola lapangan.</p>
 
     <form id="manualAddForm">
+      <input type="hidden" id="editTournamentId" name="editId" value=""/>
       <div class="form-group">
         <label class="field-label" for="addTitle">Nama Turnamen *</label>
         <input class="field" id="addTitle" name="title" required placeholder="Contoh: Surabaya Padel Open 2026"/>
@@ -502,7 +515,70 @@
 
       <div class="dialog-actions">
         <button type="button" class="btn" id="cancelManualBtn">Batal</button>
-        <button type="submit" class="btn primary">Simpan Turnamen</button>
+        <button type="submit" class="btn primary" id="manualSubmitBtn">Simpan Turnamen</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Instagram Account Add/Edit Modal -->
+<div class="modal-overlay" id="igAccountModalOverlay" hidden>
+  <div class="dialog-card">
+    <h3 class="dialog-title" id="igAccountModalTitle">Tambah Akun Radar Instagram</h3>
+    <p class="dialog-desc" id="igAccountModalDesc">Tambahkan atau perbarui akun Instagram venue, klub, promotor, atau komunitas padel di Jawa Timur.</p>
+
+    <form id="igAccountForm">
+      <input type="hidden" id="igAccOldUsername" name="oldUsername" value=""/>
+      
+      <div class="form-group">
+        <label class="field-label" for="igAccUsername">Username Instagram (Handle) *</label>
+        <div style="position:relative;display:flex;align-items:center;">
+          <span style="position:absolute;left:12px;color:var(--text-muted);font-weight:700;">@</span>
+          <input class="field" style="padding-left:28px;" id="igAccUsername" name="username" required placeholder="contoh: dolenpadel"/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="field-label" for="igAccName">Nama Akun / Klub / Venue *</label>
+        <input class="field" id="igAccName" name="name" required placeholder="Contoh: Dölen Padel Malang"/>
+      </div>
+
+      <div class="form-row">
+        <div>
+          <label class="field-label" for="igAccCity">Kota / Wilayah *</label>
+          <select class="field" id="igAccCity" name="city" required>
+            <option value="Surabaya">Surabaya</option>
+            <option value="Malang">Malang</option>
+            <option value="Batu">Kota Batu</option>
+            <option value="Sidoarjo">Sidoarjo</option>
+            <option value="Gresik">Gresik</option>
+            <option value="Pasuruan">Pasuruan</option>
+            <option value="Jember">Jember</option>
+            <option value="Kediri">Kediri</option>
+            <option value="Nganjuk">Nganjuk</option>
+            <option value="Sumenep">Sumenep</option>
+            <option value="Jawa Timur">Jawa Timur (Umum)</option>
+          </select>
+        </div>
+        <div>
+          <label class="field-label" for="igAccRole">Kategori / Peran *</label>
+          <select class="field" id="igAccRole" name="role" required>
+            <option value="Club & Venue">Club & Venue (Lapangan)</option>
+            <option value="Tournament Organizer">Tournament Organizer (Promotor)</option>
+            <option value="Komunitas">Komunitas & Mabar</option>
+            <option value="Federasi Resmi">Federasi Resmi (PBPI)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="field-label" for="igAccAvatar">URL Foto Profil Avatar (Opsional)</label>
+        <input class="field" type="url" id="igAccAvatar" name="avatarUrl" placeholder="https://..."/>
+      </div>
+
+      <div class="dialog-actions">
+        <button type="button" class="btn" id="cancelIgAccBtn">Batal</button>
+        <button type="submit" class="btn primary" id="igAccSubmitBtn">Simpan Akun</button>
       </div>
     </form>
   </div>
@@ -521,6 +597,8 @@ let masterEvents = [];
 let currentStartMonth = 'all';
 let currentEndMonth = 'all';
 let toastTimer = null;
+const ITEMS_PER_PAGE = 9;
+let currentPage = 1;
 
 // Escaped string helper
 function escaped(s) {
@@ -718,6 +796,7 @@ $$('.preset-chip').forEach(chip => {
 
     $('#scanStartMonth').value = currentStartMonth;
     $('#scanEndMonth').value = currentEndMonth;
+    currentPage = 1;
     render();
   };
 });
@@ -725,12 +804,14 @@ $$('.preset-chip').forEach(chip => {
 $('#scanStartMonth').addEventListener('change', e => {
   currentStartMonth = e.target.value;
   updatePresetActive(currentStartMonth === 'all' && currentEndMonth === 'all' ? 'all' : '');
+  currentPage = 1;
   render();
 });
 
 $('#scanEndMonth').addEventListener('change', e => {
   currentEndMonth = e.target.value;
   updatePresetActive(currentStartMonth === 'all' && currentEndMonth === 'all' ? 'all' : '');
+  currentPage = 1;
   render();
 });
 
@@ -740,6 +821,7 @@ $('#resetRangeBtn').onclick = () => {
   $('#scanStartMonth').value = 'all';
   $('#scanEndMonth').value = 'all';
   updatePresetActive('all');
+  currentPage = 1;
   render();
 };
 
@@ -751,6 +833,19 @@ function notify(text, isError = false) {
   toast.hidden = false;
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => { toast.hidden = true; }, 4200);
+}
+
+// 5b. FILTER LOCALLY DELETED & EDITED EVENTS
+function getActiveEvents(rawEvents) {
+  let deletedList = [];
+  let editedMap = {};
+  try {
+    deletedList = JSON.parse(localStorage.getItem('padel_deleted_ids') || '[]');
+    editedMap = JSON.parse(localStorage.getItem('padel_edited_events') || '{}');
+  } catch {}
+  return (rawEvents || [])
+    .filter(e => !deletedList.includes(e.id))
+    .map(e => editedMap[e.id] ? { ...e, ...editedMap[e.id] } : e);
 }
 
 // 6. FETCH API & RENDER
@@ -765,7 +860,7 @@ async function loadData() {
     }
     if (!res || !res.ok) throw new Error('Gagal memuat API atau berkas statis');
     const data = await res.json();
-    masterEvents = data.events || [];
+    masterEvents = getActiveEvents(data.events || []);
     populateMonthSelects();
     populateCityFilter();
     render();
@@ -850,6 +945,8 @@ function render() {
     : `Semua turnamen terindeks di Jawa Timur (${displayList.length} turnamen).`;
 
   const container = $('#tournamentsList');
+  const paginationControls = $('#paginationControls');
+
   if (displayList.length === 0) {
     container.innerHTML = `
       <div class="empty-state">
@@ -857,10 +954,21 @@ function render() {
         <div class="empty-state-desc">Cobalah mereset filter kota, kata kunci pencarian, atau rentang bulan di atas.</div>
       </div>
     `;
+    if (paginationControls) paginationControls.style.display = 'none';
     return;
   }
 
-  container.innerHTML = displayList.map(renderTournamentCard).join('');
+  // Pagination calculations
+  const totalItems = displayList.length;
+  const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE) || 1;
+  if (currentPage > totalPages) currentPage = totalPages;
+  if (currentPage < 1) currentPage = 1;
+
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = Math.min(startIndex + ITEMS_PER_PAGE, totalItems);
+  const paginatedList = displayList.slice(startIndex, endIndex);
+
+  container.innerHTML = paginatedList.map(renderTournamentCard).join('');
 
   // Attach Lightbox event
   $$('.card-poster').forEach(p => {
@@ -871,7 +979,107 @@ function render() {
       }
     };
   });
+
+  // Render pagination navigation
+  renderPagination(totalItems, totalPages, startIndex + 1, endIndex);
 }
+
+// 6b. PAGINATION CONTROLS
+function renderPagination(totalItems, totalPages, startItem, endItem) {
+  const paginationControls = $('#paginationControls');
+  if (!paginationControls) return;
+
+  if (totalPages <= 1) {
+    paginationControls.style.display = 'none';
+    return;
+  }
+
+  paginationControls.style.display = 'flex';
+
+  const infoEl = $('#paginationInfo');
+  if (infoEl) {
+    infoEl.innerHTML = `Menampilkan <strong>${startItem}–${endItem}</strong> dari <strong>${totalItems}</strong> turnamen`;
+  }
+
+  const navEl = $('#paginationNav');
+  if (!navEl) return;
+
+  let html = '';
+
+  // Previous button
+  html += `<button type="button" class="btn-page-nav" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''} aria-label="Halaman Sebelumnya">
+    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+    Sebelumnya
+  </button>`;
+
+  // Page numbers with ellipsis
+  const pagesToShow = [];
+  for (let i = 1; i <= totalPages; i++) {
+    if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
+      pagesToShow.push(i);
+    }
+  }
+
+  let lastP = 0;
+  for (const p of pagesToShow) {
+    if (lastP && p - lastP > 1) {
+      html += `<span class="pagination-ellipsis">…</span>`;
+    }
+    html += `<button type="button" class="btn-page ${p === currentPage ? 'active' : ''}" onclick="goToPage(${p})" ${p === currentPage ? 'aria-current="page"' : ''}>${p}</button>`;
+    lastP = p;
+  }
+
+  // Next button
+  html += `<button type="button" class="btn-page-nav" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''} aria-label="Halaman Selanjutnya">
+    Selanjutnya
+    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+  </button>`;
+
+  navEl.innerHTML = html;
+}
+
+window.goToPage = function(page) {
+  currentPage = page;
+  render();
+  const target = $('#tournamentsList');
+  if (target) {
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+};
+
+window.deleteTournament = async function(id, title) {
+  if (!confirm(`Hapus turnamen ini dari katalog?\n\n"${title || id}"\n\nTindakan ini akan menghapus turnamen dari database.`)) {
+    return;
+  }
+
+  // Remove optimistically from masterEvents
+  masterEvents = masterEvents.filter(e => e.id !== id);
+
+  // Store locally so it stays removed across reloads
+  try {
+    const deletedList = JSON.parse(localStorage.getItem('padel_deleted_ids') || '[]');
+    if (!deletedList.includes(id)) {
+      deletedList.push(id);
+      localStorage.setItem('padel_deleted_ids', JSON.stringify(deletedList));
+    }
+  } catch {}
+
+  populateCityFilter();
+  render();
+
+  try {
+    const res = await fetch(API + '/tournaments/' + encodeURIComponent(id), {
+      method: 'DELETE'
+    });
+    if (res.ok) {
+      notify(`Turnamen "${title || id}" berhasil dihapus.`);
+    } else {
+      notify(`Turnamen berhasil dihapus dari tampilan.`);
+    }
+  } catch (err) {
+    notify(`Turnamen berhasil dihapus dari tampilan.`);
+  }
+};
 
 // 7. RENDER INDIVIDUAL TOURNAMENT CARD
 function renderTournamentCard(e) {
@@ -904,6 +1112,10 @@ function renderTournamentCard(e) {
   const zoomButton = pl
     ? `<button type="button" class="action-btn muted icon-only" title="Lihat Ukuran Penuh Flyer Poster" onclick="openLightbox('${escaped(pl)}', '${escaped(e.title)}', '${escaped(dateStr)}', '${escaped(e.location)}', '${escaped(rl || '')}')"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>`
     : '';
+
+  const editButton = `<button type="button" class="action-btn muted icon-only" title="Edit Detail Turnamen" onclick="openEditModal('${escaped(e.id)}')"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>`;
+
+  const deleteButton = `<button type="button" class="action-btn danger icon-only" title="Hapus Turnamen (Jika Tidak Relevan)" onclick="deleteTournament('${escaped(e.id)}', '${escaped(e.title.replace(/'/g, ''))}')"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg></button>`;
 
   const categoryTag = e.category
     ? `<div class="card-category-badge" title="${escaped(e.category)}">${escaped(e.category)}</div>`
@@ -939,6 +1151,8 @@ function renderTournamentCard(e) {
         <div class="card-actions">
           ${actionButton}
           ${zoomButton}
+          ${editButton}
+          ${deleteButton}
         </div>
 
         <div class="card-footer">
@@ -1020,7 +1234,7 @@ $('#triggerScanBtn').onclick = async () => {
     // Refresh data
     const refreshRes = await fetch(API + '/tournaments');
     const freshData = await refreshRes.json();
-    masterEvents = freshData.events || [];
+    masterEvents = getActiveEvents(freshData.events || []);
 
     populateMonthSelects();
     populateCityFilter();
@@ -1114,6 +1328,7 @@ function clearSourceFilters() {
   selectedSources.clear();
   $$('.source-checkbox').forEach(cb => cb.checked = false);
   syncSourceFilters();
+  currentPage = 1;
   render();
 }
 
@@ -1127,6 +1342,7 @@ function toggleSource(name) {
     if (cb) cb.checked = true;
   }
   syncSourceFilters();
+  currentPage = 1;
   render();
 }
 
@@ -1192,7 +1408,10 @@ function syncSourceFilters() {
 // 9b. OTHER FILTER EVENT LISTENERS
 ['#searchKeyword', '#filterCity', '#filterStatus'].forEach(sel => {
   const el = $(sel);
-  if (el) el.addEventListener(sel === '#searchKeyword' ? 'input' : 'change', render);
+  if (el) el.addEventListener(sel === '#searchKeyword' ? 'input' : 'change', () => {
+    currentPage = 1;
+    render();
+  });
 });
 
 // 10. LIGHTBOX HANDLER
@@ -1232,12 +1451,41 @@ window.addEventListener('keydown', e => {
   }
 });
 
-// 11. MANUAL ADD MODAL
+// 11. MANUAL ADD & EDIT MODAL
 function openManualModal() {
+  $('#manualAddForm').reset();
+  $('#editTournamentId').value = '';
+  $('#manualModalTitle').textContent = 'Tambah Turnamen Manual';
+  $('#manualModalDesc').textContent = 'Masukkan informasi turnamen padel di Jawa Timur jika Anda memiliki brosur atau informasi langsung dari pengelola lapangan.';
+  $('#manualSubmitBtn').textContent = 'Simpan Turnamen';
   $('#manualModalOverlay').hidden = false;
   document.body.style.overflow = 'hidden';
   $('#addTitle').focus();
 }
+
+window.openEditModal = function(id) {
+  const ev = masterEvents.find(e => e.id === id);
+  if (!ev) return;
+
+  $('#editTournamentId').value = ev.id;
+  $('#addTitle').value = ev.title || '';
+  $('#addStart').value = ev.dateStart || '';
+  $('#addEnd').value = ev.dateEnd || ev.dateStart || '';
+  $('#addLocation').value = ev.location || '';
+  $('#addCategory').value = ev.category || '';
+  $('#addSource').value = ev.source || '';
+  $('#addPoster').value = ev.posterUrl || '';
+  $('#addReg').value = ev.registrationUrl || '';
+  $('#addDesc').value = ev.description || '';
+
+  $('#manualModalTitle').textContent = 'Edit Informasi Turnamen';
+  $('#manualModalDesc').textContent = 'Perbarui detail nama, jadwal tanggal, lokasi, kategori, atau tautan pendaftaran turnamen ini.';
+  $('#manualSubmitBtn').textContent = 'Simpan Perubahan';
+
+  $('#manualModalOverlay').hidden = false;
+  document.body.style.overflow = 'hidden';
+  $('#addTitle').focus();
+};
 
 function closeManualModal() {
   $('#manualModalOverlay').hidden = true;
@@ -1253,6 +1501,86 @@ $('#manualModalOverlay').onclick = e => {
 $('#manualAddForm').onsubmit = async e => {
   e.preventDefault();
   const formData = Object.fromEntries(new FormData(e.target));
+  const editId = formData.editId;
+
+  if (editId && editId.startsWith('CANDIDATE:')) {
+    const candId = editId.replace('CANDIDATE:', '');
+    const candPayload = {
+      title: formData.title,
+      dateStart: formData.dateStart,
+      dateEnd: formData.dateEnd || formData.dateStart,
+      location: formData.location,
+      category: formData.category || null,
+      posterUrl: formData.posterUrl || null,
+      registrationUrl: formData.registrationUrl || null,
+      description: formData.description || ''
+    };
+
+    closeManualModal();
+    notify('Kandidat turnamen berhasil diperbarui!');
+
+    try {
+      await fetch(API + '/instagram/candidates/' + encodeURIComponent(candId), {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(candPayload)
+      });
+      loadIgCandidates();
+    } catch {}
+    return;
+  }
+
+  if (editId) {
+    // Mode EDIT TURNAMEN
+    const existing = masterEvents.find(x => x.id === editId) || {};
+    const updatedEv = {
+      ...existing,
+      id: editId,
+      title: formData.title,
+      dateStart: formData.dateStart,
+      dateEnd: formData.dateEnd || formData.dateStart,
+      location: formData.location,
+      city: (formData.location.match(/(Surabaya|Malang|Batu|Sidoarjo|Gresik|Pasuruan|Jember|Kediri|Nganjuk|Sumenep)/i) || [existing.city || 'Surabaya'])[0],
+      category: formData.category || null,
+      source: formData.source || existing.source || 'Manual Input',
+      posterUrl: formData.posterUrl || null,
+      registrationUrl: formData.registrationUrl || null,
+      description: formData.description || existing.description || '',
+      updatedAt: new Date().toISOString()
+    };
+
+    // Update state in-memory
+    const idx = masterEvents.findIndex(x => x.id === editId);
+    if (idx !== -1) {
+      masterEvents[idx] = updatedEv;
+    }
+
+    // Persist locally for static host
+    try {
+      const editedMap = JSON.parse(localStorage.getItem('padel_edited_events') || '{}');
+      editedMap[editId] = updatedEv;
+      localStorage.setItem('padel_edited_events', JSON.stringify(editedMap));
+    } catch {}
+
+    populateMonthSelects();
+    populateCityFilter();
+    render();
+    closeManualModal();
+    notify('Perubahan turnamen berhasil disimpan!');
+
+    // Persist to server API if available
+    try {
+      await fetch(API + '/tournaments/' + encodeURIComponent(editId), {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+    } catch {}
+
+    return;
+  }
+
+  // Mode TAMBAH TURNAMEN BARU
   try {
     let res = null;
     try {
@@ -1428,7 +1756,20 @@ async function loadIgRadarAccounts() {
     if (!res || !res.ok) {
       res = await fetch('./data/instagram-accounts.json');
     }
-    allIgAccounts = await res.json();
+    const rawList = await res.json();
+    
+    // Merge local edits & deletions for static fallback
+    let deletedList = [];
+    let editedMap = {};
+    try {
+      deletedList = JSON.parse(localStorage.getItem('padel_deleted_ig_accounts') || '[]');
+      editedMap = JSON.parse(localStorage.getItem('padel_edited_ig_accounts') || '{}');
+    } catch {}
+
+    allIgAccounts = (rawList || [])
+      .filter(a => !deletedList.includes(a.username.toLowerCase()))
+      .map(a => editedMap[a.username.toLowerCase()] ? { ...a, ...editedMap[a.username.toLowerCase()] } : a);
+
     $('#igAccountsTotalCount').textContent = allIgAccounts.length;
     renderIgAccounts();
   } catch {}
@@ -1509,12 +1850,156 @@ function renderIgAccounts() {
             <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
             <span>Ekstrak</span>
           </button>
+          <button type="button" class="btn-ig-icon" title="Edit Akun Radar" onclick="openEditIgAccount('${escaped(a.username)}')">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          </button>
+          <button type="button" class="btn-ig-icon danger" title="Hapus Akun dari Radar" onclick="deleteIgAccount('${escaped(a.username)}')">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+          </button>
         </div>
       </div>
     </div>
   `;
   }).join('');
 }
+
+window.openAddIgAccount = function() {
+  $('#igAccountForm').reset();
+  $('#igAccOldUsername').value = '';
+  $('#igAccountModalTitle').textContent = 'Tambah Akun Radar Instagram';
+  $('#igAccountModalDesc').textContent = 'Tambahkan akun Instagram baru (venue, promotor, klub, atau komunitas) untuk dipantau radar.';
+  $('#igAccSubmitBtn').textContent = 'Tambah Akun';
+  $('#igAccountModalOverlay').hidden = false;
+  document.body.style.overflow = 'hidden';
+  $('#igAccUsername').focus();
+};
+
+window.openEditIgAccount = function(username) {
+  const acc = allIgAccounts.find(a => a.username.toLowerCase() === username.toLowerCase());
+  if (!acc) return;
+
+  $('#igAccOldUsername').value = acc.username;
+  $('#igAccUsername').value = acc.username;
+  $('#igAccName').value = acc.name || '';
+  $('#igAccCity').value = acc.city || 'Surabaya';
+  $('#igAccRole').value = acc.role || 'Club & Venue';
+  $('#igAccAvatar').value = acc.avatarUrl || '';
+
+  $('#igAccountModalTitle').textContent = 'Edit Akun Radar Instagram';
+  $('#igAccountModalDesc').textContent = `Perbarui detail nama, kategori, kota, atau foto profil untuk @${acc.username}.`;
+  $('#igAccSubmitBtn').textContent = 'Simpan Perubahan';
+
+  $('#igAccountModalOverlay').hidden = false;
+  document.body.style.overflow = 'hidden';
+  $('#igAccName').focus();
+};
+
+function closeIgAccountModal() {
+  $('#igAccountModalOverlay').hidden = true;
+  document.body.style.overflow = '';
+}
+
+$('#cancelIgAccBtn').onclick = closeIgAccountModal;
+$('#igAccountModalOverlay').onclick = e => {
+  if (e.target.id === 'igAccountModalOverlay') closeIgAccountModal();
+};
+
+if ($('#openAddIgAccountBtn')) {
+  $('#openAddIgAccountBtn').onclick = openAddIgAccount;
+}
+
+$('#igAccountForm').onsubmit = async e => {
+  e.preventDefault();
+  const formData = Object.fromEntries(new FormData(e.target));
+  const oldU = (formData.oldUsername || '').trim().toLowerCase();
+  const rawU = (formData.username || '').trim().replace(/^@/, '').toLowerCase();
+
+  if (!rawU) {
+    notify('Username Instagram wajib diisi!', true);
+    return;
+  }
+
+  const payload = {
+    username: rawU,
+    name: formData.name.trim(),
+    city: formData.city,
+    role: formData.role,
+    avatarUrl: formData.avatarUrl ? formData.avatarUrl.trim() : null
+  };
+
+  if (oldU) {
+    // Mode EDIT
+    const idx = allIgAccounts.findIndex(a => a.username.toLowerCase() === oldU);
+    if (idx !== -1) {
+      allIgAccounts[idx] = { ...allIgAccounts[idx], ...payload };
+    }
+
+    try {
+      const editedMap = JSON.parse(localStorage.getItem('padel_edited_ig_accounts') || '{}');
+      editedMap[oldU] = payload;
+      if (oldU !== rawU) editedMap[rawU] = payload;
+      localStorage.setItem('padel_edited_ig_accounts', JSON.stringify(editedMap));
+    } catch {}
+
+    closeIgAccountModal();
+    renderIgAccounts();
+    notify(`Akun @${rawU} berhasil diperbarui!`);
+
+    try {
+      await fetch(API + '/instagram/accounts/' + encodeURIComponent(oldU), {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+    } catch {}
+    return;
+  }
+
+  // Mode TAMBAH BARU
+  allIgAccounts.unshift(payload);
+  $('#igAccountsTotalCount').textContent = allIgAccounts.length;
+  renderIgAccounts();
+  closeIgAccountModal();
+  notify(`Akun @${rawU} berhasil ditambahkan ke radar!`);
+
+  try {
+    await fetch(API + '/instagram/accounts', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  } catch {}
+};
+
+window.deleteIgAccount = async function(username) {
+  const target = username.replace(/^@/, '');
+  const acc = allIgAccounts.find(a => a.username.toLowerCase() === target.toLowerCase());
+  const name = acc ? acc.name : target;
+
+  if (!confirm(`Hapus akun Instagram ini dari radar pantauan?\n\n@${target} (${name})\n\nAkun tidak akan dimonitor lagi di Jawa Timur.`)) {
+    return;
+  }
+
+  allIgAccounts = allIgAccounts.filter(a => a.username.toLowerCase() !== target.toLowerCase());
+  $('#igAccountsTotalCount').textContent = allIgAccounts.length;
+  renderIgAccounts();
+
+  try {
+    const deletedList = JSON.parse(localStorage.getItem('padel_deleted_ig_accounts') || '[]');
+    if (!deletedList.includes(target.toLowerCase())) {
+      deletedList.push(target.toLowerCase());
+      localStorage.setItem('padel_deleted_ig_accounts', JSON.stringify(deletedList));
+    }
+  } catch {}
+
+  notify(`Akun @${target} dihapus dari radar.`);
+
+  try {
+    await fetch(API + '/instagram/accounts/' + encodeURIComponent(target), {
+      method: 'DELETE'
+    });
+  } catch {}
+};
 
 window.importFromAccount = function(handle) {
   $('[data-igtab="extract"]').click();
@@ -1573,13 +2058,56 @@ async function loadIgCandidates() {
       <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;margin-bottom:10px;">
         <div style="font-weight:800;font-size:14px;margin-bottom:4px;">${escaped(c.title)}</div>
         <div style="font-size:12px;color:var(--text-muted);margin-bottom:6px;">📅 ${escaped(c.dateStart)} s/d ${escaped(c.dateEnd)} · 📍 ${escaped(c.location)}</div>
-        <div style="display:flex;gap:8px;margin-top:10px;">
+        <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;">
           <button class="btn primary" onclick="approveIgCandidate('${escaped(c.id)}')">Setujui & Publikasikan</button>
+          <button class="btn" onclick="openEditCandidateModal('${escaped(c.id)}')">Edit Detail</button>
+          <button class="btn" style="color:#ef4444;" onclick="rejectIgCandidate('${escaped(c.id)}')">Tolak / Hapus</button>
         </div>
       </div>
     `).join('');
   } catch {}
 }
+
+window.openEditCandidateModal = async function(id) {
+  try {
+    const res = await fetch(API + '/instagram/candidates');
+    const candidates = await res.json();
+    const c = candidates.find(x => x.id === id);
+    if (!c) return;
+
+    $('#editTournamentId').value = 'CANDIDATE:' + c.id;
+    $('#addTitle').value = c.title || '';
+    $('#addStart').value = c.dateStart || '';
+    $('#addEnd').value = c.dateEnd || c.dateStart || '';
+    $('#addLocation').value = c.location || '';
+    $('#addCategory').value = c.category || '';
+    $('#addSource').value = 'Instagram Post';
+    $('#addPoster').value = c.posterUrl || '';
+    $('#addReg').value = c.registrationUrl || '';
+    $('#addDesc').value = c.description || '';
+
+    $('#manualModalTitle').textContent = 'Edit Kandidat Turnamen Instagram';
+    $('#manualModalDesc').textContent = 'Perbarui detail turnamen sebelum dipublikasikan ke katalog.';
+    $('#manualSubmitBtn').textContent = 'Simpan Kandidat';
+
+    $('#manualModalOverlay').hidden = false;
+    document.body.style.overflow = 'hidden';
+    $('#addTitle').focus();
+  } catch {}
+};
+
+window.rejectIgCandidate = async function(id) {
+  if (!confirm('Tolak dan hapus kandidat turnamen ini?')) return;
+  try {
+    const res = await fetch(API + '/instagram/candidates/' + encodeURIComponent(id), { method: 'DELETE' });
+    if (res.ok) {
+      notify('Kandidat berhasil dihapus.');
+      loadIgCandidates();
+    }
+  } catch {
+    notify('Gagal menghapus kandidat', true);
+  }
+};
 
 window.approveIgCandidate = async function(id) {
   try {

@@ -822,24 +822,163 @@ app.post('/api/tournaments', async (req, res) => {
   res.status(201).json(ev);
 });
 
-app.delete('/api/tournaments/:id', async (req, res) => {
-  const d = await load();
-  const ev = d.events.find(e => e.id === req.params.id);
-  if (!ev || (!ev.manual && !ev.source?.includes('Instagram'))) {
-    return res.status(404).json({ error: 'Hanya data manual atau input Instagram yang dapat dihapus' });
+app.put('/api/tournaments/:id', async (req, res) => {
+  try {
+    const p = req.body || {};
+    if (!p.title || !p.dateStart || !p.location) {
+      return res.status(400).json({ error: 'Nama, tanggal mulai, dan lokasi wajib diisi' });
+    }
+    if (!/^20\d\d-\d\d-\d\d$/.test(p.dateStart)) {
+      return res.status(400).json({ error: 'Tanggal harus berformat YYYY-MM-DD' });
+    }
+
+    const d = await load();
+    const idx = d.events.findIndex(e => e.id === req.params.id);
+    if (idx === -1) {
+      return res.status(404).json({ error: 'Turnamen tidak ditemukan' });
+    }
+
+    const existing = d.events[idx];
+    const updated = {
+      ...existing,
+      title: compact(p.title).slice(0, 140),
+      dateStart: p.dateStart,
+      dateEnd: p.dateEnd || p.dateStart,
+      location: compact(p.location).slice(0, 160),
+      city: cityFrom(p.location) || existing.city,
+      posterUrl: p.posterUrl ? absolute(p.posterUrl, 'https://example.com') : null,
+      registrationUrl: p.registrationUrl ? absolute(p.registrationUrl, 'https://example.com') : null,
+      registrationType: p.registrationUrl ? 'registration' : 'missing',
+      source: p.source ? compact(p.source) : existing.source,
+      sourceUrl: p.sourceUrl ? absolute(p.sourceUrl, 'https://example.com') : existing.sourceUrl,
+      description: compact(p.description || '').slice(0, 400),
+      category: compact(p.category || '').slice(0, 100) || null,
+      updatedAt: new Date().toISOString()
+    };
+
+    d.events[idx] = updated;
+    await save(d);
+    res.json(updated);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
-  d.events = d.events.filter(e => e.id !== req.params.id);
-  await save(d);
-  res.json({ ok: true });
+});
+
+app.delete('/api/tournaments/:id', async (req, res) => {
+  try {
+    const d = await load();
+    const idx = d.events.findIndex(e => e.id === req.params.id);
+    if (idx === -1) {
+      return res.status(404).json({ error: 'Turnamen tidak ditemukan' });
+    }
+    const [removed] = d.events.splice(idx, 1);
+    await save(d);
+    res.json({ ok: true, removed });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.delete('/api/instagram/candidates/:id', async (req, res) => {
+  try {
+    const db = await loadIg();
+    db.candidates = (db.candidates || []).filter(x => x.id !== req.params.id);
+    await saveIg(db);
+    res.json({ ok: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 app.get('/api/sources', (req, res) => res.json(SOURCES));
-app.get('/api/instagram/accounts', async (req, res) => {
+const IG_ACCOUNTS_FILE = path.join(ROOT, 'data', 'instagram-accounts.json');
+
+async function loadIgAccounts() {
   try {
-    const list = JSON.parse(await fs.readFile(path.join(ROOT, 'data', 'instagram-accounts.json'), 'utf8'));
-    return res.json(list);
+    return JSON.parse(await fs.readFile(IG_ACCOUNTS_FILE, 'utf8'));
   } catch {
-    return res.json(JATIM_IG_ACCOUNTS);
+    return JATIM_IG_ACCOUNTS;
+  }
+}
+
+async function saveIgAccounts(list) {
+  await fs.writeFile(IG_ACCOUNTS_FILE, JSON.stringify(list, null, 2), 'utf8');
+}
+
+app.get('/api/instagram/accounts', async (req, res) => {
+  res.json(await loadIgAccounts());
+});
+
+app.post('/api/instagram/accounts', async (req, res) => {
+  try {
+    const { username, name, city, role, avatarUrl } = req.body || {};
+    const u = (username || '').trim().replace(/^@/, '').toLowerCase();
+    if (!u) return res.status(400).json({ error: 'Username Instagram wajib diisi' });
+
+    const list = await loadIgAccounts();
+    if (list.some(a => a.username.toLowerCase() === u)) {
+      return res.status(400).json({ error: `Akun @${u} sudah terdaftar di radar` });
+    }
+
+    const newAcc = {
+      username: u,
+      name: (name || u).trim(),
+      city: (city || 'Surabaya').trim(),
+      role: (role || 'Club & Venue').trim(),
+      avatarUrl: (avatarUrl || '').trim() || null
+    };
+
+    list.unshift(newAcc);
+    await saveIgAccounts(list);
+    res.status(201).json(newAcc);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.put('/api/instagram/accounts/:username', async (req, res) => {
+  try {
+    const target = req.params.username.trim().replace(/^@/, '').toLowerCase();
+    const { username, name, city, role, avatarUrl } = req.body || {};
+
+    const list = await loadIgAccounts();
+    const idx = list.findIndex(a => a.username.toLowerCase() === target);
+    if (idx === -1) {
+      return res.status(404).json({ error: 'Akun tidak ditemukan' });
+    }
+
+    const updatedUsername = username ? username.trim().replace(/^@/, '').toLowerCase() : target;
+    const updated = {
+      ...list[idx],
+      username: updatedUsername,
+      name: name ? name.trim() : list[idx].name,
+      city: city ? city.trim() : list[idx].city,
+      role: role ? role.trim() : list[idx].role,
+      avatarUrl: avatarUrl !== undefined ? (avatarUrl.trim() || null) : list[idx].avatarUrl
+    };
+
+    list[idx] = updated;
+    await saveIgAccounts(list);
+    res.json(updated);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.delete('/api/instagram/accounts/:username', async (req, res) => {
+  try {
+    const target = req.params.username.trim().replace(/^@/, '').toLowerCase();
+    const list = await loadIgAccounts();
+    const idx = list.findIndex(a => a.username.toLowerCase() === target);
+    if (idx === -1) {
+      return res.status(404).json({ error: 'Akun tidak ditemukan' });
+    }
+
+    const [removed] = list.splice(idx, 1);
+    await saveIgAccounts(list);
+    res.json({ ok: true, removed });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 });
 
@@ -1175,6 +1314,31 @@ app.post('/api/instagram/scan', async (req, res) => {
     res.status(500).json({ error: e.message });
   } finally {
     igBusy = false;
+  }
+});
+
+app.put('/api/instagram/candidates/:id', async (req, res) => {
+  try {
+    const db = await loadIg();
+    const candidate = db.candidates.find(x => x.id === req.params.id);
+    if (!candidate) return res.status(404).json({ error: 'Kandidat tidak ditemukan' });
+
+    const p = req.body || {};
+    if (p.title) candidate.title = compact(p.title);
+    if (p.dateStart) candidate.dateStart = p.dateStart;
+    if (p.dateEnd) candidate.dateEnd = p.dateEnd;
+    if (p.location) {
+      candidate.location = compact(p.location);
+      candidate.city = cityFrom(candidate.location);
+    }
+    if (p.category !== undefined) candidate.category = compact(p.category) || null;
+    if (p.posterUrl !== undefined) candidate.posterUrl = p.posterUrl ? absolute(p.posterUrl, 'https://example.com') : null;
+    if (p.registrationUrl !== undefined) candidate.registrationUrl = p.registrationUrl ? absolute(p.registrationUrl, 'https://example.com') : null;
+
+    await saveIg(db);
+    res.json(candidate);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 });
 
