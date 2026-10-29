@@ -13,6 +13,8 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json({ limit: '500kb' }));
 app.use(express.static(path.join(ROOT, 'public')));
 app.use('/data', express.static(path.join(ROOT, 'data')));
+app.use('/posters', express.static(path.join(ROOT, 'public', 'posters')));
+app.use('/public/posters', express.static(path.join(ROOT, 'public', 'posters')));
 
 const DB = path.join(ROOT, 'data', 'tournaments.json');
 const IG_DB = path.join(ROOT, 'data', 'instagram-candidates.json');
@@ -95,6 +97,21 @@ const JATIM_IG_ACCOUNTS = [
 ];
 
 const CITIES = [
+  // DKI Jakarta
+  'jakarta', 'jakarta selatan', 'jakarta barat', 'jakarta pusat', 'jakarta utara', 'jakarta timur',
+  'jaksel', 'jakbar', 'jakpus', 'jakut', 'jaktim',
+  // Banten
+  'tangerang', 'tangerang selatan', 'tangsel', 'bsd', 'bintaro', 'serang', 'cilegon', 'pandeglang', 'lebak',
+  // Jawa Barat
+  'bandung', 'bogor', 'depok', 'bekasi', 'cikarang', 'karawang', 'cirebon', 'sukabumi', 'tasikmalaya',
+  'cimahi', 'purwakarta', 'subang', 'garut', 'sumedang', 'cianjur', 'indramayu', 'majalengka',
+  // Jawa Tengah
+  'semarang', 'solo', 'surakarta', 'magelang', 'salatiga', 'pekalongan', 'tegal', 'purwokerto', 'kudus',
+  'klaten', 'banyumas', 'cilacap', 'brebes', 'boyolali', 'sukoharjo', 'karanganyar', 'wonogiri', 'sragen',
+  'jepara', 'kendal', 'batang', 'pemalang', 'kebumen', 'purworejo', 'wonosobo', 'temanggung',
+  // DI Yogyakarta
+  'yogyakarta', 'jogja', 'sleman', 'bantul', 'kulon progo', 'gunungkidul',
+  // Jawa Timur
   'surabaya', 'sidoarjo', 'gresik', 'malang', 'batu', 'mojokerto', 'pasuruan',
   'probolinggo', 'jember', 'kediri', 'madiun', 'blitar', 'tulungagung', 'lamongan',
   'tuban', 'bangkalan', 'sumenep', 'pamekasan', 'sampang', 'banyuwangi', 'lumajang',
@@ -123,6 +140,7 @@ const absolute = (u, base) => {
   if (!u || typeof u !== 'string') return null;
   u = u.trim();
   if (u === '' || u === 'undefined' || u === 'null') return null;
+  if (u.startsWith('/') || u.startsWith('./')) return u;
   try {
     const x = new URL(u, base);
     return /^https?:$/.test(x.protocol) ? x.href : null;
@@ -133,33 +151,82 @@ const absolute = (u, base) => {
 
 const hash = s => crypto.createHash('sha1').update(s).digest('hex').slice(0, 12);
 
-const isJatim = s => {
+const isJavaIsland = s => {
   if (!s) return false;
   const str = String(s);
-  if (/kalimantan|sumatera|sulawesi|bali|lombok|papua|jakarta|bandung|semarang|yogyakarta|jogja/i.test(str) && !/jawa\s*timur|east\s*java|jatim/i.test(str)) {
+
+  // Reject regions clearly outside Pulau Jawa unless Java is explicitly specified
+  if (/\b(?:bali|canggu|seminyak|ubud|sanur|uluwatu|badung|denpasar|lombok|mataram|sumatera|medan|palembang|batam|pekanbaru|lampung|aceh|kalimantan|balikpapan|samarinda|pontianak|banjarmasin|sulawesi|makassar|manado|papua|jayapura|singapore|malaysia|thailand|philippines)\b/i.test(str) &&
+      !/\b(?:jawa|jakarta|bandung|surabaya|semarang|yogyakarta|jogja|tangerang|bekasi|bogor|depok|solo|surakarta|malang|banten)\b/i.test(str)) {
     return false;
   }
-  return /jawa\s*timur|east\s*java|jatim/i.test(str) ||
-    CITIES.some(c => new RegExp('\\b' + c + '\\b', 'i').test(str)) ||
-    /\bdarmo\b|graha\s*padel|citraland|de\s*casano|\bvibora\b|jas\s*padel|pas\s*padel|jamo\s*padel|golden\s*east|kijo\s*padel|padel\s*garden|platinum\s*padel|\bkober\b|luca\s*padel|padel\s*town|uno\s*padel|homeground|sempusari|panjalu|padel\s*collective|golden\s*grove|araya\s*(?:padel|club|malang)|east\s*padel|markas\s*padel|musang|padelista|don\s*padel|osseh|grand\s*sports|sol\s*padel|popup\s*padel|super\s*padel|padeltoday|weekend\s*padel|padelaper|padelpagipagi/i.test(str);
+
+  // Matches Pulau Jawa provinces or island keywords
+  if (/\b(?:pulau\s*jawa|jawa|dki\s*jakarta|jakarta|banten|jawa\s*barat|west\s*java|jabar|jawa\s*tengah|central\s*java|jateng|di\s*yogyakarta|yogyakarta|jogja|diy|jawa\s*timur|east\s*java|jatim)\b/i.test(str)) {
+    return true;
+  }
+
+  // Matches known city names in Pulau Jawa
+  if (CITIES.some(c => new RegExp('\\b' + c + '\\b', 'i').test(str))) {
+    return true;
+  }
+
+  // Matches prominent padel courts & venues across Pulau Jawa
+  return /\b(?:darmo|graha|citraland|de\s*casano|vibora|jas\s*padel|pas\s*padel|jamo|golden\s*east|kijo|padel\s*garden|platinum|kober|luca\s*padel|padel\s*town|uno\s*padel|homeground|sempusari|panjalu|padel\s*collective|golden\s*grove|araya|east\s*padel|markas\s*padel|musang|padelista|don\s*padel|osseh|grand\s*sports|sol\s*padel|popup\s*padel|super\s*padel|padeltoday|weekend\s*padel|padelaper|padelpagipagi|dolen|kemang|verde|republic\s*padel|smash\s*padel|padel\s*pro|cilandak|bintaro|bsd|gading\s*serpong|senayan|scbd|pik|pantai\s*indah\s*kapuk|sentul|dago|parahyangan)\b/i.test(str);
 };
 
+// Backward-compatible alias
+const isJatim = isJavaIsland;
+
 function cityFrom(text) {
-  if (!text) return 'Jawa Timur';
-  const found = CITIES.find(c => new RegExp('\\b' + c + '\\b', 'i').test(text));
+  if (!text) return 'Pulau Jawa';
+  const str = String(text);
+
+  // Specific city / area detection across Pulau Jawa
+  if (/jakarta\s*selatan|jaksel|kemang|cilandak|kuningan|senayan|scbd|pondok\s*indah|kebayoran|tb\s*simatupang/i.test(str)) return 'Jakarta Selatan';
+  if (/jakarta\s*utara|jakut|pantai\s*indah\s*kapuk|\bpik\b|kelapa\s*gading|pluit|sunter/i.test(str)) return 'Jakarta Utara';
+  if (/jakarta\s*barat|jakbar|puri|kebon\s*jeruk/i.test(str)) return 'Jakarta Barat';
+  if (/jakarta\s*pusat|jakpus|menteng|tanah\s*abang|sudirman/i.test(str)) return 'Jakarta Pusat';
+  if (/jakarta\s*timur|jaktim|rawamangun/i.test(str)) return 'Jakarta Timur';
+  if (/\bjakarta\b/i.test(str)) return 'Jakarta';
+
+  if (/tangerang\s*selatan|tangsel|\bbsd\b|serpong|bintaro|alam\s*sutera/i.test(str)) return 'Tangerang Selatan';
+  if (/tangerang|karawaci/i.test(str)) return 'Tangerang';
+
+  if (/bandung|cimahi|dago|parahyangan/i.test(str)) return 'Bandung';
+  if (/bogor|sentul/i.test(str)) return 'Bogor';
+  if (/depok/i.test(str)) return 'Depok';
+  if (/bekasi|cikarang/i.test(str)) return 'Bekasi';
+  if (/cirebon/i.test(str)) return 'Cirebon';
+  if (/sukabumi/i.test(str)) return 'Sukabumi';
+
+  if (/semarang/i.test(str)) return 'Semarang';
+  if (/surakarta|\bsolo\b|sukoharjo/i.test(str)) return 'Solo';
+  if (/magelang|borobudur/i.test(str)) return 'Magelang';
+  if (/salatiga/i.test(str)) return 'Salatiga';
+  if (/tegal/i.test(str)) return 'Tegal';
+  if (/purwokerto|banyumas/i.test(str)) return 'Purwokerto';
+
+  if (/yogyakarta|\bjogja\b|sleman|bantul/i.test(str)) return 'Yogyakarta';
+
+  if (/darmo|graha|citraland|casano|vibora|fairway|platinum|luca|padel\s*town|uno\s*padel|homeground|padel\s*collective|ngagel|chill\s*padel|padelols|east\s*padel|merr|padelista|dinoyo|don\s*padel|osseh|grand\s*sports|jemursari|sol\s*padel|popup|super\s*padel|padeltoday|weekend\s*padel|padelaper|surabaya/i.test(str)) return 'Surabaya';
+  if (/jas|araya|padel\s*garden|kober|golden\s*grove|dolen|malang/i.test(str)) return 'Malang';
+  if (/paolo|\bbatu\b/i.test(str)) return 'Batu';
+  if (/pas\s*padel|basecamp|pasuruan/i.test(str)) return 'Pasuruan';
+  if (/jamo|markas\s*padel|musang|sidoarjo/i.test(str)) return 'Sidoarjo';
+  if (/golden\s*east|padelpagipagi|gresik/i.test(str)) return 'Gresik';
+  if (/kijo|nganjuk/i.test(str)) return 'Nganjuk';
+  if (/panjalu|kediri/i.test(str)) return 'Kediri';
+  if (/sempusari|padeleight|jember/i.test(str)) return 'Jember';
+  if (/sumenep/i.test(str)) return 'Sumenep';
+  if (/banyuwangi/i.test(str)) return 'Banyuwangi';
+
+  const found = CITIES.find(c => new RegExp('\\b' + c + '\\b', 'i').test(str));
   if (found) {
     return found.charAt(0).toUpperCase() + found.slice(1);
   }
-  if (/darmo|graha|citraland|casano|vibora|fairway|platinum|luca|padel\s*town|uno\s*padel|homeground|padel\s*collective|ngagel|chill\s*padel|padelols|east\s*padel|merr|padelista|dinoyo|don\s*padel|osseh|grand\s*sports|jemursari|sol\s*padel|popup|super\s*padel|padeltoday|weekend\s*padel|padelaper/i.test(text)) return 'Surabaya';
-  if (/jas|araya|padel\s*garden|kober|golden\s*grove/i.test(text)) return 'Malang';
-  if (/pas\s*padel|basecamp/i.test(text)) return 'Pasuruan';
-  if (/jamo|markas\s*padel|musang/i.test(text)) return 'Sidoarjo';
-  if (/golden\s*east|padelpagipagi/i.test(text)) return 'Gresik';
-  if (/kijo/i.test(text)) return 'Nganjuk';
-  if (/panjalu/i.test(text)) return 'Kediri';
-  if (/sempusari|padeleight/i.test(text)) return 'Jember';
-  if (/sumenep/i.test(text)) return 'Sumenep';
-  return 'Jawa Timur';
+
+  return 'Pulau Jawa';
 }
 
 function iso(y, m, d) {
@@ -300,9 +367,9 @@ async function scanIncourta() {
       const endDate = meta.endDate ? meta.endDate.slice(0, 10) : startDate;
       const venue = meta.location?.name || item.cardCourt || 'Padel Venue';
       const locality = meta.location?.address?.addressLocality || '';
-      const fullLoc = [venue, locality, 'Jawa Timur'].filter(Boolean).join(', ');
+      const fullLoc = [venue, locality, 'Pulau Jawa'].filter(Boolean).join(', ');
 
-      if (!isJatim(fullLoc) && !isJatim(title) && !isJatim(item.cardCourt)) continue;
+      if (!isJavaIsland(fullLoc) && !isJavaIsland(title) && !isJavaIsland(item.cardCourt)) continue;
 
       const poster = absolute(meta.image?.[0] || item.cardImg, item.link);
       const ev = mk({
@@ -352,11 +419,11 @@ async function scanPadelgigs() {
 
   const found = [];
   for (const t of all) {
-    const isEastJava = /jawa\s*timur|east\s*java/i.test(t.province_name || '') ||
-      isJatim((t.regency_name || '') + ' ' + (t.venue_name || '') + ' ' + (t.name || ''));
-    if (!isEastJava) continue;
+    const isJava = /jawa|jakarta|banten|yogyakarta|jogja/i.test(t.province_name || '') ||
+      isJavaIsland((t.regency_name || '') + ' ' + (t.venue_name || '') + ' ' + (t.name || ''));
+    if (!isJava) continue;
 
-    const fullVenue = [t.venue_name, t.regency_name, 'Jawa Timur'].filter(Boolean).join(', ');
+    const fullVenue = [t.venue_name, t.regency_name, t.province_name || 'Pulau Jawa'].filter(Boolean).join(', ');
     const poster = t.poster_url ? absolute(t.poster_url, base) : null;
     const tournamentUrl = `https://padelgigs.id/tournaments/${t.id}`;
     const categories = t.items?.map(it => `${it.division_label || ''} ${it.skill_level_label || ''}`.trim()).filter(Boolean).join(' • ') || '';
@@ -469,14 +536,14 @@ async function scanSmesh() {
       let poster = flyerUrl || extractImage(j, url);
       if (poster && /\.html?(?:\?|$)/i.test(poster)) poster = null;
 
-      const locationMatch = text.match(/(?:[\w\s.&-]{3,70})[·,]\s*(?:Surabaya|Sidoarjo|Gresik|Malang|Batu|Jember|Kediri|Banyuwangi)[^\.]{0,60}/i)?.[0];
+      const locationMatch = text.match(/(?:[\w\s.&-]{3,70})[·,]\s*(?:Jakarta|Tangerang|Bandung|Bogor|Depok|Bekasi|Semarang|Solo|Surakarta|Yogyakarta|Jogja|Surabaya|Sidoarjo|Gresik|Malang|Batu|Jember|Kediri|Banyuwangi)[^\.]{0,60}/i)?.[0];
 
       const ev = mk({
         title,
         source: 'Smesh.ID',
         sourceUrl: url,
         date,
-        location: locationMatch || 'Surabaya, Jawa Timur',
+        location: locationMatch || `${cityFrom(text)}, Pulau Jawa`,
         posterUrl: poster,
         registrationUrl: officialUrl || url,
         registrationType: officialUrl ? 'external' : 'event'
@@ -519,14 +586,14 @@ async function scanRecourt() {
       const date = dateFromText(bodyText.slice(0, 600));
       const poster = j('img[src*="ufs.sh"], img[src*="recourt.id"]').first().attr('src') || extractImage(j, url);
 
-      let location = `${cityFrom(bodyText)}, Jawa Timur`;
-      const locMatch = bodyText.match(/(Platinum Padel|Padel Garden|Graha Padel|Darmo Padel|Jungle Padel|Vibora|de Casano|JAS Padel|Golden East|Kijo Padel)\s*·\s*[A-Za-z]+(?:,\s*Jawa Timur)?/i);
+      let location = `${cityFrom(bodyText)}, Pulau Jawa`;
+      const locMatch = bodyText.match(/(?:[\w\s.&'-]{3,40})\s*·\s*[A-Za-z\s]+(?:,\s*(?:Jawa|Jakarta|Banten|Jabar|Jateng|DIY|Jatim))?/i);
       if (locMatch) {
         location = locMatch[0].trim();
       } else {
-        const generalMatch = bodyText.match(/([A-Z][a-zA-Z0-9\s&'-]{2,20})\s*·\s*(Surabaya|Malang|Sidoarjo|Gresik|Pasuruan|Batu|Jember|Kediri|Nganjuk|Banyuwangi)/i);
+        const generalMatch = bodyText.match(/([A-Z][a-zA-Z0-9\s&'-]{2,25})\s*·\s*(Jakarta|Tangerang|Bandung|Bogor|Depok|Bekasi|Semarang|Solo|Yogyakarta|Jogja|Surabaya|Malang|Sidoarjo|Gresik|Pasuruan|Batu|Jember|Kediri|Nganjuk|Banyuwangi)/i);
         if (generalMatch) {
-          location = `${generalMatch[1].trim()} · ${generalMatch[2].trim()}, Jawa Timur`;
+          location = `${generalMatch[1].trim()} · ${generalMatch[2].trim()}, Pulau Jawa`;
         }
       }
 
@@ -663,7 +730,13 @@ function dedupe(events) {
       continue;
     }
     const prev = m.get(key);
-    if (!prev.posterUrl && e.posterUrl) prev.posterUrl = e.posterUrl;
+    // Prefer permanent local poster over remote or placeholder URL
+    if (e.posterUrl?.startsWith('/posters/') && !prev.posterUrl?.startsWith('/posters/')) {
+      prev.posterUrl = e.posterUrl;
+      prev.posterImage = e.posterUrl;
+    } else if (!prev.posterUrl && e.posterUrl) {
+      prev.posterUrl = e.posterUrl;
+    }
     if (prev.posterUrl?.includes('undefined') && e.posterUrl && !e.posterUrl.includes('undefined')) {
       prev.posterUrl = e.posterUrl;
     }
@@ -765,8 +838,7 @@ app.post('/api/scan', async (req, res) => {
       }
     }
 
-    const manuallyEdited = existing.events.filter(e => e.manual || e.source?.includes('Instagram'));
-    let fresh = dedupe([...raw, ...manuallyEdited]);
+    let fresh = dedupe([...raw, ...existing.events]);
     if (raw.length === 0 && existing.events.length) fresh = existing.events;
 
     const output = { events: fresh, lastSynced: new Date().toISOString(), status, monthStart, monthEnd };

@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>Jatim Padel Scout, Radar dan Agregator Turnamen Padel Jawa Timur</title>
-  <meta name="description" content="Katalog dan pemindai jadwal turnamen padel di Jawa Timur: Surabaya, Malang, Sidoarjo, Gresik, Pasuruan, Nganjuk, dan sekitarnya. Sumber data dari Incourta, Padelgigs, PBPI Jatim, Smesh.ID, Recourt.ID, dan Instagram."/>
+  <title>Padel Scout Jawa - Radar & Agregator Turnamen Padel Seluruh Pulau Jawa</title>
+  <meta name="description" content="Katalog dan pemindai jadwal turnamen padel di seluruh Pulau Jawa: DKI Jakarta, Banten, Jawa Barat, Jawa Tengah, D.I. Yogyakarta, dan Jawa Timur. Sumber data dari Incourta, Padelgigs, PBPI, Smesh.ID, Recourt.ID, dan Instagram."/>
   <meta name="theme-color" content="#15803d"/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,8 +19,8 @@
     <div class="brand">
       <div class="brand-mark">JP</div>
       <div class="brand-text">
-        <span class="brand-title">Jatim Padel Scout</span>
-        <span class="brand-subtitle">Tournament Radar</span>
+        <span class="brand-title">Padel Scout Jawa</span>
+        <span class="brand-subtitle">Radar Pulau Jawa</span>
       </div>
     </div>
 
@@ -56,7 +56,7 @@
           <span class="source-count" id="countPadelgigs">0</span>
         </div>
         <div class="source-item" data-source="PBPI" onclick="toggleSource('PBPI')">
-          <span class="source-tag"><span class="status-dot"></span><span>PBPI Jawa Timur</span></span>
+          <span class="source-tag"><span class="status-dot"></span><span>PBPI</span></span>
           <span class="source-count" id="countPbpi">0</span>
         </div>
         <div class="source-item" data-source="Smesh" onclick="toggleSource('Smesh')">
@@ -71,7 +71,7 @@
     </div>
 
     <div class="side-footer">
-      Sistem pemindai independen turnamen padel Jawa Timur. Pembaruan berkala dari platform resmi dan asosiasi.
+      Sistem pemindai independen turnamen padel se-Pulau Jawa (DKI Jakarta, Banten, Jabar, Jateng, DIY, Jatim). Pembaruan berkala dari platform resmi dan promotor.
     </div>
   </aside>
 
@@ -80,7 +80,7 @@
     <!-- Top Bar with Breadcrumb and Theme Switcher -->
     <header class="top-bar">
       <div class="top-meta">
-        <span>JAWA TIMUR</span>
+        <span>PULAU JAWA</span>
         <span>/</span>
         <strong id="topMetaTitle">KATALOG TURNAMEN</strong>
       </div>
@@ -107,10 +107,10 @@
         <div class="hero-eyebrow">
           <span>RADAR RESMI</span>
           <span>•</span>
-          <span>JAWA TIMUR</span>
+          <span>PULAU JAWA</span>
         </div>
-        <h1 class="hero-title">Turnamen Padel Jawa Timur</h1>
-        <p class="hero-desc">Pusat informasi dan direktori turnamen padel se-Jawa Timur: Surabaya, Malang, Sidoarjo, Gresik, Pasuruan, Nganjuk, dan sekitarnya. Tentukan rentang bulan sebelum memindai data terbaru.</p>
+        <h1 class="hero-title">Turnamen Padel Pulau Jawa</h1>
+        <p class="hero-desc">Pusat informasi dan direktori turnamen padel se-Pulau Jawa: DKI Jakarta, Banten, Jawa Barat, Jawa Tengah, D.I. Yogyakarta, dan Jawa Timur. Tentukan rentang bulan sebelum memindai data terbaru.</p>
       </div>
 
       <div class="hero-buttons">
@@ -128,7 +128,7 @@
       <div class="range-scan-header">
         <div>
           <div class="range-scan-title">Filter Scraping Berdasarkan Rentang Bulan</div>
-          <p class="range-scan-desc">Tentukan rentang bulan yang ingin dipindai dari Incourta, Padelgigs, PBPI Jatim, Smesh.ID, dan Recourt.ID:</p>
+          <p class="range-scan-desc">Tentukan rentang bulan yang ingin dipindai dari Incourta, Padelgigs, PBPI, Smesh.ID, dan Recourt.ID:</p>
         </div>
 
         <!-- Quick Preset Range Chips -->
@@ -206,7 +206,7 @@
       </div>
 
       <select class="field" id="filterCity">
-        <option value="">Semua Kota (Jatim)</option>
+        <option value="">Semua Kota (Pulau Jawa)</option>
       </select>
 
       <!-- Status Filter with explicit "Sudah Selesai" label -->
@@ -246,7 +246,7 @@
             </label>
             <label class="multi-select-option">
               <input type="checkbox" class="source-checkbox" value="PBPI" />
-              <span class="option-name">PBPI Jawa Timur</span>
+              <span class="option-name">PBPI</span>
               <span class="option-count" id="optCountPbpi">0</span>
             </label>
             <label class="multi-select-option">
@@ -286,7 +286,7 @@
     <section class="tournaments-grid" id="tournamentsList">
       <div class="empty-state">
         <div class="empty-state-title">Memuat data turnamen...</div>
-        <div class="empty-state-desc">Menghubungkan ke basis data turnamen padel Jawa Timur.</div>
+        <div class="empty-state-desc">Menghubungkan ke basis data turnamen padel Pulau Jawa.</div>
       </div>
     </section>
 
@@ -302,9 +302,9 @@
       <section class="ig-page-header">
         <div class="ig-page-title-row">
           <div>
-            <div class="ig-page-badge">INSTAGRAM RADAR JAWA TIMUR</div>
+            <div class="ig-page-badge">INSTAGRAM RADAR PULAU JAWA</div>
             <h1 class="ig-page-title">Direktori Radar Akun & Ekstraktor Postingan</h1>
-            <p class="ig-page-desc">Pantau 57 akun Instagram resmi federasi, klub, venue, komunitas, dan tournament organizer padel se-Jawa Timur. Ekstraksi jadwal turnamen secara otomatis langsung dari caption atau link postingan.</p>
+            <p class="ig-page-desc">Pantau 68 akun Instagram resmi federasi, klub, venue, komunitas, dan tournament organizer padel se-Pulau Jawa (DKI Jakarta, Banten, Jabar, Jateng, DIY, Jatim). Ekstraksi jadwal turnamen secara otomatis langsung dari caption atau link postingan.</p>
           </div>
           <button type="button" class="btn" id="backToCatalogBtn">
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
@@ -315,7 +315,7 @@
         <div class="ig-tabs">
           <button type="button" class="ig-tab active" data-igtab="radar">
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
-            Radar 55 Akun Jatim
+            Radar 68 Akun Jawa
           </button>
           <button type="button" class="ig-tab" data-igtab="extract">
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
@@ -346,12 +346,13 @@
               <span>Kota</span>
             </label>
             <select class="select select-bordered select-sm" id="selectIgCity">
-              <option value="all" selected>Semua Kota (Jawa Timur)</option>
-              <option value="Surabaya">Surabaya</option>
-              <option value="Malang">Malang & Batu</option>
-              <option value="Sidoarjo">Sidoarjo & Gresik</option>
-              <option value="Pasuruan">Pasuruan</option>
-              <option value="Lainnya">Kota Lainnya (Jember, Kediri, dll.)</option>
+              <option value="all" selected>Semua Wilayah (Pulau Jawa)</option>
+              <option value="Jakarta">DKI Jakarta & Sekitarnya</option>
+              <option value="Banten">Banten (Tangerang, BSD, Bintaro)</option>
+              <option value="Jabar">Jawa Barat (Bandung, Bogor, Bekasi)</option>
+              <option value="Jateng">Jawa Tengah (Semarang, Solo)</option>
+              <option value="DIY">D.I. Yogyakarta (Jogja, Sleman)</option>
+              <option value="Jatim">Jawa Timur (Surabaya, Malang, dll.)</option>
             </select>
           </div>
 
@@ -386,7 +387,7 @@
         <!-- Filter Status Banner / Meta -->
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;padding:0 2px;font-size:12.5px;color:var(--text-muted);flex-wrap:wrap;gap:8px;">
           <div>
-            Menampilkan <strong id="igAccountsFilteredCount" style="color:var(--text);">55</strong> dari <span id="igAccountsTotalCount">55</span> akun terpantau
+            Menampilkan <strong id="igAccountsFilteredCount" style="color:var(--text);">68</strong> dari <span id="igAccountsTotalCount">68</span> akun terpantau
             <span id="igFilterActiveBadge" style="display:none;margin-left:8px;font-size:11px;font-weight:700;color:var(--accent);background:var(--accent-subtle);padding:2px 8px;border-radius:12px;">Filter Aktif</span>
           </div>
         </div>
@@ -462,7 +463,7 @@
 <div class="modal-overlay" id="manualModalOverlay" hidden>
   <div class="dialog-card">
     <h3 class="dialog-title" id="manualModalTitle">Tambah Turnamen Manual</h3>
-    <p class="dialog-desc" id="manualModalDesc">Masukkan informasi turnamen padel di Jawa Timur jika Anda memiliki brosur atau informasi langsung dari pengelola lapangan.</p>
+    <p class="dialog-desc" id="manualModalDesc">Masukkan informasi turnamen padel di Pulau Jawa jika Anda memiliki brosur atau informasi langsung dari pengelola lapangan.</p>
 
     <form id="manualAddForm">
       <input type="hidden" id="editTournamentId" name="editId" value=""/>
@@ -525,7 +526,7 @@
 <div class="modal-overlay" id="igAccountModalOverlay" hidden>
   <div class="dialog-card">
     <h3 class="dialog-title" id="igAccountModalTitle">Tambah Akun Radar Instagram</h3>
-    <p class="dialog-desc" id="igAccountModalDesc">Tambahkan atau perbarui akun Instagram venue, klub, promotor, atau komunitas padel di Jawa Timur.</p>
+    <p class="dialog-desc" id="igAccountModalDesc">Tambahkan atau perbarui akun Instagram venue, klub, promotor, atau komunitas padel di Pulau Jawa.</p>
 
     <form id="igAccountForm">
       <input type="hidden" id="igAccOldUsername" name="oldUsername" value=""/>
@@ -547,6 +548,21 @@
         <div>
           <label class="field-label" for="igAccCity">Kota / Wilayah *</label>
           <select class="field" id="igAccCity" name="city" required>
+            <option value="Jakarta Selatan">Jakarta Selatan</option>
+            <option value="Jakarta Utara">Jakarta Utara</option>
+            <option value="Jakarta Pusat">Jakarta Pusat</option>
+            <option value="Jakarta Barat">Jakarta Barat</option>
+            <option value="Jakarta Timur">Jakarta Timur</option>
+            <option value="Tangerang Selatan">Tangerang Selatan (BSD/Bintaro)</option>
+            <option value="Tangerang">Tangerang</option>
+            <option value="Bandung">Bandung</option>
+            <option value="Bogor">Bogor</option>
+            <option value="Bekasi">Bekasi</option>
+            <option value="Depok">Depok</option>
+            <option value="Semarang">Semarang</option>
+            <option value="Solo">Solo / Surakarta</option>
+            <option value="Magelang">Magelang</option>
+            <option value="Yogyakarta">Yogyakarta / Sleman</option>
             <option value="Surabaya">Surabaya</option>
             <option value="Malang">Malang</option>
             <option value="Batu">Kota Batu</option>
@@ -557,7 +573,7 @@
             <option value="Kediri">Kediri</option>
             <option value="Nganjuk">Nganjuk</option>
             <option value="Sumenep">Sumenep</option>
-            <option value="Jawa Timur">Jawa Timur (Umum)</option>
+            <option value="Pulau Jawa">Pulau Jawa (Lainnya)</option>
           </select>
         </div>
         <div>
@@ -845,18 +861,29 @@ function getActiveEvents(rawEvents) {
   } catch {}
   return (rawEvents || [])
     .filter(e => !deletedList.includes(e.id))
-    .map(e => editedMap[e.id] ? { ...e, ...editedMap[e.id] } : e);
+    .map(e => {
+      if (!editedMap[e.id]) return e;
+      const merged = { ...e, ...editedMap[e.id] };
+      if ((!merged.posterUrl || merged.posterUrl.includes('unsplash')) && e.posterUrl) {
+        merged.posterUrl = e.posterUrl;
+      }
+      return merged;
+    });
 }
 
 // 6. FETCH API & RENDER
 async function loadData() {
   try {
     let res = null;
+    const v = '?t=' + Date.now();
     try {
-      res = await fetch(API + '/tournaments');
+      res = await fetch(API + '/tournaments' + v);
     } catch {}
     if (!res || !res.ok) {
-      res = await fetch('./data/tournaments.json');
+      res = await fetch('./data/tournaments.json' + v);
+    }
+    if (!res || !res.ok) {
+      res = await fetch('/data/tournaments.json' + v);
     }
     if (!res || !res.ok) throw new Error('Gagal memuat API atau berkas statis');
     const data = await res.json();
@@ -873,7 +900,7 @@ function populateCityFilter() {
   const citySelect = $('#filterCity');
   const curVal = citySelect.value;
   const cities = [...new Set(masterEvents.map(e => e.city).filter(Boolean))].sort();
-  citySelect.innerHTML = '<option value="">Semua Kota (Jatim)</option>' +
+  citySelect.innerHTML = '<option value="">Semua Kota (Pulau Jawa)</option>' +
     cities.map(c => `<option value="${escaped(c)}">${escaped(c)}</option>`).join('');
   citySelect.value = curVal;
 }
@@ -942,7 +969,7 @@ function render() {
   $('#resultsCount').textContent = `${displayList.length} Turnamen`;
   $('#resultsSubtext').textContent = isRangeFiltered
     ? `Menampilkan ${displayList.length} dari ${masterEvents.length} turnamen total.`
-    : `Semua turnamen terindeks di Jawa Timur (${displayList.length} turnamen).`;
+    : `Semua turnamen terindeks di Pulau Jawa (${displayList.length} turnamen).`;
 
   const container = $('#tournamentsList');
   const paginationControls = $('#paginationControls');
@@ -1082,18 +1109,73 @@ window.deleteTournament = async function(id, title) {
 };
 
 // 7. RENDER INDIVIDUAL TOURNAMENT CARD
+function resolvePosterSrc(url) {
+  if (!url || typeof url !== 'string') return '';
+  url = url.trim();
+  if (url === '' || url === 'undefined' || url === 'null') return '';
+  if (/^https?:\/\//i.test(url)) return url;
+
+  const clean = url.replace(/^\.?\/?(?:public\/)?(?:posters\/)?/, '');
+  if (!clean) return url;
+
+  if (window.location.protocol === 'file:') {
+    return './posters/' + clean;
+  }
+  return '/posters/' + clean;
+}
+
+window.handlePosterError = function(img, rawUrl) {
+  const retry = parseInt(img.dataset.retried || '0', 10);
+  const clean = (rawUrl || '').replace(/^\.?\/?(?:public\/)?(?:posters\/)?/, '');
+
+  if (clean && retry === 0) {
+    img.dataset.retried = '1';
+    img.src = './posters/' + clean;
+    return;
+  }
+  if (clean && retry === 1) {
+    img.dataset.retried = '2';
+    img.src = '/public/posters/' + clean;
+    return;
+  }
+  if (clean && retry === 2) {
+    img.dataset.retried = '3';
+    img.src = 'public/posters/' + clean;
+    return;
+  }
+  if (clean && retry === 3) {
+    img.dataset.retried = '4';
+    img.src = 'posters/' + clean;
+    return;
+  }
+
+  img.style.display = 'none';
+  if (img.parentElement && !img.parentElement.querySelector('.card-poster-empty')) {
+    const empty = document.createElement('div');
+    empty.className = 'card-poster-empty';
+    empty.innerHTML = `
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="3" y="3" width="18" height="18" rx="2.5"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m3 17 5-5 4 4 3-3 6 6"/>
+      </svg>
+      <span>Flyer Turnamen</span>
+    `;
+    img.parentElement.insertBefore(empty, img);
+  }
+};
+
 function renderTournamentCard(e) {
   const status = timeStatus(e);
   const isPast = status === 'past';
   const rl = validUrl(e.registrationUrl);
-  const pl = validUrl(e.posterUrl);
+  const rawPoster = e.posterUrl || e.posterImage || '';
+  const pl = resolvePosterSrc(rawPoster);
   const src = validUrl(e.sourceUrl);
 
   const statusBadge = getStatusBadge(status);
   const dateStr = displayDateRange(e);
 
   const posterHtml = pl
-    ? `<img src="${escaped(pl)}" alt="Poster ${escaped(e.title)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentElement.innerHTML=renderEmptyPoster()"/>`
+    ? `<img src="${escaped(pl)}" alt="Poster ${escaped(e.title)}" loading="lazy" referrerpolicy="no-referrer" onerror="handlePosterError(this, '${escaped(rawPoster)}')"/>`
     : renderEmptyPoster();
 
   let actionButton = '';
@@ -1179,6 +1261,7 @@ function validUrl(url) {
   if (!url || typeof url !== 'string') return null;
   url = url.trim();
   if (url === '' || url === 'undefined' || url === 'null') return null;
+  if (url.startsWith('/') || url.startsWith('./') || url.startsWith('posters/')) return url;
   try {
     const u = new URL(url);
     return /^https?:$/.test(u.protocol) ? u.href : null;
@@ -1216,7 +1299,7 @@ $('#triggerScanBtn').onclick = async () => {
       if (window.location.hostname.includes('github.io')) {
         // Di GitHub Pages (hosting statis), muat ulang dari database JSON terindeks
         await loadData();
-        notify('Data turnamen Jawa Timur berhasil dimuat ulang dari database terindeks. (Crawler realtime aktif di server lokal)');
+        notify('Data turnamen Pulau Jawa berhasil dimuat ulang dari database terindeks. (Crawler realtime aktif di server lokal)');
         return;
       }
       let errMsg = res ? `Server merespon ${res.status}` : 'Tidak dapat terhubung ke server pemindai';
@@ -1456,7 +1539,7 @@ function openManualModal() {
   $('#manualAddForm').reset();
   $('#editTournamentId').value = '';
   $('#manualModalTitle').textContent = 'Tambah Turnamen Manual';
-  $('#manualModalDesc').textContent = 'Masukkan informasi turnamen padel di Jawa Timur jika Anda memiliki brosur atau informasi langsung dari pengelola lapangan.';
+  $('#manualModalDesc').textContent = 'Masukkan informasi turnamen padel di Pulau Jawa jika Anda memiliki brosur atau informasi langsung dari pengelola lapangan.';
   $('#manualSubmitBtn').textContent = 'Simpan Turnamen';
   $('#manualModalOverlay').hidden = false;
   document.body.style.overflow = 'hidden';
@@ -1540,7 +1623,7 @@ $('#manualAddForm').onsubmit = async e => {
       dateStart: formData.dateStart,
       dateEnd: formData.dateEnd || formData.dateStart,
       location: formData.location,
-      city: (formData.location.match(/(Surabaya|Malang|Batu|Sidoarjo|Gresik|Pasuruan|Jember|Kediri|Nganjuk|Sumenep)/i) || [existing.city || 'Surabaya'])[0],
+      city: (formData.location.match(/(Jakarta|Tangerang|Bandung|Bogor|Depok|Bekasi|Semarang|Solo|Surakarta|Yogyakarta|Jogja|Surabaya|Malang|Batu|Sidoarjo|Gresik|Pasuruan|Jember|Kediri|Nganjuk|Sumenep|Banyuwangi)/i) || [existing.city || 'Surabaya'])[0],
       category: formData.category || null,
       source: formData.source || existing.source || 'Manual Input',
       posterUrl: formData.posterUrl || null,
@@ -1780,11 +1863,19 @@ function renderIgAccounts() {
   const filtered = allIgAccounts.filter(a => {
     const textMatch = !q || [a.name, a.username, a.city, a.role].join(' ').toLowerCase().includes(q);
     let cityMatch = true;
-    if (currentIgCityFilter === 'Surabaya') cityMatch = a.city === 'Surabaya';
-    else if (currentIgCityFilter === 'Malang') cityMatch = (a.city === 'Malang' || a.city === 'Batu');
-    else if (currentIgCityFilter === 'Sidoarjo') cityMatch = (a.city === 'Sidoarjo' || a.city === 'Gresik');
-    else if (currentIgCityFilter === 'Pasuruan') cityMatch = a.city === 'Pasuruan';
-    else if (currentIgCityFilter === 'Lainnya') cityMatch = !['Surabaya', 'Malang', 'Batu', 'Sidoarjo', 'Gresik', 'Pasuruan'].includes(a.city);
+    if (currentIgCityFilter === 'Jakarta') {
+      cityMatch = /jakarta/i.test(a.city);
+    } else if (currentIgCityFilter === 'Banten') {
+      cityMatch = /tangerang|banten|bsd|bintaro/i.test(a.city);
+    } else if (currentIgCityFilter === 'Jabar') {
+      cityMatch = /bandung|bogor|bekasi|depok|jawabarat|jawa barat/i.test(a.city);
+    } else if (currentIgCityFilter === 'Jateng') {
+      cityMatch = /semarang|solo|surakarta|magelang|jawatengah|jawa tengah/i.test(a.city);
+    } else if (currentIgCityFilter === 'DIY') {
+      cityMatch = /yogyakarta|jogja|sleman|bantul/i.test(a.city);
+    } else if (currentIgCityFilter === 'Jatim') {
+      cityMatch = /surabaya|malang|batu|sidoarjo|gresik|pasuruan|nganjuk|kediri|jember|sumenep|jawa timur|jatim/i.test(a.city);
+    }
 
     let roleMatch = true;
     if (currentIgRoleFilter !== 'all') {
@@ -1976,7 +2067,7 @@ window.deleteIgAccount = async function(username) {
   const acc = allIgAccounts.find(a => a.username.toLowerCase() === target.toLowerCase());
   const name = acc ? acc.name : target;
 
-  if (!confirm(`Hapus akun Instagram ini dari radar pantauan?\n\n@${target} (${name})\n\nAkun tidak akan dimonitor lagi di Jawa Timur.`)) {
+  if (!confirm(`Hapus akun Instagram ini dari radar pantauan?\n\n@${target} (${name})\n\nAkun tidak akan dimonitor lagi di Pulau Jawa.`)) {
     return;
   }
 

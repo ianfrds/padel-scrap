@@ -385,5 +385,71 @@
     "name": "Unggul Sports Padel Malang",
     "city": "Malang",
     "role": "Club & Venue"
+  },
+  {
+    "username": "kemangpadel",
+    "name": "Kemang Padel Club",
+    "city": "Jakarta Selatan",
+    "role": "Club & Venue"
+  },
+  {
+    "username": "verdepadel",
+    "name": "Verde Padel PIK 2",
+    "city": "Jakarta Utara",
+    "role": "Club & Venue"
+  },
+  {
+    "username": "padelpro.id",
+    "name": "Padel Pro Indonesia",
+    "city": "Jakarta",
+    "role": "Tournament Organizer"
+  },
+  {
+    "username": "bsdpadel",
+    "name": "BSD Padel Arena",
+    "city": "Tangerang Selatan",
+    "role": "Club & Venue"
+  },
+  {
+    "username": "gadingserpongpadel",
+    "name": "Gading Serpong Padel Club",
+    "city": "Tangerang",
+    "role": "Club & Venue"
+  },
+  {
+    "username": "bintaropadel",
+    "name": "Bintaro Jaya Padel",
+    "city": "Tangerang Selatan",
+    "role": "Club & Venue"
+  },
+  {
+    "username": "bandungpadel",
+    "name": "Bandung Padel Arena",
+    "city": "Bandung",
+    "role": "Club & Venue"
+  },
+  {
+    "username": "sentulpadel",
+    "name": "Sentul Padel Club",
+    "city": "Bogor",
+    "role": "Club & Venue"
+  },
+  {
+    "username": "semarangpadel",
+    "name": "Semarang Padel Club",
+    "city": "Semarang",
+    "role": "Club & Venue"
+  },
+  {
+    "username": "solopadel",
+    "name": "Solo Padel Arena",
+    "city": "Solo",
+    "role": "Club & Venue"
+  },
+  {
+    "username": "jogjapadel",
+    "name": "Jogja Padel Club",
+    "city": "Yogyakarta",
+    "role": "Club & Venue"
   }
 ]
